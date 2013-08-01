@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Wordguess Creator</title>
+		<meta charset="utf-8" />
+		<style type="text/css"></style>
+		<script type="text/javascript" src="/js/materia.require.js"></script>
+		<link rel="stylesheet/less" type="text/css" href="css/creator.less">
+		<script type="text/javascript">
+			require([
+				'creatorcore', 'less', // Materia dependencies.
+				'cs!js/creator-events', 'cs!js/creator-logic', 'cs!js/creator-UI', 'cs!js/creator' // Creator components.
+				], function(util) {
+				Materia.CreatorCore.start(Wordguess.Creator);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="widget-title">
+			<p>Widget Title: </p>
+			<input id="title" type="text" placeholder="New WordGuess Widget"/>
+		</div>
+
+		<section class="outer">
+
+			<section id="edit-region" class="inner ease-out-quart">
+
+				<!-- title area -->
+				<div class="information">
+					<div id="title-info-box" class="info-box ease-elastic">
+						<center>
+							<p>This will appear directly above your finished paragraph. Leave this area unchanged if you don't want to display a title.</p>
+						</center>
+						<div class="arrow-down"></div>
+					</div>
+					<span class="info-bubble"><p>?</p></span>
+					<!-- <img class="info-bubble" id="title-info"> -->
+					<p>Title:</p>
+				</div>
+
+				<input class="ease-out-quart" id="paragraph-title" type="text" placeholder="Enter a title here."/>
+
+				<!-- paragraph area -->
+				<div class="information">
+					<div id="paragraph-info-box" class="info-box ease-elastic">
+						<center>
+							<p>This will be displayed with removed words for students to fill in. To alter how words are removed, change the options.</p>
+						</center>
+						<div class="arrow-down"></div>
+					</div>
+					<span class="info-bubble"><p>?</p></span>
+					<p>Paragraph:</p>
+				</div>
+
+				<div class="edit-areas ease-out-quart" id="editable">Enter a paragraph here.</div>
+
+				
+				<div id="no-paragraph" class="big-info ease-elastic">
+					<div class="arrow-up"></div>
+					Enter a paragraph first.
+				</div>
+				<div id="manually-select-info" class="big-info ease-elastic">
+					Click on words to hide here.
+					<div class="arrow-down"></div>
+				</div>
+				
+				<textarea class="edit-areas ease-out-quart" id="paragraph" placeholder="Enter a paragraph here."></textarea>
+
+
+				<div id="go-back" class="big-info ease-elastic">
+					Go back to edit your paragraph.
+					<div class="arrow-down"></div>
+				</div>
+				
+				<!-- buttons -->
+				<div id="next" class="button">Next</div>
+				<div id="back" class="button">Edit Paragraph</div>
+				<div id="reset" class="button">Reset</div>
+
+			</section> <!-- edit-region -->
+
+			<section id="hidden-words" class="inner ease-out-quart">
+				<div class="information">
+					<div id="hidden-words-info-box" class="info-box ease-elastic">
+						<center>
+							<p>Words that will be removed for students to fill in are shown here. Punctuation will not be hidden from your paragraph.</p>
+						</center>
+						<div class="arrow-down"></div>
+					</div>
+					<span class="info-bubble"><p>?</p></span>
+					<p>Hidden Words:</p>
+				</div>
+
+				<div id="hidden-words-box"></div>
+			</section> <!-- hidden-words -->
+
+			<section id="options">
+				<h3 class="ease-out-quart">Decide how to hide words</h3>
+				<nav class="ease-out-quart">
+					<div class="selected" id="auto-hide">Automatic</div>
+					<div id="man-hide">Let Me Choose</div>
+				</nav>
+
+				<div id="option1" class="option ease-out-quart">
+					<p class="rule">Number of words to skip:</p>
+
+					<div id="words-to-skip">
+						<span class="quick-anim" id="num-up"></span>
+						<span class="quick-anim" id="num-down"></span>
+						<span id="num-words-to-skip">3</span>
+					</div>
+				</div>
+
+				<div id="option2" class="option ease-out-quart">
+					Select words from the paragraph area to hide them.
+				</div>
+			</section>
+
+		</section> <!-- outer -->
+
+	</body>
+</html>

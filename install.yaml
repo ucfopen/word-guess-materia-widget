@@ -1,0 +1,33 @@
+---
+general:
+  name: Word Guess
+  group: Materia
+  height: 670
+  width: 800
+  in_catalog: Yes
+  is_editable: Yes
+  is_playable: Yes
+  is_qset_encrypted: Yes
+  is_answer_encrypted: Yes
+  is_storage_enabled: No
+  api_version: 2
+files:
+  creator: creator.html
+  player: widget.html
+  flash_version: 0
+score:
+  is_scorable: Yes
+  score_module: Wordguess
+  score_type: SERVER
+meta_data:
+  features:
+    - Customizable
+  supported_data:
+    - Fill-in-the-blank
+  about: >
+    Word Guess is a madlib-style game in which
+    students are allowed to fill the missing words
+    within a paragraph and discover how their
+    answers differed from the original text.
+  excerpt: >
+    Students fill blanks within a paragraph with words they think belong.

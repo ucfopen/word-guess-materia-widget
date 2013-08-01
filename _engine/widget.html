@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wordguess Engine</title>
+		<meta charset="utf-8" />
+		<style type="text/css"></style>
+		<link rel="stylesheet/less" type="text/css" href="css/widget.less">
+		<script type="text/javascript" src="/js/materia.require.js"></script>
+		<script type="text/javascript">
+			require([
+				'enginecore', 'score', 'less',                             // Materia dependencies.
+				'cs!js/events', 'cs!js/logic', 'cs!js/UI', 'cs!js/widget', // Widget components.
+				], function(util) {
+				Materia.Engine.start(Wordguess.Engine);
+			});
+		</script>
+	</head>
+	<body>
+		<div class="quick-anim3" id="welcome-page">
+			<h1>{ WORD <span id="underline">_______ </span>
+			<span id="guess">
+				<span>G</span><span>U</span><span>E</span><span>S</span><span>S</span>
+			</span>
+			}</h1>
+			<h3>Fill in the missing words with what <em>you</em> think belongs.</h3>
+			<h5>Click to Begin</h5>
+		</div> <!-- welcome -->
+
+		<div class="quick-anim3" id="submission-page">
+			<div id="finish-warning">
+				<h1>You haven't finished!</h1>
+				<div id="submit-check" class="button quick-anim2">Submit what I have!</div>
+				<div id="go-back" class="button quick-anim2">What am I missing?</div>
+			</div> <!-- finish-warning -->
+		</div> <!-- submission-page -->
+
+		<div class="blurred quick-anim" id="game-page">
+			<div class="paper" id="game-box">
+				<h1 id="game-title"><!-- title here --></h1>
+				<div id="game-paragraph">
+					<p id="modified-paragraph"><!-- paragraph here --></p>
+				</div>
+				<div id="options">
+					<div id ="submit" class="button quick-anim2">Submit!</div>
+					<div id ="reset" class="button quick-anim2">Reset</div>
+				</div> <!-- options -->
+			</div> <!-- game-box -->
+
+			<div class="paper" id="paper-css-1"></div>
+			<div class="paper" id="paper-css-2"></div>
+			<div class="paper" id="paper-css-3"></div>
+		</div> <!-- game_page -->
+	</body>
+</html>
