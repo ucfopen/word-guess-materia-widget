@@ -53,7 +53,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	# Replace tags with their escape characters to prevent XSS attack.
 	replaceTags = (text) -> 
-		text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+		text = Materia.CreatorCore.escapeScriptTags(text)
 
 	cleanParagraph = (paragraph) ->
 		cleansedParagraph = $.trim(replaceTags(paragraph))

@@ -12,8 +12,11 @@ Namespace('Wordguess').Engine = do ->
 
 	# Returns user input to Materia to be graded.
 	saveAnswers = ->
-		$('input').each (i) ->
-			Materia.Score.submitQuestionForScoring(_qset.questions_answers[i].id, $(this).val().replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+		inputs = document.getElementsByTagName('input')
+
+		for i in [0..inputs.length-1]
+		# $('input').each (i) ->
+			Materia.Score.submitQuestionForScoring(_qset.questions_answers[i].id, this.value.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
 
 	# Tell's Materia to redirect to the score screen.
 	endGame = ->

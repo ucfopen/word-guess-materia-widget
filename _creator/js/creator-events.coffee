@@ -70,10 +70,10 @@ Namespace('Wordguess').CreatorEvents = do ->
 		return this
 
 	setEventListeners = (isMobile) ->
-		#Disable right click.
-		# document.oncontextmenu = -> false
-		# document.addEventListener 'mousedown', (e) -> 
-		# 	if e.button is 2 then false else true
+		# Disable right click.
+		document.oncontextmenu = -> false
+		document.addEventListener 'mousedown', (e) -> 
+			if e.button is 2 then false else true
 
 		# Events for information bubbles.
 		if isMobile
