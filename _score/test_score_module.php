@@ -16,79 +16,79 @@ class Test_Score_Modules_Wordguess extends \Basetest
 				"items":[
 				{
 					"items":[
-							{
-						 		"name":null,
-						 		"type":"MC",
-						 		"assets":null,
-						 		"answers":[
-						 			{
-						 				"id":"0",
-						 				"text":"100",
-						 				"options":{},
-						 				"value":"100"
-						 			},
-						 			{
-						 				"id":"0",
-						 				"text":"50",
-						 				"options":{},
-						 				"value":"50"
-						 			},
-						 			{
-						 				"id":"0",
-						 				"text":"Wrong",
-						 				"options":{},
-						 				"value":"0"
-						 			}
-						 		],
-						 		"questions":[
-						 			{
-						 				"text":"q1",
-						 				"options":{},
-						 				"value":""
-						 			}
-						 		],
-						 		"options":{},
-						 		"id":0
-						 	},
-							{
-						 		"name":null,
-						 		"type":"MC",
-						 		"assets":null,
-						 		"answers":[
-						 			{
-						 				"id":"0",
-						 				"text":"ONE HUNDRED",
-						 				"options":{},
-						 				"value":"100"
-						 			},
-						 			{
-						 				"id":"0",
-						 				"text":"FIFTY",
-						 				"options":{},
-						 				"value":"50"
-						 			},
-						 			{
-						 				"id":"0",
-						 				"text":"ZERO",
-						 				"options":{},
-						 				"value":"0"
-						 			}
-						 		],
-						 		"questions":[
-						 			{
-						 				"text":"q1",
-						 				"options":{},
-						 				"value":""
-						 			}
-						 		],
-						 		"options":{},
-						 		"id":0
-						 	}
-						 ],
-						 "name":"CATEGORY 1",
-						 "options":{},
-						 "assets":[],
-						 "rand":false
+						{
+							"name":null,
+							"type":"MC",
+							"assets":null,
+							"answers":[
+								{
+									"id":"0",
+									"text":"100",
+									"options":{},
+									"value":""
+								},
+								{
+									"id":"0",
+									"text":"50",
+									"options":{},
+									"value":""
+								},
+								{
+									"id":"0",
+									"text":"Wrong",
+									"options":{},
+									"value":""
+								}
+							],
+							"questions":[
+								{
+									"text":"q1",
+									"options":{},
+									"value":""
+								}
+							],
+							"options":{},
+							"id":0
+						},
+						{
+							"name":null,
+							"type":"MC",
+							"assets":null,
+							"answers":[
+								{
+									"id":"0",
+									"text":"ONE HUNDRED",
+									"options":{},
+									"value":""
+								},
+								{
+									"id":"0",
+									"text":"FIFTY",
+									"options":{},
+									"value":""
+								},
+								{
+									"id":"0",
+									"text":"ZERO",
+									"options":{},
+									"value":""
+								}
+							],
+							"questions":[
+								{
+									"text":"q2",
+									"options":{},
+									"value":""
+								}
+							],
+							"options":{},
+							"id":0
+						}
+					],
+					"name":"CATEGORY 1",
+					"options":{},
+					"assets":[],
+					"rand":false
 					}
 				],
 				 "name":"",
@@ -98,26 +98,26 @@ class Test_Score_Modules_Wordguess extends \Basetest
 			}');
 	}
 
-	protected function _makeWidget($partial = 'false')
+	protected function _make_widget()
 	{
 		$this->_asAuthor();
 
-		$title = "WORDGUESS SCORE MODULE TEST";
-		$widget_id = $this->_find_widget_id('Wordguess');
+		$title = 'WORDGUESS SCORE MODULE TEST';
+		$widget_id = $this->_find_widget_id('Word Guess');
 		$qset = (object) ['version' => 1, 'data' => $this->_get_qset()];
 		return \Materia\Api::widget_instance_save($widget_id, $title, $qset, false);
 	}
 
 	public function test_check_answer()
 	{
-		$inst = $this->_makeWidget('false');
-		$playSession = \Materia\Api::session_play_create($inst->id);
-		$qset = \Materia\Api::question_set_get($inst->id, $playSession);
+		$inst = $this->_make_widget();
+		$play_session = \Materia\Api::session_play_create($inst->id);
+		$qset = \Materia\Api::question_set_get($inst->id, $play_session);
 
 		$logs = array();
 
 		$logs[] = json_decode('{
-			"text":"50",
+			"text":"100",
 			"type":1004,
 			"value":"",
 			"item_id":"'.$qset->data['items'][0]['items'][0]['id'].'",
@@ -139,13 +139,13 @@ class Test_Score_Modules_Wordguess extends \Basetest
 			"game_time":12
 		}');
 
-		$output = \Materia\Api::play_logs_save($playSession, $logs);
+		$output = \Materia\Api::play_logs_save($play_session, $logs);
 
 		$scores = \Materia\Api::widget_instance_scores_get($inst->id);
 
-		$thisScore = \Materia\Api::widget_instance_play_scores_get($playSession);
+		$this_score = \Materia\Api::widget_instance_play_scores_get($play_session);
 
-		$this->assertInternalType('array', $thisScore);
-		$this->assertEquals(25, $thisScore[0]['perc']);
+		$this->assertInternalType('array', $this_score);
+		$this->assertEquals(100, $this_score[0]['overview']['score']);
 	}
 }
