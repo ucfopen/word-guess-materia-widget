@@ -1,5 +1,9 @@
 Namespace('Wordguess').Engine = do ->
-	_qset         = null
+	regexLT  = /</g
+	regexGT  = />/g
+	escapeLT = '&lt;'
+	escapeGT = '&gt;'
+	_qset    = null
 
 	# Initializes the starting game state.
 	start = (instance, qset, version = 1) ->
@@ -16,7 +20,10 @@ Namespace('Wordguess').Engine = do ->
 
 		for i in [0..inputs.length-1]
 		# $('input').each (i) ->
-			Materia.Score.submitQuestionForScoring(_qset.questions_answers[i].id, this.value.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+			Materia.Score
+				.submitQuestionForScoring(
+					_qset.questions_answers[i].id, 
+					inputs[i].value.replace(regexLT, escapeLT).replace(regexGT, escapeGT))
 
 	# Tell's Materia to redirect to the score screen.
 	endGame = ->

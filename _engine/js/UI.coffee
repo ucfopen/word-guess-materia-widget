@@ -43,7 +43,6 @@ Namespace('Wordguess').UI = do ->
 
 	# Replaces words with input boxes and inserts a paragraph into the DOM.
 	showNewParagraph = (qset) ->
-		console.log qset
 		text = qset.paragraph.split(' ')
 
 		# Case 1: The creator chose to automatically hide words.
@@ -66,7 +65,6 @@ Namespace('Wordguess').UI = do ->
 
 	# Highlights input boxes that haven't been filled.
 	showEmptyInput = () ->
-
 		inputs = document.getElementsByTagName('input')
 
 		for i in [0..inputs.length-1]
