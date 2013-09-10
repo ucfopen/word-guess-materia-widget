@@ -75,21 +75,21 @@ Namespace('Wordguess').CreatorLogic = do ->
 	turnOffManualHiding = ->
 		manuallyHide = off
 
-	cleanStringArray = (stringArray) ->
-		for i in [0..stringArray.length - 1]
-			first = stringArray[i].charAt(0)
-			last = stringArray[i].charAt(stringArray[i].length - 1)
+	removePunc = (string) ->
+		for i in [0..string.length - 1]
+			first = string.charAt(0)
+			last = string.charAt(string.length - 1)
 
 			if last.match(regexNotAlpha) != null
-				stringArray[i] = stringArray[i].substr(0, stringArray[i].length - 1)
+				string = string.substr(0, string.length - 1)
 			else if first.match(regexNotAlpha) != null
-				stringArray[i] = stringArray[i].substr(1)
+				string = string.substr(1)
 
-		return stringArray
+		return string
 
 	buildQuestionsAnswers = (paragraph) ->
 		questionsAnswers = []
-		paragraph = cleanStringArray(paragraph)
+
 		j = 1
 
 		if manuallyHide is on
@@ -98,7 +98,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 					'id'        : 0,
 					'type'      : 'QA',
 					'questions' :['text': ('word #' + j)],
-					'answers'   :['text': paragraph[manualSkippingIndices[i]]]
+					'answers'   :['text': removePunc(paragraph[manualSkippingIndices[i]])]
 				j++
 
 		else
@@ -107,7 +107,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 					'id'        : 0,
 					'type'      : 'QA',
 					'questions' :['text': 'word #' + j],
-					'answers'   :['text': paragraph[i]]
+					'answers'   :['text': removePunc(paragraph[i])]
 				j++
 
 		return questionsAnswers
@@ -151,7 +151,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 	wordsToSkipUp         : wordsToSkipUp
 	wordsToSkipDown       : wordsToSkipDown
 	resetWordsToSkip      : resetWordsToSkip
-	cleanStringArray      : cleanStringArray
 	buildQuestionsAnswers : buildQuestionsAnswers
 	buildSaveData         : buildSaveData
 	analyzeParagraph      : analyzeParagraph

@@ -33,8 +33,6 @@ Namespace('Wordguess').Creator = do ->
 		_qset = Wordguess.CreatorLogic.buildSaveData()
 		Materia.CreatorCore.save widgetTitle, _qset
 
-
-
 	onSaveComplete = (title, widget, qset, version) -> true
 
 	# Public methods, called by Materia.
