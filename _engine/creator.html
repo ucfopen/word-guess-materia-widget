@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- INJECTS IE CLASSES ONTO HTML TAG -->
+<!--[if IE 8 ]>    <html class="IE8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="IE9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
 	<head>
-		<title>Wordguess Creator</title>
+		<title>Word Guess Creator</title>
 		<meta charset="utf-8" />
-		<style type="text/css"></style>
-		<script type="text/javascript" src="/js/materia.require.js"></script>
-		<link rel="stylesheet/less" type="text/css" href="css/creator.less">
-		<script type="text/javascript">
-			require([
-				'creatorcore', 'less', // Materia dependencies.
-				'cs!js/creator-events', 'cs!js/creator-logic', 'cs!js/creator-UI', 'cs!js/creator' // Creator components.
-				], function(util) {
-				Materia.CreatorCore.start(Wordguess.Creator);
-			});
-		</script>
-	</head>
 
+		<!-- STYLESHEETS -->
+		<link rel="stylesheet" type="text/css" href="creator.css">
+
+		<!-- REQUIRED MATERIA JAVASCRIPT -->
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/materia.creatorcore.js"></script>
+
+		<!-- YOUR PREREQUISITES -->
+		<script type="text/javascript" src="creator-logic.js"></script>
+		<script type="text/javascript" src="creator-events.js"></script>
+		<script type="text/javascript" src="creator-UI.js"></script>
+
+		<!-- MAIN CREATOR SCRIPT -->
+		<script src="creator.js"></script>
+	</head>
 	<body>
 		<div id="widget-title">
 			<p>Widget Title: </p>
@@ -118,6 +124,11 @@
 			</section>
 
 		</section> <!-- outer -->
+
+<!-- INITIALIZE -->
+<script type="text/javascript">
+	Materia.CreatorCore.start(Wordguess.Creator);
+</script>
 
 	</body>
 </html>

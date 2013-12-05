@@ -1,7 +1,0 @@
----
-type: compile_html
-target: creator.html
-include:
-  - font
-  - css
-  - js
