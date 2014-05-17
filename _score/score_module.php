@@ -1,14 +1,4 @@
 <?php
-/**
- * NEEDS DOCUMENTATION
- *
- * The widget score module
- *
- * @package	    Main
- * @subpackage  scoring
- * @category    Modules
- * @author      Micheal Parks
- */
 
 namespace Materia;
 
