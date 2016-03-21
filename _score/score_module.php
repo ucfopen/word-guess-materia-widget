@@ -19,7 +19,7 @@ class Score_Modules_Wordguess extends Score_Module
 			['type', '=', Session_Log::TYPE_QUESTION_ANSWERED],
 			['play_id', '!=', $log->play_id]
 		];
-		$other_words = Session_Logger::query_logs($where);
+		$other_words = static::query_logs($where);
 
 		foreach ($other_words as $other_word)
 		{
