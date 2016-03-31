@@ -13,7 +13,9 @@ class Score_Modules_Wordguess extends Score_Module
 	// use the question feedback area to display all guesses for the given word by all students
 	protected function get_feedback($log, $answers)
 	{
-		$all_words = [$log->text => 1];
+		$all_words = [];
+		if (strlen($log->text)) $all_words[$log->text] = 1;
+
 		$where = [
 			['item_id', '=', $log->item_id],
 			['type', '=', Session_Log::TYPE_QUESTION_ANSWERED],
@@ -39,6 +41,14 @@ class Score_Modules_Wordguess extends Score_Module
 			}
 			sort($final_words);
 		}
-		if ( ! empty($final_words)) return 'All recorded responses for this word: '.implode(', ', $final_words);
+
+		if ( ! empty($final_words))
+		{
+			return 'All recorded responses for this word: '.implode(', ', $final_words);
+		}
+		else
+		{
+			return 'No other responses have been recorded for this word.';
+		}
 	}
 }
