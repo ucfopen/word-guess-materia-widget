@@ -56,7 +56,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 		# Inputs:
 		title          = document.getElementById('title')
-		paragraphTitle = document.getElementById('paragraph-title')
 		wordsToSkipBox = document.getElementById('words-to-skip')
 
 		# Information divs:
@@ -66,7 +65,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 		infoBubble = document.getElementsByClassName('info-bubble')
 		bigInfo    = document.getElementsByClassName('big-info')
- 
+
 		return this
 
 	setEventListeners = (isMobile) ->
@@ -113,7 +112,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.setUpManualHiding(paragraph, editable)
 					.showHiddenWords(hiddenWordsBox)
 
-		nextButton.addEventListener 'click', ->                       
+		nextButton.addEventListener 'click', ->
 			if not animating
 				animating = true
 				setTimeout ->
@@ -139,7 +138,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 					Wordguess.CreatorUI
 						.hideFirstMenu(paragraphTextarea, resetButton)
-						.showSecondMenu(paragraphTitle, backButton, editable)
+						.showSecondMenu(title, backButton, editable)
 						.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
 						.showHiddenWords(hiddenWordsBox)
 						.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
@@ -172,7 +171,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 				this.className = 'selected'
 				autoHide.className = ''
-			
+
 				manuallyHide = on
 
 				options.children[2].style.display = 'none'
@@ -197,7 +196,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 				setTimeout ->
 					document.addEventListener 'click', removeManHideBox
-						
 				, 1
 
 		autoHide.addEventListener 'click', ->
@@ -226,6 +224,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 				Wordguess.CreatorLogic
 					.analyzeParagraph(paragraphTextarea.value)
 				Wordguess.CreatorUI
+					.showHiddenWords(hiddenWordsBox)
 					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 				$('#editable span').off()
@@ -241,7 +240,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 				Wordguess.CreatorUI
 					.showFirstMenu(paragraphTextarea, resetButton)
-					.hideSecondMenu(paragraphTitle, backButton, editable)
+					.hideSecondMenu(title, backButton, editable)
 					.animateOutSecondMenu(editRegion.style, hiddenWords.style, options)
 
 				if manuallyHide is off
@@ -266,7 +265,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 	removeNoParagraphBox = ->
 		elementStyle = noParagraph.style
-		elementStyle.margin = '72px 0 0 10px'     
+		elementStyle.margin = '72px 0 0 10px'
 		elementStyle.opacity = 0
 		setTimeout ->
 			elementStyle.display = 'none'
