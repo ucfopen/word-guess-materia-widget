@@ -21,8 +21,9 @@ class Score_Modules_Wordguess extends Score_Module
 			['type', '=', Session_Log::TYPE_QUESTION_ANSWERED],
 			['play_id', '!=', $log->play_id]
 		];
-		$other_words = static::query_logs($where);
+		$other_words = $this->query_logs($where);
 
+		//initial loop - build array with all words and the counts for each
 		foreach ($other_words as $other_word)
 		{
 			$word = mb_strtolower(trim($other_word['text']));
@@ -33,6 +34,7 @@ class Score_Modules_Wordguess extends Score_Module
 		$final_words = [];
 		if ( ! empty($all_words))
 		{
+			//second loop - condense words and their counts into single strings
 			foreach ($all_words as $word => $count)
 			{
 				if ($count < 1) continue;
