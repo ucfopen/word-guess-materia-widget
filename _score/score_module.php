@@ -27,8 +27,12 @@ class Score_Modules_Wordguess extends Score_Module
 		foreach ($other_words as $other_word)
 		{
 			$word = mb_strtolower(trim($other_word['text']));
-			if ( ! isset($all_words[$word])) $all_words[$word] = 0;
-			$all_words[$word]++;
+
+			if (strlen($word))
+			{
+				if ( ! isset($all_words[$word]) ) $all_words[$word] = 1;
+				else $all_words[$word]++;
+			}
 		}
 
 		$final_words = [];
