@@ -23,7 +23,7 @@ Namespace('Wordguess').Creator = do ->
 			.setEventListeners(isMobile)
 			.setSecondMenuEventListeners()
 		Wordguess.CreatorUI
-			.setInputValues(title, qset.title, qset.paragraph, wordsToSkip) 
+			.setInputValues(title, qset.paragraph, wordsToSkip)
 
 	onSaveClicked = (mode = 'save') ->
 		titleValue = document.getElementById('title').value

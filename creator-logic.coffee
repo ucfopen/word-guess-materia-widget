@@ -127,7 +127,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		return qset =
 			'questions_answers'     : questionsAnswers
-			'title'                 : replaceTags(document.getElementById('paragraph-title').value)
+			'title'                 : replaceTags(document.getElementById('title').value)
 			'paragraph'             : replaceTags(paragraph.join ' ')
 			'wordsToSkip'           : wordsToSkip
 			'manualSkippingIndices' : manualSkippingIndices

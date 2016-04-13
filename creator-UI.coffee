@@ -5,9 +5,8 @@ Namespace('Wordguess').CreatorUI = do ->
 	regexNewlineMultiSpace = /\s{2,}|\n/g
 	regexNotAlpha          = /[^A-z]/
 
-	setInputValues = (widgetTitle, gameTitle, paragraph, wordsToSkip) ->
-		document.getElementById('title').value           = widgetTitle
-		document.getElementById('paragraph-title').value = gameTitle
+	setInputValues = (widgetTitle, paragraph, wordsToSkip) ->
+		document.getElementById('title').value = widgetTitle
 		document.getElementById('paragraph').value       = paragraph
 		if wordsToSkip != null
 			document.getElementById('num-words-to-skip').innerHTML = wordsToSkip
@@ -24,7 +23,7 @@ Namespace('Wordguess').CreatorUI = do ->
 		, 1
 
 	hideInfoBox = (element) ->
-		element.style.opacity = 0.6                      # Remove the bubble's highlight.                   
+		element.style.opacity = 0.6                      # Remove the bubble's highlight.
 		nodeStyle = element.parentNode.children[0].style # Cache the info box.
 		nodeStyle.margin  = '-65px 0 0 -13px'            # Slightly changing the margin "bounces-in" the box.
 		nodeStyle.opacity = 0                            # Fade out the info box.
@@ -39,7 +38,7 @@ Namespace('Wordguess').CreatorUI = do ->
 		, 300
 
 	alertNoParagraph = (noParagraph) ->
-		noParagraph.display = 'block'                    # Set display.           
+		noParagraph.display = 'block'                    # Set display.
 		setTimeout ->
 			noParagraph.margin = '62px 0 0 10px'         # Other properties must be set slightly later to trigger animation.
 			noParagraph.opacity = 0.6
