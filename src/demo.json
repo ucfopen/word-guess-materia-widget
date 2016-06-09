@@ -1,0 +1,495 @@
+{
+  "name": "Kafka's Metamorphosis",
+  "qset": {
+    "version": 1,
+    "data": {
+      "questions_answers": [
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #1"
+            }
+          ],
+          "answers": [
+            {
+              "text": "morning"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #2"
+            }
+          ],
+          "answers": [
+            {
+              "text": "dreams"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #3"
+            }
+          ],
+          "answers": [
+            {
+              "text": "bed"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #4"
+            }
+          ],
+          "answers": [
+            {
+              "text": "changed"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #5"
+            }
+          ],
+          "answers": [
+            {
+              "text": "verminous"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #6"
+            }
+          ],
+          "answers": [
+            {
+              "text": "back"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #7"
+            }
+          ],
+          "answers": [
+            {
+              "text": "lifted"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #8"
+            }
+          ],
+          "answers": [
+            {
+              "text": "abdomen"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #9"
+            }
+          ],
+          "answers": [
+            {
+              "text": "bow-like"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #10"
+            }
+          ],
+          "answers": [
+            {
+              "text": "blanket"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #11"
+            }
+          ],
+          "answers": [
+            {
+              "text": "slide"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #12"
+            }
+          ],
+          "answers": [
+            {
+              "text": "hardly"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #13"
+            }
+          ],
+          "answers": [
+            {
+              "text": "numerous"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #14"
+            }
+          ],
+          "answers": [
+            {
+              "text": "circumference"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #15"
+            }
+          ],
+          "answers": [
+            {
+              "text": "eyes"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #16"
+            }
+          ],
+          "answers": [
+            {
+              "text": "thought"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #17"
+            }
+          ],
+          "answers": [
+            {
+              "text": "proper"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #18"
+            }
+          ],
+          "answers": [
+            {
+              "text": "human"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #19"
+            }
+          ],
+          "answers": [
+            {
+              "text": "quietly"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #20"
+            }
+          ],
+          "answers": [
+            {
+              "text": "walls"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #21"
+            }
+          ],
+          "answers": [
+            {
+              "text": "goods"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #22"
+            }
+          ],
+          "answers": [
+            {
+              "text": "unpacked"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #23"
+            }
+          ],
+          "answers": [
+            {
+              "text": "travelling"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #24"
+            }
+          ],
+          "answers": [
+            {
+              "text": "picture"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #25"
+            }
+          ],
+          "answers": [
+            {
+              "text": "illustrated"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #26"
+            }
+          ],
+          "answers": [
+            {
+              "text": "set"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #27"
+            }
+          ],
+          "answers": [
+            {
+              "text": "picture"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #28"
+            }
+          ],
+          "answers": [
+            {
+              "text": "hat"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #29"
+            }
+          ],
+          "answers": [
+            {
+              "text": "erect"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #30"
+            }
+          ],
+          "answers": [
+            {
+              "text": "viewer"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #31"
+            }
+          ],
+          "answers": [
+            {
+              "text": "entire"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "type": "QA",
+          "questions": [
+            {
+              "text": "Word #32"
+            }
+          ],
+          "answers": [
+            {
+              "text": "disappeared"
+            }
+          ]
+        }
+      ],
+      "title": "The Metamorphosis",
+      "paragraph": "One morning, as Gregor Samsa was waking up from anxious dreams, he discovered that in his bed he had been changed into a monstrous verminous bug. He lay on his armour-hard back and saw, as he lifted his head up a little, his brown, arched abdomen divided up into rigid bow-like sections. From this height the blanket, just about ready to slide off completely, could hardly stay in place. His numerous legs, pitifully thin in comparison to the rest of his circumference, flickered helplessly before his eyes. \"What’s happened to me,\" he thought. It was no dream. His room, a proper room for a human being, only somewhat too small, lay quietly between the four well-known walls. Above the table, on which an unpacked collection of sample cloth goods was spread out—Samsa was a travelling salesman—hung the picture which he had cut out of an illustrated magazine a little while ago and set in a pretty gilt frame. It was a picture of a woman with a fur hat and a fur boa. She sat erect there, lifting up in the direction of the viewer a solid fur muff into which her entire forearm had disappeared.\n",
+      "wordsToSkip": -1,
+      "manualSkippingIndices": [
+        1,
+        10,
+        16,
+        20,
+        24,
+        31,
+        36,
+        45,
+        50,
+        56,
+        61,
+        65,
+        70,
+        81,
+        86,
+        92,
+        100,
+        104,
+        111,
+        116,
+        123,
+        128,
+        134,
+        137,
+        145,
+        152,
+        161,
+        168,
+        175,
+        184,
+        192,
+        195
+      ]
+    }
+  }
+}
