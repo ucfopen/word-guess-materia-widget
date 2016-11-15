@@ -8,7 +8,7 @@ Namespace('Wordguess').Logic = do ->
 
 		# Leading and trailing punctuation exist.
 		if first.match(regexNotAlpha) != null && last.match(regexNotAlpha) != null
-			return text = first+'<input class="quick-anim" type="text" value="" />'+last  
+			return text = first+'<input class="quick-anim" type="text" value="" />'+last
 		# Only leading punctuation.
 		else if first.match(regexNotAlpha) != null
 			return text = first+'<input class="quick-anim" type="text" value="" />'
