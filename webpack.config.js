@@ -41,13 +41,24 @@ webpackConfig.module.rules.push({
 })
 
 // add entries for our other coffee files
-webpackConfig.entry['creator-events.js'] = [path.join(srcPath, 'creator-events.coffee')]
-webpackConfig.entry['creator-logic.js'] = [path.join(srcPath, 'creator-logic.coffee')]
-webpackConfig.entry['creator-UI.js'] = [path.join(srcPath, 'creator-UI.coffee')]
+webpackConfig.entry['creator.js'] = [
+	path.join(srcPath, 'creator-events.coffee'),
+	path.join(srcPath, 'creator-logic.coffee'),
+	path.join(srcPath, 'creator-UI.coffee'),
+	path.join(srcPath, 'creator.coffee')
+]
+// webpackConfig.entry['creator-logic.js'] = [path.join(srcPath, 'creator-logic.coffee')]
+// webpackConfig.entry['creator-UI.js'] = [path.join(srcPath, 'creator-UI.coffee')]
 
-webpackConfig.entry['player-events.js'] = [path.join(srcPath, 'player-events.coffee')]
-webpackConfig.entry['player-logic.js'] = [path.join(srcPath, 'player-logic.coffee')]
-webpackConfig.entry['player-UI.js'] = [path.join(srcPath, 'player-UI.coffee')]
+webpackConfig.entry['player.js'] = [
+	path.join(srcPath, 'player-events.coffee'),
+	path.join(srcPath, 'player-logic.coffee'),
+	path.join(srcPath, 'player-UI.coffee'),
+	path.join(srcPath, 'player.coffee')
+]
+// webpackConfig.entry['player-events.js'] = [path.join(srcPath, 'player-events.coffee')]
+// webpackConfig.entry['player-logic.js'] = [path.join(srcPath, 'player-logic.coffee')]
+// webpackConfig.entry['player-UI.js'] = [path.join(srcPath, 'player-UI.coffee')]
 
 // replace creator.css entry with one using our less file
 webpackConfig.entry['creator.css'] = [
