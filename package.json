@@ -17,9 +17,5 @@
   "author": "University of Central Florida, Center for Distributed Learning",
   "description": "Word Guess is a madlib-style game in which students fill in missing words within a paragraph and discover how their answers differed from the original text.",
   "main": "webpack.config.js",
-  "repository": {
-    "type": "git",
-    "url": "git@clu.cdl.ucf.edu:materia/this-or-that.git"
-  },
   "license": "UNLICENSED"
 }
