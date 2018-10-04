@@ -16,11 +16,7 @@ body {
 	margin: 0;
 	overflow-x: hidden;
 
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	     -o-user-select: none;
-	        user-select: none;
+	user-select: none;
 	input {
 		border: 5px solid white;
 		padding: 10px;
@@ -31,42 +27,17 @@ body {
 		width: 780px;
 		text-overflow: ellipsis;
 	}
-	/* Webkit */
-	textarea::-webkit-input-placeholder,
-	input::-webkit-input-placeholder {
+
+	textarea::placeholder,
+	input::placeholder {
 		color: black;
 	}
-	textarea:focus::-webkit-input-placeholder,
-	input:focus::-webkit-input-placeholder {
-		color: rgba(0,0,0,0.3);
+
+	textarea:focus::placeholder,
+	input:focus::placeholder {
+		color: rgba(0, 0, 0, 0.3);
 	}
-	/* Mozilla Firefox 4 to 18 */
-	textarea:-moz-placeholder,
-	input:-moz-placeholder {
-		color: black;
-	}
-	textarea:focus:-moz-placeholder,
-	input:focus:-moz-placeholder {
-		color: rgba(0,0,0,0.3);
-	}
-	/* Mozilla Firefox 19+ */
-	textarea::-moz-placeholder,
-	input::-moz-placeholder {
-		color: black;
-	}
-	textarea:focus::-moz-placeholder,
-	input:focus::-moz-placeholder {
-		color: rgba(0,0,0,0.3);
-	}
-	/* Internet Explorer 10 */
-	textarea:-ms-input-placeholder,
-	input:-ms-input-placeholder {
-		color: black;
-	}
-	textarea:focus:-ms-input-placeholder,
-	input:focus:-ms-input-placeholder {
-		color: rgba(0,0,0,0.3);
-	}
+
 	input:focus,
 	select:focus,
 	textarea:focus,
@@ -79,7 +50,7 @@ body {
 		width: 1010px;
 		padding-bottom: 10px;
 		p {
-			margin-left: 40px; 
+			margin-left: 40px;
 			margin-right: 0;
 			color: black;
 			font-size: 16px;
@@ -114,11 +85,7 @@ body {
 					position: absolute;
 					margin: 1px 0 0 7px;
 				}
-				-webkit-transition: 0.25s;
-				   -moz-transition: 0.25s;
-				    -ms-transition: 0.25s;
-				     -o-transition: 0.25s;
-				        transition: 0.25s;
+				transition: 0.25s;
 			}
 			.info-box {
 				text-align: center;
@@ -157,7 +124,7 @@ body {
 	}
 	#edit-region {
 		position: absolute;
-		top: 0; 
+		top: 0;
 		bottom: 0;
 		width: 900px;
 		#paragraph-title {
@@ -189,11 +156,7 @@ body {
 				color: black;
 				cursor: pointer;
 				border-radius: 5px;
-				-webkit-transition: 0.1s;
-				   -moz-transition: 0.1s;
-				    -ms-transition: 0.1s;
-				     -o-transition: 0.1s;
-				        transition: 0.1s;
+				transition: 0.1s;
 			}
 			&.shown {
 				display: block;
@@ -211,19 +174,11 @@ body {
 			color: white;
 			border-radius: 10px;
 			border-bottom: 3px solid #252525;
-			-webkit-transition: 0.1s;
-			   -moz-transition: 0.1s;
-			    -ms-transition: 0.1s;
-			     -o-transition: 0.1s;
-			        transition: 0.1s;
+			transition: 0.1s;
 			&:hover {
 				background-color: #484848;
 				border-bottom-color: #3B3B3B;
-				-webkit-transition: 0.1s;
-				   -moz-transition: 0.1s;
-				    -ms-transition: 0.1s;
-				     -o-transition: 0.1s;
-				        transition: 0.1s;
+				transition: 0.1s;
 			}
 		}
 		#next.button  {
@@ -331,11 +286,7 @@ body {
 			&:hover {
 				background-color: #484848;
 				border-bottom-color: #3B3B3B;
-				-webkit-transition: 0.1s;
-				   -moz-transition: 0.1s;
-				    -ms-transition: 0.1s;
-				     -o-transition: 0.1s;
-				        transition: 0.1s;
+				transition: 0.1s;
 			}
 			&:nth-child(1) {
 				border-top-right-radius: 0;
@@ -386,7 +337,7 @@ body {
 					/*  Currently, any element with a transform property
 						must be set in 3d space from page load to avoid
 						rendering issues with webkit. */
-					
+
 					-webkit-transform: translateZ(0);
 				}
 				#num-up {
@@ -400,11 +351,7 @@ body {
 				}
 				#num-up:hover,
 				#num-down:hover {
-					-webkit-transform: scale(1.2);
-					   -moz-transform: scale(1.2);
-					    -ms-transform: scale(1.2);
-					     -o-transform: scale(1.2);
-					        transform: scale(1.2);
+					transform: scale(1.2);
 				}
 
 				#num-up:hover {
@@ -430,39 +377,15 @@ body {
 }
 
 .quick-anim {
-	-webkit-transition: 0.2s;
-	   -moz-transition: 0.2s;
-	    -ms-transition: 0.2s;
-	     -o-transition: 0.2s;
-	        transition: 0.2s;
+	transition: 0.2s;
 }
 
 .ease-out-quart {
-	-webkit-transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	   -moz-transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	    -ms-transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	     -o-transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	        transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000);
-
-	-webkit-transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	   -moz-transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	    -ms-transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	     -o-transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000); 
-	        transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+	transition: all 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000);
+	transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
 }
 
 .ease-elastic {
-	-webkit-transition: all 300ms cubic-bezier(0.520, 0, 0.405, 1); /* older webkit */
-	-webkit-transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	   -moz-transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	    -ms-transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	     -o-transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	        transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350);
-
-	-webkit-transition-timing-function: cubic-bezier(0.520, 0, 0.405, 1); /* older webkit */
-	-webkit-transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	   -moz-transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	    -ms-transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	     -o-transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350); 
-	        transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350);
+	transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350);
+	transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350);
 }

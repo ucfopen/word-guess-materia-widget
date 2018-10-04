@@ -8,16 +8,8 @@ body {
 	overflow: hidden;
 	font-family: 'Lucida Grande', arial, serif;
 	background-color: #C5EAED;
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	     -o-user-select: none;
-	        user-select: none;
-	-webkit-transition: 1800ms all;
-	   -moz-transition: 1800ms all;
-	    -ms-transition: 1800ms all;
-	     -o-transition: 1800ms all;
-	        transition: 1800ms all;
+	user-select: none;
+	transition: 1800ms all;
 	h1 {
 		font-family: 'Lato', arial, serif;
 		font-size: 80px;
@@ -39,13 +31,8 @@ body {
 		border-bottom: 1px solid rgba(0,0,0,0.5);
 		&.highlighted {
 			border-bottom: 1px solid #EDDE93;
-			-webkit-box-shadow: 0 2px 0px -2px #EDDE93;
-			        box-shadow: 0 2px 0px -2px #EDDE93;
-			-webkit-transition: 200ms all;
-			   -moz-transition: 200ms all;
-			    -ms-transition: 200ms all;
-			     -o-transition: 200ms all;
-			        transition: 200ms all;
+			box-shadow: 0 2px 0px -2px #EDDE93;
+			transition: 200ms all;
 
 		}
 	}
@@ -64,11 +51,7 @@ body {
 			left: 50%;
 			span {
 				opacity: 0;
-				-webkit-transition: 200ms all;
-				   -moz-transition: 200ms all;
-				    -ms-transition: 200ms all;
-				     -o-transition: 200ms all;
-				        transition: 200ms all;
+				transition: 200ms all;
 			}
 		}
 	}
@@ -96,14 +79,10 @@ body {
 		position: relative;
 		height: 100%;
 		width: 100%;
-		-webkit-perspective: 2000;
-		        perspective: 2000;
+		perspective: 2000;
 		&.blurred {
 			opacity: 0.2;
-			-webkit-filter: blur(2px);
-			   -moz-filter: blur(2px);
-			    -ms-filter: blur(2px);
-			        filter: blur(2px);
+			filter: blur(2px);
 		}
 		h1 {
 			font-size: 35px;
@@ -142,40 +121,17 @@ body {
 			margin-left: -16em;
 			padding: 20px;
 
-			-webkit-transform-style: preserve-3d;
-			   -moz-transform-style: preserve-3d;
-			    -ms-transform-style: preserve-3d;
-			     -o-transform-style: preserve-3d;
-			        transform-style: preserve-3d;
+			transform-style: preserve-3d;
 
-			-webkit-transform-origin: -20% center 0;
-			   -moz-transform-origin: -20% center 0;
-			    -ms-transform-origin: -20% center 0;
-			        transform-origin: -20% center 0;
+			transform-origin: -20% center 0;
 
-			-webkit-backface-visibility: hidden;
-			   -moz-backface-visibility: hidden;
-			    -ms-backface-visibility: hidden;
-			        backface-visibility: hidden;
+			backface-visibility: hidden;
+			transition: transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010);
 
-			-webkit-transition: -webkit-transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1);
-			-webkit-transition: -webkit-transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			   -moz-transition:    -moz-transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			    -ms-transition:     -ms-transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			     -o-transition:      -o-transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			        transition:         transform 700ms cubic-bezier(1.000, 0.005, 0.620, 1.010);
-
-			-webkit-transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1);
-			-webkit-transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			   -moz-transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			    -ms-transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			     -o-transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010); 
-			        transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010);
+			transition-timing-function: cubic-bezier(1.000, 0.005, 0.620, 1.010);
 
 			&.rotated {
-				-webkit-transform: translateZ(-1px) rotateY(-180deg);
-				   -moz-transform: translateZ(-1px) rotateY(-180deg);
-				        transform: translateZ(-1px) rotateY(-180deg);
+				transform: translateZ(-1px) rotateY(-180deg);
 			}
 		}
 		#paper-css-1 {
@@ -222,25 +178,13 @@ body {
 
 /* CSS3 Transitions */
 .quick-anim {
-	-webkit-transition: 200ms all;
-	   -moz-transition: 200ms all;
-	    -ms-transition: 200ms all;
-	     -o-transition: 200ms all;
-	        transition: 200ms all;
+	transition: 200ms all;
 }
 
 .quick-anim2 {
-	-webkit-transition: 100ms all;
-	   -moz-transition: 100ms all;
-	    -ms-transition: 100ms all;
-	     -o-transition: 100ms all;
-	        transition: 100ms all;
+	transition: 100ms all;
 }
 
 .quick-anim3 {
-	-webkit-transition: 300ms all;
-	   -moz-transition: 300ms all;
-	    -ms-transition: 300ms all;
-	     -o-transition: 300ms all;
-	        transition: 300ms all;
+	transition: 300ms all;
 }

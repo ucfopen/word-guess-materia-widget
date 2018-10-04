@@ -19,10 +19,9 @@ Namespace('Wordguess').Engine = do ->
 		inputs = document.getElementsByTagName('input')
 
 		for i in [0..inputs.length-1]
-		# $('input').each (i) ->
 			Materia.Score
 				.submitQuestionForScoring(
-					_qset.questions_answers[i].id, 
+					_qset.questions_answers[i].id,
 					inputs[i].value.replace(regexLT, escapeLT).replace(regexGT, escapeGT))
 
 	# Tell's Materia to redirect to the score screen.
