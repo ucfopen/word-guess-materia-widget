@@ -1,75 +1,26 @@
 const path = require('path')
-const srcPath = path.join(process.cwd(), 'src')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const srcPath = path.join(__dirname, 'src') + path.sep
+const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 
-//override the demo with a copy that assigns ids to each question for dev purposes
-const configOptions = {}
-// if (process.env.npm_lifecycle_script == 'webpack-dev-server') {
-// 	configOptions.demoPath = 'devmateria_demo.json'
-// }
+const entries = widgetWebpack.getDefaultEntries()
 
-let webpackConfig = require('materia-widget-development-kit/webpack-widget').getLegacyWidgetBuildConfig(configOptions)
-
-// process less files
-webpackConfig.module.rules.push({
-	test: /\.less$/i,
-	exclude: /node_modules/,
-	loader: ExtractTextPlugin.extract({
-		use: [
-			'raw-loader',
-			{
-				// postcss-loader is needed to run autoprefixer
-				loader: 'postcss-loader',
-				options: {
-					// add autoprefixer, tell it what to prefix
-					plugins: [require('autoprefixer')({browsers: [
-						'Explorer >= 11',
-						'last 3 Chrome versions',
-						'last 3 ChromeAndroid versions',
-						'last 3 Android versions',
-						'last 3 Firefox versions',
-						'last 3 FirefoxAndroid versions',
-						'last 3 iOS versions',
-						'last 3 Safari versions',
-						'last 3 Edge versions'
-					]})]
-				}
-			},
-			'less-loader'
-		]
-	})
-})
-
-// add entries for our other coffee files
-webpackConfig.entry['creator.js'] = [
-	path.join(srcPath, 'creator-events.coffee'),
-	path.join(srcPath, 'creator-logic.coffee'),
-	path.join(srcPath, 'creator-UI.coffee'),
-	path.join(srcPath, 'creator.coffee')
-]
-// webpackConfig.entry['creator-logic.js'] = [path.join(srcPath, 'creator-logic.coffee')]
-// webpackConfig.entry['creator-UI.js'] = [path.join(srcPath, 'creator-UI.coffee')]
-
-webpackConfig.entry['player.js'] = [
-	path.join(srcPath, 'player-events.coffee'),
-	path.join(srcPath, 'player-logic.coffee'),
-	path.join(srcPath, 'player-UI.coffee'),
-	path.join(srcPath, 'player.coffee')
-]
-// webpackConfig.entry['player-events.js'] = [path.join(srcPath, 'player-events.coffee')]
-// webpackConfig.entry['player-logic.js'] = [path.join(srcPath, 'player-logic.coffee')]
-// webpackConfig.entry['player-UI.js'] = [path.join(srcPath, 'player-UI.coffee')]
-
-// replace creator.css entry with one using our less file
-webpackConfig.entry['creator.css'] = [
-	path.join(srcPath, 'creator.html'),
-	path.join(srcPath, 'creator.less')
+entries['player.js'] = [
+	`${srcPath}player-events.coffee`,
+	`${srcPath}player-logic.coffee`,
+	`${srcPath}player-UI.coffee`,
+	`${srcPath}player.coffee`
 ]
 
-// replace player.css entry with one using our less file
-webpackConfig.entry['player.css'] = [
-	path.join(srcPath, 'player.html'),
-	path.join(srcPath, 'player.less')
+entries['creator.js'] = [
+	`${srcPath}creator-events.coffee`,
+	`${srcPath}creator-logic.coffee`,
+	`${srcPath}creator-UI.coffee`,
+	`${srcPath}creator.coffee`
 ]
 
-module.exports = webpackConfig
+// options for the build
+let options = {
+	entries: entries
+}
+
+module.exports = widgetWebpack.getLegacyWidgetBuildConfig(options)

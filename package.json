@@ -3,19 +3,18 @@
   "materia": {
     "cleanName": "word-guess"
   },
-  "private": true,
   "dependencies": {
-    "less": "^3.8.1",
-    "less-loader": "3.0.0",
-    "materia-widget-development-kit": "1.2.2"
+    "materia-widget-development-kit": "^2.0.0"
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack",
-    "build-prod": "webpack -p"
+    "build": "webpack -p",
+    "build-dev": "webpack",
+    "test": "echo 'Tests no yet implemented'",
+    "test-ci": "echo 'CI tests no yet implemented'"
   },
   "author": "University of Central Florida, Center for Distributed Learning",
   "description": "Word Guess is a madlib-style game in which students fill in missing words within a paragraph and discover how their answers differed from the original text.",
   "main": "webpack.config.js",
-  "license": "UNLICENSED"
+  "license": "AGPL-3.0"
 }

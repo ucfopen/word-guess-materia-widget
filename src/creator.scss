@@ -75,6 +75,7 @@ body {
 		font-size: 20px;
 		.information {
 			.info-bubble {
+				cursor: help;
 				opacity: 0.6;
 				position: absolute;
 				height: 24px;
@@ -168,6 +169,7 @@ body {
 			}
 		}
 		.button {
+			cursor: pointer;
 			font-size: 14px;
 			position: absolute;
 			text-align: center;
@@ -280,7 +282,8 @@ body {
 			margin: 0 -300px 0 0;
 			text-align: center;
 		}
-		nav div {
+		nav .button {
+			cursor: pointer;
 			font-size: 15px;
 			width: 150px;
 			padding: 10px 0;
@@ -333,6 +336,7 @@ body {
 				}
 				#num-up,
 				#num-down {
+					cursor: pointer;
 					position: absolute;
 					display: block;
 					margin-left: -55px;
