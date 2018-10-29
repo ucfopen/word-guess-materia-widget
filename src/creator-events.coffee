@@ -28,7 +28,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 	goBack              = null
 	manuallySelectInfo  = null
 
-	infoBubble = null
+	infoBubbles = null
 	bigInfo    = null
 
 	manuallyHide = off
@@ -63,7 +63,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 		goBack             = document.getElementById('go-back')
 		manuallySelectInfo = document.getElementById('manually-select-info')
 
-		infoBubble = document.getElementsByClassName('info-bubble')
+		infoBubbles = document.getElementsByClassName('info-bubble')
 		bigInfo    = document.getElementsByClassName('big-info')
 
 		return this
@@ -71,16 +71,13 @@ Namespace('Wordguess').CreatorEvents = do ->
 	setEventListeners = (isMobile) ->
 		# Disable right click.
 		document.oncontextmenu = -> false
-		document.addEventListener 'mousedown', (e) -> 
+		document.addEventListener 'mousedown', (e) ->
 			if e.button is 2 then false else true
 
 		# Events for information bubbles.
-		if isMobile
-			# TODO: Add a respectable mobile environment.
-
-		else
-			for i in [0..infoBubble.length-1]
-				$(infoBubble).on 'mouseenter', ->
+		if !isMobile
+			for bubble in infoBubbles
+				bubble.addEventListener 'mouseenter', ->
 					if not animating
 						animating = true
 						setTimeout ->
@@ -88,11 +85,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 						, 300
 						Wordguess.CreatorUI.showInfoBox(this)
 
-				$(infoBubble).on 'mouseleave', ->
+				bubble.addEventListener 'mouseleave', ->
 					Wordguess.CreatorUI.hideInfoBox(this)
 
-			for i in [0..bigInfo.length-1]
-				bigInfo[i].addEventListener 'mouseover', -> 
+			for info in bigInfo
+				info.addEventListener 'mouseover', ->
 					Wordguess.CreatorUI.hideBigInfoBox(this.style)
 
 		# Reset will either clear a paragraph on the first menu,
@@ -119,8 +116,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 					animating = false
 				, 400
 
-				autoHide.className = 'selected'
-				manHide.className = ''
+				autoHide.classList.add 'selected'
+				manHide.classList.remove 'selected'
 
 				if Wordguess.CreatorLogic.noParagraph(paragraphTextarea)
 					document.removeEventListener 'click', removeNoParagraphBox
@@ -169,8 +166,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 					animating = false
 				, 200
 
-				this.className = 'selected'
-				autoHide.className = ''
+				this.classList.add 'selected'
+				autoHide.classList.remove 'selected'
 
 				manuallyHide = on
 
@@ -205,8 +202,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 					animating = false
 				, 200
 
-				this.className = 'selected'
-				manHide.className = ''
+				this.classList.add 'selected'
+				manHide.classList.remove 'selected'
 
 				manuallyHide = off
 				Wordguess.CreatorLogic
@@ -227,7 +224,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.showHiddenWords(hiddenWordsBox)
 					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
-				$('#editable span').off()
+				unsetManualChoiceEventListeners()
 
 		backButton.addEventListener 'click', ->
 			if not animating
@@ -287,31 +284,45 @@ Namespace('Wordguess').CreatorEvents = do ->
 			elementStyle.display = 'none'
 		, 300
 
+
+	onEditableOver = ->
+		this.classList.add('yellow')
+
+	onEditableOut = ->
+		this.classList.remove('yellow')
+
+	onEditableClick = ->
+		if this.classList.contains 'manually-selected'
+			this.classList.remove 'manually-selected'
+			Wordguess.CreatorLogic.removeHiddenWord(this)
+
+		else
+			this.classList.add 'manually-selected'
+			Wordguess.CreatorLogic
+				.pushHiddenWord(this.innerHTML)
+
+		Wordguess.CreatorUI
+			.showHiddenWords(hiddenWordsBox)
+
+		manuallySelectInfo.style.margin = '-407px 0 0 5px'
+		manuallySelectInfo.style.opacity = 0
+		setTimeout ->
+			manuallySelectInfo.style.display = 'none'
+		, 300
+
 	setManualChoiceEventListeners = ->
-		$('#editable span')
-			.hover ->
-				$(this).addClass 'yellow'
-			, ->
-				$(this).removeClass 'yellow'
-			.click ->
-				$this = $(this)
-				if $this.hasClass 'manually-selected'
-					$this.removeClass 'manually-selected'
-					Wordguess.CreatorLogic.removeHiddenWord(this)
+		editables = document.querySelectorAll('#editable span')
+		for edit in editables
+			edit.addEventListener 'mouseover', onEditableOver
+			edit.addEventListener 'mouseout', onEditableOut
+			edit.addEventListener 'click', onEditableClick
 
-				else
-					$this.addClass 'manually-selected'
-					Wordguess.CreatorLogic
-						.pushHiddenWord(this.innerHTML)
-
-				Wordguess.CreatorUI
-					.showHiddenWords(hiddenWordsBox)
-
-				manuallySelectInfo.style.margin = '-407px 0 0 5px'
-				manuallySelectInfo.style.opacity = 0
-				setTimeout ->
-					manuallySelectInfo.style.display = 'none'
-				, 300
+	unsetManualChoiceEventListeners = ->
+		editables = document.querySelectorAll('#editable span')
+		for edit in editables
+			edit.removeEventListener 'mouseover', onEditableOver
+			edit.removeEventListener 'mouseout', onEditableOut
+			edit.removeEventListener 'click', onEditableClick
 
 	# Public methods.
 	cacheElements                 : cacheElements

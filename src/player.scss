@@ -46,9 +46,15 @@ body {
 		text-align: center;
 		height: 100%; width: 100%;
 		left: 0;
+
+		> h1{
+			display: inline-block;
+			position: relative;
+		}
+
 		#guess {
 			position: absolute;
-			left: 50%;
+			right: 7%;
 			span {
 				opacity: 0;
 				transition: 200ms all;
