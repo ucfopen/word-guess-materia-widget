@@ -21,8 +21,12 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	# Return array of hidden words minus the clicked word.
 	removeHiddenWord = (word) ->
-		$word = $(word)
-		hiddenWords = $.grep hiddenWords, (n, i) -> n != ($word.text())
+		text = word.innerHTML
+		for hidden, i in hiddenWords
+			console.log i, hidden
+			if hidden == text
+				hiddenWords.splice i, 1
+				return
 
 	# Tell the user they must enter a paragraph to continue.
 	noParagraph = (paragraph) ->
@@ -52,11 +56,11 @@ Namespace('Wordguess').CreatorLogic = do ->
 		return this
 
 	# Replace tags with their escape characters to prevent XSS attack.
-	replaceTags = (text) -> 
+	replaceTags = (text) ->
 		text = Materia.CreatorCore.escapeScriptTags(text)
 
 	cleanParagraph = (paragraph) ->
-		cleansedParagraph = $.trim(replaceTags(paragraph))
+		cleansedParagraph = replaceTags(paragraph).trim()
 		cleansedParagraph = cleansedParagraph.replace(regexTwoOrMoreSpaces, ' ').split(regexWhitespace)
 		return cleansedParagraph
 
@@ -116,9 +120,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 		if manuallyHide is on
 			manualSkippingIndices = []
 
-			$('#editable span').each (index) ->
-				if $(this).hasClass 'manually-selected'
-					manualSkippingIndices.push index
+			editables = document.querySelectorAll('#editable span')
+			for edit, i in editables
+				if edit.classList.contains 'manually-selected'
+					manualSkippingIndices.push i
 
 			wordsToSkip = -1
 
