@@ -17,8 +17,8 @@ deploy:
   api_key:
     secure: "eg8+OsDHhkmV+L3YPVzTZdGetCp8TDjgIlonqSzsrMCoAh1jIvJQyhpKLaXAPK9k9CxRsLlE3BD+snmTKpDVmw3VCfL2yM5V2kgNRg7NNgksS9Dqzfp0cRPsemVoSCgJwTNh6G6YduP5qcyiMEQz5WJ0rTmi6/2qb5fmwNskg+BS+XPRQCldv8iJ0/FvlsZ1eNrDpKYIN6k+lXCQMoGUWkus4+AMzcPWvfzwqcw+H/bIkE6eGjEUTtrrX6HetjMeCo60x/NRoFA2v4t3z0aBS2I2bce3yO9lUPoefMkMzOQ2lvpEd38eAnzmwdP635Y7SJvkqSt5jjrGY1Ilab09xpSwgcDp7Zm6RtAk1xCP7VtIEDjyzGH0r3H20EkNnwbwLKrxaAYRTQujvsXnZwPy2b92iIWiDLAx6lG2PFvsVN4rncTypwgx1Gd9yfO/fC9Cj2oeX/N64YGcMX6C9FqPCkhyfxxjWsx/neJE8FcXe604HTpwboNRJz3smZkj8Brzt4dF7lDV8Lt7HsA39O0VU3192Ag+KO3yJwPxoxojcDOVfRiIGrEzi+8C0TAc0Vxy7dah9a1UbM3NAdN1S+4ofKCoqxmwgDcAq7MhrnyOO8uDZF/cI/FmHiJe7VsevpzGtbRVRqETSIThmscbZlKIJTUblgtjE3TNyDMxT/CtYBg="
   file:
-    - build/_output/"word-guess-widget.wigt
-    - build/_output/"word-guess-widget-build-info.yml
+    - build/_output/word-guess.wigt
+    - build/_output/word-guess-build-info.yml
   on:
     tags: true
     repo: ucfopen/"word-guess-materia-widget
