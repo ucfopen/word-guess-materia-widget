@@ -21,7 +21,7 @@ deploy:
     - build/_output/word-guess-build-info.yml
   on:
     tags: true
-    repo: ucfopen/"word-guess-materia-widget
+    repo: ucfopen/word-guess-materia-widget
 notifications:
   email: false
   slack:
