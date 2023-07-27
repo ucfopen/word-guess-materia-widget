@@ -17,7 +17,7 @@ Namespace('Wordguess').Engine = do ->
 
 	# Returns user input to Materia to be graded.
 	saveAnswers = ->
-		inputs = document.getElementsByTagName('input')
+		inputs = document.getElementById('game-paragraph').getElementsByTagName('input')
 
 		for i in [0..inputs.length-1]
 			Materia.Score
