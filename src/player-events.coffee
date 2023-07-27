@@ -24,7 +24,7 @@ Namespace('Wordguess').Events = do ->
 
 		return this
 
-	setEventListeners = ->
+	setEventListeners = (phrase, sentences) ->
 		_cacheElements()
 
 		document.oncontextmenu = -> false                  # Disables right click.
@@ -61,6 +61,15 @@ Namespace('Wordguess').Events = do ->
 					.animateExit(paper)
 				gamePage.className = "quick-anim"
 				Wordguess.Engine.endGame()
+
+		gameParagraph.addEventListener 'keyup', (e) ->
+			if e.ctrlKey and e.code == 'KeyW'
+				e.preventDefault()
+				document.getElementById('aria-live').innerHTML = 'Now reading entire phrase: ' + phrase
+			if e.ctrlKey and e.code == 'KeyT'
+				e.preventDefault
+				sentence = sentences[e.target.getAttribute('data-sentence')]
+				document.getElementById('aria-live').innerHTML = 'The sentence for this blank is: ' + sentence
 
 		submit.addEventListener 'mousedown', ->
 			submit.className = 'button quick-anim2 pushed' # Gives a button a 'pushed' animation.

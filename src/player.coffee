@@ -8,11 +8,12 @@ Namespace('Wordguess').Engine = do ->
 	# Initializes the starting game state.
 	start = (instance, qset, version = 1) ->
 		_qset = qset
-		Wordguess.Events
-			.setEventListeners()
-		Wordguess.UI
+		[phrase, sentences] = Wordguess.UI
 			.setStartAnimation(document.getElementById('guess'))
 			.showNewParagraph(_qset)
+
+		Wordguess.Events
+			.setEventListeners(phrase, sentences)
 
 	# Returns user input to Materia to be graded.
 	saveAnswers = ->

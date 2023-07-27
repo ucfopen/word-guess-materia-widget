@@ -14,6 +14,11 @@
 		<script src="player.js"></script>
 	</head>
 	<body>
+		<div id="aria-live"
+			class="clip"
+			aria-live="assertive"
+			tabindex="-1"></div>
+
 		<div id="welcome-page"
 			class="quick-anim3"
 			aria-label="giggety go to hell"
@@ -51,6 +56,7 @@
 		</div> <!-- submission-page -->
 
 		<div id="game-page"
+			role="application"
 			inert="true"
 			class="blurred quick-anim">
 			<form class="paper" id="game-box">
