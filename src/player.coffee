@@ -24,7 +24,7 @@ Namespace('Wordguess').Engine = do ->
 					_qset.questions_answers[i].id,
 					inputs[i].value.replace(regexLT, escapeLT).replace(regexGT, escapeGT))
 
-	# Tell's Materia to redirect to the score screen.
+	# Tells Materia to redirect to the score screen.
 	endGame = ->
 		if saveAnswers()
 			setTimeout ->

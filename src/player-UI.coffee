@@ -60,12 +60,21 @@ Namespace('Wordguess').UI = do ->
 		if qset.title != "Enter a title here."
 			document.getElementById('game-title').innerHTML = qset.title
 
+		ariaText = 'Welcome to Word Guess. Now playing: ' + qset.title +
+			'. You will be presented a paragraph with some words left blank. ' +
+			'Fill in the missing blanks with the words you think belong. ' +
+			'Use the Tab key to move between blank words. ' +
+			'Press any key to begin.'
+		document.getElementById('welcome-page').setAttribute('aria-label', ariaText)
+
+		console.log('uhh',text)
+
 		# Injects the paragraph.
 		document.getElementById('game-paragraph').innerHTML = text.join(' ')
 
 	# Highlights input boxes that haven't been filled.
 	showEmptyInput = () ->
-		inputs = document.getElementsByTagName('input')
+		inputs = document.getElementById('game-paragraph').getElementsByTagName('input')
 
 		for i in [0..inputs.length-1]
 			inputs[i].className = "highlighted quick-anim" unless inputs[i].value != ""

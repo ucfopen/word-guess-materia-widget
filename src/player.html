@@ -14,35 +14,55 @@
 		<script src="player.js"></script>
 	</head>
 	<body>
-		<div class="quick-anim3" id="welcome-page">
-			<h1>{ WORD <span id="underline">________ </span>
-			<span id="guess">
-				<span>G</span><span>U</span><span>E</span><span>S</span><span>S</span>
-			</span>
-			}</h1>
+		<div id="welcome-page"
+			class="quick-anim3"
+			aria-label="giggety go to hell"
+			tabindex="0">
+			<h1 inert="true">
+				{ WORD
+				<span id="underline">______</span>
+				<span id="guess">
+					<span>G</span><span>U</span><span>E</span><span>S</span><span>S</span>
+				</span>
+				}
+			</h1>
 			<h3>Fill in the missing words with what <em>you</em> think belongs.</h3>
-			<h5>Click to Begin</h5>
+			<h5>Click or press any key to Begin</h5>
 		</div> <!-- welcome -->
 
-		<div class="quick-anim3" id="submission-page">
+		<div id="submission-page"
+			inert="true"
+			class="quick-anim3">
 			<div id="finish-warning">
 				<h1>You haven't finished!</h1>
-				<div id="submit-check" class="button quick-anim2">Submit what I have!</div>
-				<div id="go-back" class="button quick-anim2">What am I missing?</div>
+				<div id="submit-check"
+					tabindex="0"
+					aria-label="You have not filled in all of the blanks. Press Enter or Space to submit what you have or use the Tab key to select the button to return to the paragraph and finish filling in the blanks."
+					class="button quick-anim2">
+					Submit what I have!
+				</div>
+				<div id="go-back"
+					tabindex="0"
+					aria-label="Press Enter or Space to return to the paragraph and finish filling in the blanks. Your cursor will be moved automatically to the earliest unfilled blank space."
+					class="button quick-anim2">
+					What am I missing?
+				</div>
 			</div> <!-- finish-warning -->
 		</div> <!-- submission-page -->
 
-		<div class="blurred quick-anim" id="game-page">
-			<div class="paper" id="game-box">
+		<div id="game-page"
+			inert="true"
+			class="blurred quick-anim">
+			<form class="paper" id="game-box">
 				<h1 id="game-title"><!-- title here --></h1>
 				<div id="game-paragraph">
 					<p id="modified-paragraph"><!-- paragraph here --></p>
 				</div>
 				<div id="options">
-					<div id ="submit" class="button quick-anim2">Submit!</div>
-					<div id ="reset" class="button quick-anim2">Reset</div>
+					<input type="submit" id="submit" class="button quick-anim2" value="Submit!"/>
+					<input type="reset"  id="reset" class="button quick-anim2"/>
 				</div> <!-- options -->
-			</div> <!-- game-box -->
+			</form> <!-- game-box -->
 
 			<div class="paper" id="paper-css-1"></div>
 			<div class="paper" id="paper-css-2"></div>

@@ -162,6 +162,7 @@ body {
 	}
 	.button {
 		position: relative;
+		cursor: pointer;
 		top: 0;
 		display: inline;
 		font-size: 18px;
@@ -171,7 +172,8 @@ body {
 		border-bottom: 3px solid #BC7C7C;
 		margin: 10px 10px 10px 0;
 		padding: 5px 15px;
-		&:hover {
+		&:hover,
+		&:focus {
 			color: white;
 			background-color: #943A3A;
 			border-bottom: 3px solid #6F2B2B;
