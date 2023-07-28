@@ -19,6 +19,11 @@ score:
   is_scorable: Yes
   score_module: Wordguess
 meta_data:
+  accessibility_keyboard: Full
+  accessibility_reader: Full
+  accessibility_description: >
+    Includes custom controls that may override standard navigation.
+    These controls are communicated visually and to screenreaders.
   features:
     - Customizable
   supported_data:

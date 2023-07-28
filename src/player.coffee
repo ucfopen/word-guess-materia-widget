@@ -8,12 +8,12 @@ Namespace('Wordguess').Engine = do ->
 	# Initializes the starting game state.
 	start = (instance, qset, version = 1) ->
 		_qset = qset
-		[phrase, sentences] = Wordguess.UI
+		paragraph  = Wordguess.UI
 			.setStartAnimation(document.getElementById('guess'))
 			.showNewParagraph(_qset)
 
 		Wordguess.Events
-			.setEventListeners(phrase, sentences)
+			.setEventListeners(paragraph)
 
 	# Returns user input to Materia to be graded.
 	saveAnswers = ->
@@ -32,7 +32,18 @@ Namespace('Wordguess').Engine = do ->
 				Materia.Engine.end()
 			, 800
 
+	# Builds the full screen reader visible instructions to attach to the welcome screen.
+	helpText = ->
+		return 'Welcome to Word Guess. Now playing: ' + _qset.title +
+			'. You will be presented a paragraph with some words left blank. ' +
+			'Fill in the missing blanks with the words you think belong. ' +
+			'Use the Tab key to move between blank words. ' +
+			'Hold the Control key and press Escape to hear the entire paragraph along with the blanks. ' +
+			'Hold the Control key and press Space to hear these instructions again. '
+			'Click or press any key to begin.'
+
 	# Public methods.
 	start       : start
 	saveAnswers : saveAnswers
 	endGame     : endGame
+	helpText    : helpText

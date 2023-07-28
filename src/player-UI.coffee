@@ -43,11 +43,6 @@ Namespace('Wordguess').UI = do ->
 
 	# Replaces words with input boxes and inserts a paragraph into the DOM.
 	showNewParagraph = (qset) ->
-		# Regular expression to pull sentences out of the full phrase.
-		regexSentence = /[a-zA-Z1-9 </>]+[.!?]?/g
-		# Regular expression to identify blanks within sentences
-		regexBlank = /(<strong>BLANK<\/strong>)/g
-
 		text = qset.paragraph.split(' ')
 		readableText = qset.paragraph.split(' ')
 
@@ -60,8 +55,6 @@ Namespace('Wordguess').UI = do ->
 				fix = Wordguess.Logic.replaceText(text[i])
 				text[i] = fix.text
 				readableText[i] = fix.readable
-				if fix.altered
-					blankIndices[blankCounter++] = i
 
 		# Case 2: Manual hiding.
 		else
@@ -70,43 +63,17 @@ Namespace('Wordguess').UI = do ->
 				fix = Wordguess.Logic.replaceText(text[index])
 				text[index] = fix.text
 				readableText[index] = fix.readable
-				if fix.altered
-					blankIndices[blankCounter++] = index
 
 		# Injects the title.
 		if qset.title != "Enter a title here."
 			document.getElementById('game-title').innerHTML = qset.title
 
-		# Builds the full screen reader visible instructions to attach to the welcome screen.
-		ariaText = 'Welcome to Word Guess. Now playing: ' + qset.title +
-			'. You will be presented a paragraph with some words left blank. ' +
-			'Fill in the missing blanks with the words you think belong. ' +
-			'Use the Tab key to move between blank words. ' +
-			'Hold the Control key and press the W key to hear the entire phrase along with the blanks. ' +
-			'Hold the Control key and press the T key to hear the sentence that contains the blank you currently have focused. '
-			'Press any key to begin.'
-		document.getElementById('welcome-page').setAttribute('aria-label', ariaText)
-
-		# Finalize the screen-readable post-substitution phrase and parse sentences out of it.
-		readableText = readableText.join(' ')
-		sentences = readableText.match(regexSentence)
-		sentences = [] unless sentences
-
-		# Go through the sentences and determine which blanks to associate with which sentences.
-		# Screen reader users will be able to read out the sentence associated with any given blank.
-		blankCounter = 0
-		for s in [0..sentences.length - 1]
-			sentences[s] = sentences[s].trim()
-			blanksInSentence = sentences[s].match(regexBlank)
-			continue unless blanksInSentence
-			for b in blanksInSentence
-				text[blankIndices[blankCounter]] = text[blankIndices[blankCounter]].replace('replace', s)
-				blankCounter++
+		document.getElementById('welcome-page').setAttribute('aria-label', Wordguess.Engine.helpText())
 
 		# Injects the paragraph.
 		document.getElementById('game-paragraph').innerHTML = text.join(' ')
 
-		return [readableText, sentences]
+		return readableText.join(' ')
 
 	# Highlights input boxes that haven't been filled.
 	showEmptyInput = () ->

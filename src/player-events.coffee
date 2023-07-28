@@ -3,6 +3,7 @@ Namespace('Wordguess').Events = do ->
 	gamePage       = null
 	gameBox        = null
 	gameParagraph  = null
+	options        = null
 	submit         = null
 	submitCheck    = null
 	goBack         = null
@@ -15,6 +16,7 @@ Namespace('Wordguess').Events = do ->
 		gamePage       = document.getElementById('game-page')
 		gameBox        = document.getElementById('game-box')
 		gameParagraph  = document.getElementById('game-paragraph')
+		options        = document.getElementById('options')
 		submit         = document.getElementById('submit')
 		submitCheck    = document.getElementById('submit-check')
 		goBack         = document.getElementById('go-back')
@@ -24,7 +26,7 @@ Namespace('Wordguess').Events = do ->
 
 		return this
 
-	setEventListeners = (phrase, sentences) ->
+	setEventListeners = (paragraph) ->
 		_cacheElements()
 
 		document.oncontextmenu = -> false                  # Disables right click.
@@ -46,7 +48,7 @@ Namespace('Wordguess').Events = do ->
 		welcomePage.addEventListener 'click', _hideWelcomePage
 		welcomePage.addEventListener 'keypress', _hideWelcomePage
 
-		gameBox.addEventListener 'submit', (e) ->
+		options.addEventListener 'submit', (e) ->
 			e.preventDefault()
 			submit.blur()
 			if Wordguess.Logic.checkForEmptyInput()
@@ -54,7 +56,7 @@ Namespace('Wordguess').Events = do ->
 				submissionPage.removeAttribute('inert')
 				Wordguess.UI.fadeIn(submissionPage)        # Fades in alert screen.
 				gamePage.className = 'blurred quick-anim'  # 'Re-blur' the game page.
-				submitCheck.focus()
+				goBack.focus()
 			else
 				Wordguess.UI
 					.fadeOut(submissionPage, 300)
@@ -63,13 +65,14 @@ Namespace('Wordguess').Events = do ->
 				Wordguess.Engine.endGame()
 
 		gameParagraph.addEventListener 'keyup', (e) ->
-			if e.ctrlKey and e.code == 'KeyW'
+			if e.ctrlKey and e.code == 'Enter'
 				e.preventDefault()
-				document.getElementById('aria-live').innerHTML = 'Now reading entire phrase: ' + phrase
-			if e.ctrlKey and e.code == 'KeyT'
-				e.preventDefault
-				sentence = sentences[e.target.getAttribute('data-sentence')]
-				document.getElementById('aria-live').innerHTML = 'The sentence for this blank is: ' + sentence
+				e.stopPropagation()
+				document.getElementById('aria-live').innerHTML = 'Now reading entire paragraph: ' + paragraph
+			if e.ctrlKey and e.code == 'Space'
+				e.preventDefault()
+				e.stopPropagation()
+				document.getElementById('aria-live').innerHTML = Wordguess.Engine.helpText()
 
 		submit.addEventListener 'mousedown', ->
 			submit.className = 'button quick-anim2 pushed' # Gives a button a 'pushed' animation.
@@ -78,7 +81,7 @@ Namespace('Wordguess').Events = do ->
 		submit.addEventListener 'mouseout', ->
 			submit.className = "button quick-anim2"
 
-		gameBox.addEventListener 'reset', (e) ->
+		options.addEventListener 'reset', (e) ->
 			e.preventDefault()
 			reset.blur()
 			# Will store every input on page.
@@ -86,6 +89,7 @@ Namespace('Wordguess').Events = do ->
 			for i in [0..inputs.length-1]
 				inputs[i].value = ''                         # Removes inputs' value.
 				inputs[i].className = "quick-anim"           # Removes highlight if highlighted.
+			document.getElementById('aria-live').innerHTML = 'All words have been reset to blank spaces.'
 
 		reset.addEventListener 'mousedown', ->
 			reset.className = "button quick-anim2 pushed"
@@ -108,7 +112,7 @@ Namespace('Wordguess').Events = do ->
 			_endGame()
 		submitCheck.addEventListener 'mouseout', ->
 			submitCheck.className = "button quick-anim2"
-		submitCheck.addEventListener 'keyup', (e) ->
+		submitCheck.addEventListener 'keypress', (e) ->
 			if e.code == 'Space' or e.code == 'Enter' then _endGame()
 
 		_returnToGame = ->
@@ -126,7 +130,7 @@ Namespace('Wordguess').Events = do ->
 			_returnToGame()
 		goBack.addEventListener 'mouseout', ->
 			goBack.className = "button quick-anim2"
-		goBack.addEventListener 'keyup', (e) ->
+		goBack.addEventListener 'keypress', (e) ->
 			if e.code == 'Space' or e.code == 'Enter' then _returnToGame()
 
 		return this
