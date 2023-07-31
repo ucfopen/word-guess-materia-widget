@@ -68,7 +68,21 @@ Namespace('Wordguess').Events = do ->
 			if e.ctrlKey and e.code == 'Enter'
 				e.preventDefault()
 				e.stopPropagation()
-				document.getElementById('aria-live').innerHTML = 'Now reading entire paragraph: ' + paragraph
+
+				live = paragraph.split(';BLANK;')
+				inputs = gameParagraph.getElementsByTagName('input')
+
+				final = []
+				for i in [0..live.length - 1]
+					final.push(live[i])
+					if i < live.length - 1
+						if inputs[i].value != ''
+							final.push inputs[i].value
+						else
+							final.push ';BLANK;'
+				final = final.join('')
+
+				document.getElementById('aria-live').innerHTML = 'Now reading entire paragraph: ' + final
 			if e.ctrlKey and e.code == 'Space'
 				e.preventDefault()
 				e.stopPropagation()

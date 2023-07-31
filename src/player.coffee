@@ -38,7 +38,7 @@ Namespace('Wordguess').Engine = do ->
 			'. You will be presented a paragraph with some words left blank. ' +
 			'Fill in the missing blanks with the words you think belong. ' +
 			'Use the Tab key to move between blank words. ' +
-			'Hold the Control key and press Escape to hear the entire paragraph along with the blanks. ' +
+			'Hold the Control key and press Enter or Return to hear the entire paragraph along with any unfilled blanks. ' +
 			'Hold the Control key and press Space to hear these instructions again. '
 			'Click or press any key to begin.'
 
