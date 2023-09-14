@@ -4,6 +4,10 @@
 		<title>Word Guess Player</title>
 		<meta charset="utf-8" />
 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
 		<!-- STYLESHEETS -->
 		<link rel="stylesheet" type="text/css" href="player.css">
 
@@ -14,34 +18,63 @@
 		<script src="player.js"></script>
 	</head>
 	<body>
-		<div class="quick-anim3" id="welcome-page">
-			<h1>{ WORD <span id="underline">________ </span>
-			<span id="guess">
-				<span>G</span><span>U</span><span>E</span><span>S</span><span>S</span>
-			</span>
-			}</h1>
+		<div id="aria-live"
+			class="clip"
+			aria-live="assertive"
+			tabindex="-1"></div>
+
+		<div id="welcome-page"
+			class="quick-anim3"
+			aria-label=""
+			tabindex="0">
+			<h1 inert="true">
+				<span id="word">{ WORD&nbsp;</span>
+				<span id="underline">______</span>
+				<span id="guess">
+					<span>G</span><span>U</span><span>E</span><span>S</span><span>S</span>
+				</span>
+				}
+			</h1>
 			<h3>Fill in the missing words with what <em>you</em> think belongs.</h3>
-			<h5>Click to Begin</h5>
+			<h5>Click or press any key to begin</h5>
 		</div> <!-- welcome -->
 
-		<div class="quick-anim3" id="submission-page">
+		<div id="submission-page"
+			inert="true"
+			class="quick-anim3">
 			<div id="finish-warning">
 				<h1>You haven't finished!</h1>
-				<div id="submit-check" class="button quick-anim2">Submit what I have!</div>
-				<div id="go-back" class="button quick-anim2">What am I missing?</div>
+				<div id="go-back"
+					tabindex="0"
+					aria-label="Press Enter or Space to return to the paragraph and finish filling in the blanks. Your cursor will be moved automatically to the earliest unfilled blank space."
+					class="button quick-anim2">
+					What am I missing?
+				</div>
+				<div id="submit-check"
+					tabindex="0"
+					aria-label="You have not filled in all of the blanks. Press Enter or Space to submit what you have or use the Tab key to select the button to return to the paragraph and finish filling in the blanks."
+					class="button quick-anim2">
+					Submit what I have!
+				</div>
 			</div> <!-- finish-warning -->
 		</div> <!-- submission-page -->
 
-		<div class="blurred quick-anim" id="game-page">
+		<div id="game-page"
+			role="application"
+			inert="true"
+			class="blurred quick-anim">
 			<div class="paper" id="game-box">
 				<h1 id="game-title"><!-- title here --></h1>
 				<div id="game-paragraph">
 					<p id="modified-paragraph"><!-- paragraph here --></p>
 				</div>
-				<div id="options">
-					<div id ="submit" class="button quick-anim2">Submit!</div>
-					<div id ="reset" class="button quick-anim2">Reset</div>
-				</div> <!-- options -->
+				<form id="options">
+					<input type="submit" id="submit" class="button quick-anim2" value="Submit!"/>
+					<input id="reset"
+						class="button quick-anim2"
+						aria-label="Reset all blanks to start over. Warning: This can not be undone."
+						type="reset"/>
+				</form> <!-- options -->
 			</div> <!-- game-box -->
 
 			<div class="paper" id="paper-css-1"></div>

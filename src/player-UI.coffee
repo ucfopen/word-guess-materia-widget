@@ -44,28 +44,40 @@ Namespace('Wordguess').UI = do ->
 	# Replaces words with input boxes and inserts a paragraph into the DOM.
 	showNewParagraph = (qset) ->
 		text = qset.paragraph.split(' ')
+		readableText = qset.paragraph.split(' ')
+
+		blankCounter = 0
+		blankIndices = {}
 
 		# Case 1: The creator chose to automatically hide words.
 		if qset.wordsToSkip != -1
 			for i in [qset.wordsToSkip..text.length - 1] by (i + 1)
-				text[i] = Wordguess.Logic.replaceText(text[i])
+				fix = Wordguess.Logic.replaceText(text[i])
+				text[i] = fix.text
+				readableText[i] = fix.readable
 
 		# Case 2: Manual hiding.
 		else
 			for i in [0..qset.manualSkippingIndices.length - 1]
 				index = qset.manualSkippingIndices[i]
-				text[index] = Wordguess.Logic.replaceText(text[index])
+				fix = Wordguess.Logic.replaceText(text[index])
+				text[index] = fix.text
+				readableText[index] = fix.readable
 
 		# Injects the title.
 		if qset.title != "Enter a title here."
 			document.getElementById('game-title').innerHTML = qset.title
 
+		document.getElementById('welcome-page').setAttribute('aria-label', Wordguess.Engine.helpText())
+
 		# Injects the paragraph.
 		document.getElementById('game-paragraph').innerHTML = text.join(' ')
 
+		return readableText.join(' ')
+
 	# Highlights input boxes that haven't been filled.
 	showEmptyInput = () ->
-		inputs = document.getElementsByTagName('input')
+		inputs = document.getElementById('game-paragraph').getElementsByTagName('input')
 
 		for i in [0..inputs.length-1]
 			inputs[i].className = "highlighted quick-anim" unless inputs[i].value != ""

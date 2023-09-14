@@ -3,25 +3,37 @@ Namespace('Wordguess').Logic = do ->
 
 	# Sends back an input with leading/trailing punctuation.
 	replaceText = (text) ->
+		inputTemplate = '<input data-sentence="replace" autocomplete="off" class="quick-anim" type="text" value="" />'
+		readableTemplate = ';BLANK;'
+
 		first = text.charAt(0)
 		last = text.charAt(text.length - 1)
 
+		readable = ''
+
 		# Leading and trailing punctuation exist.
 		if first.match(regexNotAlpha) != null && last.match(regexNotAlpha) != null
-			return text = first+'<input class="quick-anim" type="text" value="" />'+last
+			text = first+inputTemplate+last
+			readable = first+readableTemplate+last
 		# Only leading punctuation.
 		else if first.match(regexNotAlpha) != null
-			return text = first+'<input class="quick-anim" type="text" value="" />'
+			text = first+inputTemplate
+			readable = first+readableTemplate
 		# Only trailing punctuation.
 		else if last.match(regexNotAlpha) != null
-			return text = '<input class="quick-anim" type="text" value="" />'+last
+			text = inputTemplate+last
+			readable = readableTemplate+last
 		else
-			return text = '<input class="quick-anim" type="text" value="" />'
+			text = inputTemplate
+			readable = readableTemplate
+		return
+			text: text
+			readable: readable
 
 	# Searches through every input and returns whether or not blanks exist.
 	checkForEmptyInput = ->
 		blanks = 0
-		inputs = document.getElementsByTagName('input')
+		inputs = document.getElementById('game-paragraph').getElementsByTagName('input')
 
 		# Search for empty input boxes.
 		for i in [0..inputs.length-1]
