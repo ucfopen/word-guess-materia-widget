@@ -53,12 +53,19 @@ body {
 			position: relative;
 		}
 
+		#underline {
+			opacity: 0;
+			margin-left: 1em;
+		}
+
 		#guess {
 			position: absolute;
 			right: 7%;
 			span {
+				margin-right: 3px;
 				opacity: 0;
 				transition: 200ms all;
+				text-decoration: underline;
 			}
 		}
 	}
