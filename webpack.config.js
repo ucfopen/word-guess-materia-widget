@@ -2,25 +2,52 @@ const path = require('path')
 const srcPath = path.join(__dirname, 'src') + path.sep
 const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 
-const entries = widgetWebpack.getDefaultEntries()
-
-entries['player.js'] = [
-	`${srcPath}player-events.coffee`,
-	`${srcPath}player-logic.coffee`,
-	`${srcPath}player-UI.coffee`,
-	`${srcPath}player.coffee`
+const rules = widgetWebpack.getDefaultRules()
+const copy = [
+	...widgetWebpack.getDefaultCopyList()
 ]
 
-entries['creator.js'] = [
-	`${srcPath}creator-events.coffee`,
-	`${srcPath}creator-logic.coffee`,
-	`${srcPath}creator-UI.coffee`,
-	`${srcPath}creator.coffee`
-]
-
-// options for the build
-let options = {
-	entries: entries
+const entries = {
+	'player': [
+		path.join(srcPath, 'player.html'),
+		// path.join(srcPath, 'player-events.js'),
+		// path.join(srcPath, 'player-logic.js'),
+		// path.join(srcPath, 'player-UI.js'),
+		// path.join(srcPath, 'player.js'),
+		path.join(srcPath, 'player-events.coffee'),
+		path.join(srcPath, 'player-logic.coffee'),
+		path.join(srcPath, 'player-UI.coffee'),
+		path.join(srcPath, 'player.coffee'),
+		path.join(srcPath, 'player.scss')
+	],
+	'creator': [
+		path.join(srcPath, 'creator.html'),
+		// path.join(srcPath, 'creator-events.js'),
+		// path.join(srcPath, 'creator-logic.js'),
+		// path.join(srcPath, 'creator-UI.js'),
+		// path.join(srcPath, 'creator.js'),
+		path.join(srcPath, 'creator-events.coffee'),
+		path.join(srcPath, 'creator-logic.coffee'),
+		path.join(srcPath, 'creator-UI.coffee'),
+		path.join(srcPath, 'creator.coffee'),
+		path.join(srcPath, 'creator.scss')
+	]
 }
 
-module.exports = widgetWebpack.getLegacyWidgetBuildConfig(options)
+
+const customRules = [
+	rules.loadHTMLAndReplaceMateriaScripts,
+	rules.loadAndPrefixSASS,
+	rules.loaderCompileCoffee,
+	rules.copyImages,
+]
+
+const options = {
+	entries: entries,
+	copyList: copy,
+	moduleRules: customRules
+}
+
+const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig(options)
+
+module.exports = buildConfig
