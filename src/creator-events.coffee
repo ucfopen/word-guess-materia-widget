@@ -35,6 +35,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 	animating    = false
 	menu         = 1
 
+	# Previous state of manual hidden words
+	previousHiddenWords = []
+
 	cacheElements = ->
 		# Divs:
 		editRegion        = document.getElementById('edit-region')
@@ -129,6 +132,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 				else # A paragraph has been entered.
 					menu = 2
 
+					# reset the manually selected words
+					previousHiddenWords = []
+					Wordguess.CreatorLogic
+						.resetHiddenWordsIndices()
+						
 					Wordguess.CreatorLogic
 						.resetWordsToSkip(paragraph, numWordsToSkip)
 						.analyzeParagraph(paragraphTextarea.value)
@@ -180,7 +188,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 				hiddenWordsBox.innerHTML = ''
 
 				Wordguess.CreatorLogic
-					.setUpManualHiding(paragraphTextarea.value, editable)
+					.setUpManualHiding(paragraphTextarea.value, editable, previousHiddenWords)
 				Wordguess.CreatorUI
 					.showHiddenWords(hiddenWordsBox)
 
@@ -204,6 +212,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 				this.classList.add 'selected'
 				manHide.classList.remove 'selected'
+
+				if manuallyHide is on
+
+					previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords()
+
 
 				manuallyHide = off
 				Wordguess.CreatorLogic
@@ -294,12 +307,17 @@ Namespace('Wordguess').CreatorEvents = do ->
 	onEditableClick = ->
 		if this.classList.contains 'manually-selected'
 			this.classList.remove 'manually-selected'
-			Wordguess.CreatorLogic.removeHiddenWord(this)
+
+			index = parseInt(this.getAttribute('data-index'))
+			Wordguess.CreatorLogic.removeHiddenWord(this, index)
 
 		else
+			# store the index of the word in the paragraph
+			index = parseInt(this.getAttribute('data-index'))
+
 			this.classList.add 'manually-selected'
 			Wordguess.CreatorLogic
-				.pushHiddenWord(this.innerHTML)
+				.pushHiddenWord(this.innerHTML, index)
 
 		Wordguess.CreatorUI
 			.showHiddenWords(hiddenWordsBox)
