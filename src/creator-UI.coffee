@@ -75,6 +75,16 @@ Namespace('Wordguess').CreatorUI = do ->
 		editable.className = 'edit-areas ease-out-quart'
 
 		return this
+	
+	showWarningText = (warningText) ->
+		warningText.style.display = 'block'
+
+		return this
+	
+	hideWarningText = (warningText) ->
+		warningText.style.display = 'none'
+
+		return this
 
 	animateInSecondMenu = (editRegion, hiddenWords, options) ->
 		optionsH3  = options.children[0].style
@@ -183,3 +193,5 @@ Namespace('Wordguess').CreatorUI = do ->
 	animateOutSecondMenu : animateOutSecondMenu
 	showHiddenWords      : showHiddenWords
 	highlightWords       : highlightWords
+	hideWarningText	     : hideWarningText
+	showWarningText	     : showWarningText

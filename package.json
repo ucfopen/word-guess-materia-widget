@@ -4,12 +4,12 @@
     "cleanName": "word-guess"
   },
   "dependencies": {
-    "materia-widget-development-kit": "^2.3.0"
+    "materia-widget-development-kit": "^3.0.2"
   },
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack -p",
-    "build-dev": "webpack",
+    "start": "mwdk-start",
+    "build": "mwdk-build-prod",
+    "build-dev": "mwdk-build-dev",
     "test": "echo 'Tests no yet implemented'",
     "test-ci": "echo 'CI tests no yet implemented'"
   },

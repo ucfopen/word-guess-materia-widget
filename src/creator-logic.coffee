@@ -72,15 +72,18 @@ Namespace('Wordguess').CreatorLogic = do ->
 		cleansedParagraph = cleansedParagraph.replace(regexTwoOrMoreSpaces, ' ').split(regexWhitespace)
 		return cleansedParagraph
 
+	getParagraphChunks = (paragraph) ->
+		return paragraph.replace(regexNewlineMultiSpace, ' ').split(regexWhitespace)
+
 	setUpManualHiding = (paragraph, editable, previousHiddenWords) ->
 		manuallyHide = on
 		resetHiddenWords()
 
 
 		# show previous hidden words chosen by the user
-		hiddenWords = previousHiddenWords
+		hiddenWords = previousHiddenWords.slice()
 
-		paragraph = replaceTags(paragraph.replace(regexTwoOrMoreSpaces, ' ')).split(regexWhitespace)
+		paragraph = getParagraphChunks(paragraph)
 
 		for i in [0..paragraph.length - 1]
 
@@ -162,6 +165,21 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		for i in [wordsToSkip..paragraph.length - 1] by (wordsToSkip + 1)
 			hiddenWords.push paragraph[i]
+	
+	initializeHiddenWords = (manualSkippingIndices, paragraph) ->
+		hiddenWordsIndices = new Set(manualSkippingIndices)
+
+		# get the hidden words from the paragraph
+		previousHiddenWords = []
+		spanChunks = getParagraphChunks(paragraph)
+		hiddenWordsIndices.forEach (index) ->
+			previousHiddenWords.push spanChunks[index]
+
+		# save hidden words
+		Wordguess.CreatorEvents.previousHiddenWords = previousHiddenWords.slice()
+		hiddenWords = previousHiddenWords.slice()
+
+		return this
 
 	# Public methods.
 	resetHiddenWords      : resetHiddenWords
@@ -180,3 +198,4 @@ Namespace('Wordguess').CreatorLogic = do ->
 	setUpManualHiding     : setUpManualHiding
 	turnOffManualHiding   : turnOffManualHiding
 	resetHiddenWordsIndices : resetHiddenWordsIndices
+	initializeHiddenWords : initializeHiddenWords

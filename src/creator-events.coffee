@@ -28,6 +28,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 	goBack              = null
 	manuallySelectInfo  = null
 
+	warningText = null
+
 	infoBubbles = null
 	bigInfo    = null
 
@@ -69,7 +71,44 @@ Namespace('Wordguess').CreatorEvents = do ->
 		infoBubbles = document.getElementsByClassName('info-bubble')
 		bigInfo    = document.getElementsByClassName('big-info')
 
+		warningText = document.getElementById('warning-text')
+
 		return this
+	
+	onNextClick = ->
+		# save hidden words going from menu 1 to menu 2
+		previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords()
+
+		if not animating
+			animating = true
+			setTimeout ->
+				animating = false
+			, 400
+
+			autoHide.classList.add 'selected'
+			manHide.classList.remove 'selected'
+
+			if Wordguess.CreatorLogic.noParagraph(paragraphTextarea)
+				document.removeEventListener 'click', removeNoParagraphBox
+				Wordguess.CreatorUI
+					.alertNoParagraph(noParagraph.style)
+				setTimeout ->
+					document.addEventListener 'click', removeNoParagraphBox
+
+			else # A paragraph has been entered.
+				menu = 2
+					
+				Wordguess.CreatorLogic
+					.resetWordsToSkip(paragraph, numWordsToSkip)
+					.analyzeParagraph(paragraphTextarea.value)
+
+				Wordguess.CreatorUI
+					.hideFirstMenu(paragraphTextarea, resetButton)
+					.showSecondMenu(title, backButton, editable)
+					.hideWarningText(warningText)
+					.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
+					.showHiddenWords(hiddenWordsBox)
+					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 	setEventListeners = (isMobile) ->
 		# Disable right click.
@@ -113,40 +152,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.showHiddenWords(hiddenWordsBox)
 
 		nextButton.addEventListener 'click', ->
-			if not animating
-				animating = true
-				setTimeout ->
-					animating = false
-				, 400
+			onNextClick()
 
-				autoHide.classList.add 'selected'
-				manHide.classList.remove 'selected'
-
-				if Wordguess.CreatorLogic.noParagraph(paragraphTextarea)
-					document.removeEventListener 'click', removeNoParagraphBox
-					Wordguess.CreatorUI
-						.alertNoParagraph(noParagraph.style)
-					setTimeout ->
-						document.addEventListener 'click', removeNoParagraphBox
-
-				else # A paragraph has been entered.
-					menu = 2
-
-					# reset the manually selected words
-					previousHiddenWords = []
-					Wordguess.CreatorLogic
-						.resetHiddenWordsIndices()
-						
-					Wordguess.CreatorLogic
-						.resetWordsToSkip(paragraph, numWordsToSkip)
-						.analyzeParagraph(paragraphTextarea.value)
-
-					Wordguess.CreatorUI
-						.hideFirstMenu(paragraphTextarea, resetButton)
-						.showSecondMenu(title, backButton, editable)
-						.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
-						.showHiddenWords(hiddenWordsBox)
-						.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		return this
 
@@ -168,6 +175,10 @@ Namespace('Wordguess').CreatorEvents = do ->
 				.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		manHide.addEventListener 'click', ->
+			console.log 'manHide clicked'
+			console.log 'previousHiddenWords', previousHiddenWords
+			console.log 'hiddenWords', Wordguess.CreatorLogic.getHiddenWords()
+
 			if not animating
 				animating = true
 				setTimeout ->
@@ -204,6 +215,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 				, 1
 
 		autoHide.addEventListener 'click', ->
+
+			# save hidden words when moving from manual to automatic so i can restore them if the user goes back
+			previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords().slice()
+
+
 			if not animating
 				animating = true
 				setTimeout ->
@@ -212,10 +228,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 				this.classList.add 'selected'
 				manHide.classList.remove 'selected'
-
-				if manuallyHide is on
-
-					previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords()
 
 
 				manuallyHide = off
@@ -251,6 +263,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 				Wordguess.CreatorUI
 					.showFirstMenu(paragraphTextarea, resetButton)
 					.hideSecondMenu(title, backButton, editable)
+					.showWarningText(warningText)
 					.animateOutSecondMenu(editRegion.style, hiddenWords.style, options)
 
 				if manuallyHide is off
@@ -347,3 +360,4 @@ Namespace('Wordguess').CreatorEvents = do ->
 	setEventListeners             : setEventListeners
 	setSecondMenuEventListeners   : setSecondMenuEventListeners
 	setManualChoiceEventListeners : setManualChoiceEventListeners
+	onNextClick                   : onNextClick
