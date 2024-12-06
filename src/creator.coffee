@@ -18,12 +18,23 @@ Namespace('Wordguess').Creator = do ->
 		wordsToSkip = qset.wordsToSkip
 		if wordsToSkip is -1 then wordsToSkip = 3
 
+		manualSkippingIndices = qset.manualSkippingIndices
+
 		Wordguess.CreatorEvents
 			.cacheElements()
 			.setEventListeners(isMobile)
 			.setSecondMenuEventListeners()
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
+
+		Wordguess.CreatorLogic
+			.initializeHiddenWords(manualSkippingIndices, qset.paragraph)
+		
+
+		# set screen to state after clicking next
+		Wordguess.CreatorEvents
+			.onNextClick()
+
 
 	onSaveClicked = (mode = 'save') ->
 		titleValue = document.getElementById('title').value
