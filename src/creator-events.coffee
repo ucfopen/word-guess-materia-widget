@@ -175,9 +175,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 				.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		manHide.addEventListener 'click', ->
-			console.log 'manHide clicked'
-			console.log 'previousHiddenWords', previousHiddenWords
-			console.log 'hiddenWords', Wordguess.CreatorLogic.getHiddenWords()
 
 			if not animating
 				animating = true

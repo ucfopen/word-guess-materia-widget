@@ -139,14 +139,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	buildSaveData = (titleValue) ->
 		if manuallyHide is on
-			manualSkippingIndices = []
-
-			editables = document.querySelectorAll('#editable span')
-			for edit, i in editables
-				if edit.classList.contains 'manually-selected'
-					manualSkippingIndices.push i
-
 			wordsToSkip = -1
+
+		manualSkippingIndices = Array.from(hiddenWordsIndices)
+
 
 		paragraph = cleanParagraph(document.getElementById('paragraph').value)
 		questionsAnswers = buildQuestionsAnswers(paragraph)
