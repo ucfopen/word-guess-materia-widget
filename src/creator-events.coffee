@@ -36,6 +36,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 	manuallyHide = off
 	animating    = false
 	menu         = 1
+	mode 	     = 'automatic'
 
 	# Previous state of manual hidden words
 	previousHiddenWords = []
@@ -74,10 +75,15 @@ Namespace('Wordguess').CreatorEvents = do ->
 		warningText = document.getElementById('warning-text')
 
 		return this
+
+	storeHiddenWords = ->
+		# store the hidden words
+		previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords().slice()
+
+		return this
 	
-	onNextClick = ->
-		# save hidden words going from menu 1 to menu 2
-		previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords()
+	onNextClick = (previousMode) ->
+
 
 		if not animating
 			animating = true
@@ -109,6 +115,87 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
 					.showHiddenWords(hiddenWordsBox)
 					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
+			
+				# set mode to previous mode
+				if previousMode is 'manual'
+					Wordguess.CreatorEvents
+						.onManHideClick()
+
+				else if previousMode is 'automatic'
+					Wordguess.CreatorEvents
+						.onAutoHideClick()
+
+
+	onManHideClick = ->
+
+		# if im already on manual mode, dont do anything
+		if mode is 'manual'
+			return
+
+
+		manHide.classList.add 'selected'
+		autoHide.classList.remove 'selected'
+
+		mode = 'manual'
+		manuallyHide = on
+
+		options.children[2].style.display = 'none'
+		options.children[3].style.display = 'block'
+		options.children[3].style.opacity = 1
+
+		resetButton.style.opacity = 1
+
+		hiddenWordsBox.innerHTML = ''
+
+		Wordguess.CreatorLogic
+			.setUpManualHiding(paragraphTextarea.value, editable, previousHiddenWords)
+		Wordguess.CreatorUI
+			.showHiddenWords(hiddenWordsBox)
+
+		document.removeEventListener 'click', removeManHideBox
+		manuallySelectInfo.style.display = 'block'
+		setTimeout ->
+			manuallySelectInfo.style.margin = '-397px 0 0 5px'
+			manuallySelectInfo.style.opacity = 0.8
+		, 5
+
+		setTimeout ->
+			document.addEventListener 'click', removeManHideBox
+		, 1
+	
+	onAutoHideClick = ->
+		# if im already on automatic mode, dont do anything
+		if mode is 'automatic'
+			return
+
+		# save the previous hidden words
+		storeHiddenWords()
+
+		autoHide.classList.add 'selected'
+		manHide.classList.remove 'selected'
+	
+		mode = 'automatic'
+		manuallyHide = off
+		Wordguess.CreatorLogic
+			.turnOffManualHiding()
+
+		if wordsToSkip is -1
+			wordsToSkip = 3
+			numWordsToSkip.innerHTML = wordsToSkip
+
+		options.children[2].style.display = 'block'
+		options.children[3].style.display = 'none'
+
+		resetButton.style.opacity = 0
+
+		Wordguess.CreatorLogic
+			.analyzeParagraph(paragraphTextarea.value)
+		Wordguess.CreatorUI
+			.showHiddenWords(hiddenWordsBox)
+			.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
+
+		unsetManualChoiceEventListeners()
+
 
 	setEventListeners = (isMobile) ->
 		# Disable right click.
@@ -152,7 +239,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.showHiddenWords(hiddenWordsBox)
 
 		nextButton.addEventListener 'click', ->
-			onNextClick()
+			previousMode = mode
+
+			# default mode is automatic
+			mode = 'automatic'
+			onNextClick(previousMode)
 
 
 		return this
@@ -175,79 +266,12 @@ Namespace('Wordguess').CreatorEvents = do ->
 				.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		manHide.addEventListener 'click', ->
-
-			if not animating
-				animating = true
-				setTimeout ->
-					animating = false
-				, 200
-
-				this.classList.add 'selected'
-				autoHide.classList.remove 'selected'
-
-				manuallyHide = on
-
-				options.children[2].style.display = 'none'
-				options.children[3].style.display = 'block'
-				options.children[3].style.opacity = 1
-
-				resetButton.style.opacity = 1
-
-				hiddenWordsBox.innerHTML = ''
-
-				Wordguess.CreatorLogic
-					.setUpManualHiding(paragraphTextarea.value, editable, previousHiddenWords)
-				Wordguess.CreatorUI
-					.showHiddenWords(hiddenWordsBox)
-
-				document.removeEventListener 'click', removeManHideBox
-				manuallySelectInfo.style.display = 'block'
-				setTimeout ->
-					manuallySelectInfo.style.margin = '-397px 0 0 5px'
-					manuallySelectInfo.style.opacity = 0.8
-				, 5
-
-				setTimeout ->
-					document.addEventListener 'click', removeManHideBox
-				, 1
+			onManHideClick()
 
 		autoHide.addEventListener 'click', ->
+			onAutoHideClick()
 
-			# save hidden words when moving from manual to automatic so i can restore them if the user goes back
-			previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords().slice()
-
-
-			if not animating
-				animating = true
-				setTimeout ->
-					animating = false
-				, 200
-
-				this.classList.add 'selected'
-				manHide.classList.remove 'selected'
-
-
-				manuallyHide = off
-				Wordguess.CreatorLogic
-					.turnOffManualHiding()
-
-				if wordsToSkip is -1
-					wordsToSkip = 3
-					numWordsToSkip.innerHTML = wordsToSkip
-
-				options.children[2].style.display = 'block'
-				options.children[3].style.display = 'none'
-
-				resetButton.style.opacity = 0
-
-				Wordguess.CreatorLogic
-					.analyzeParagraph(paragraphTextarea.value)
-				Wordguess.CreatorUI
-					.showHiddenWords(hiddenWordsBox)
-					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
-
-				unsetManualChoiceEventListeners()
-
+		
 		backButton.addEventListener 'click', ->
 			if not animating
 				animating = true
@@ -352,9 +376,16 @@ Namespace('Wordguess').CreatorEvents = do ->
 			edit.removeEventListener 'mouseout', onEditableOut
 			edit.removeEventListener 'click', onEditableClick
 
+	getCurrentMode = ->
+		return mode
+
 	# Public methods.
 	cacheElements                 : cacheElements
 	setEventListeners             : setEventListeners
 	setSecondMenuEventListeners   : setSecondMenuEventListeners
 	setManualChoiceEventListeners : setManualChoiceEventListeners
 	onNextClick                   : onNextClick
+	getCurrentMode				  : getCurrentMode
+	onManHideClick				  : onManHideClick
+	onAutoHideClick				  : onAutoHideClick
+	storeHiddenWords			  : storeHiddenWords

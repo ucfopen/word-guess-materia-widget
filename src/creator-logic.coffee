@@ -147,12 +147,15 @@ Namespace('Wordguess').CreatorLogic = do ->
 		paragraph = cleanParagraph(document.getElementById('paragraph').value)
 		questionsAnswers = buildQuestionsAnswers(paragraph)
 
+		currentMode = Wordguess.CreatorEvents.getCurrentMode()
+
 		return qset =
 			'questions_answers'     : questionsAnswers
 			'title'                 : replaceTags(document.getElementById('title').value)
 			'paragraph'             : replaceTags(paragraph.join ' ')
 			'wordsToSkip'           : wordsToSkip
 			'manualSkippingIndices' : manualSkippingIndices
+			'mode'				    : currentMode
 
 	analyzeParagraph = (paragraph) ->
 		resetHiddenWords()

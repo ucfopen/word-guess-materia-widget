@@ -15,6 +15,8 @@ Namespace('Wordguess').Creator = do ->
 			.setSecondMenuEventListeners()
 
 	initExistingWidget = (title, widget, qset, version, baseUrl) ->
+		previousMode = qset.mode
+
 		wordsToSkip = qset.wordsToSkip
 		if wordsToSkip is -1 then wordsToSkip = 3
 
@@ -30,11 +32,12 @@ Namespace('Wordguess').Creator = do ->
 		Wordguess.CreatorLogic
 			.initializeHiddenWords(manualSkippingIndices, qset.paragraph)
 		
+		Wordguess.CreatorEvents
+			.storeHiddenWords()
 
 		# set screen to state after clicking next
 		Wordguess.CreatorEvents
-			.onNextClick()
-
+			.onNextClick(previousMode)
 
 	onSaveClicked = (mode = 'save') ->
 		titleValue = document.getElementById('title').value
