@@ -3,7 +3,7 @@ Namespace('Wordguess').CreatorUI = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	
+
 	# Regex to match non-letter characters (non-Unicode letters)
 	regexNotAlpha = /[^\p{L}]/u
 
@@ -87,6 +87,7 @@ Namespace('Wordguess').CreatorUI = do ->
 		warningText.style.display = 'none'
 
 		return this
+		
 
 	animateInSecondMenu = (editRegion, hiddenWords, options) ->
 		optionsH3  = options.children[0].style

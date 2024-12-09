@@ -148,6 +148,13 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	buildSaveData = (titleValue) ->
 
+		if manuallyHide is on and hiddenWordsIndices.size is 0
+			saveWarningText = document.getElementById('save-warning-text')
+			console.log saveWarningText
+			Wordguess.CreatorUI.showWarningText(saveWarningText)
+			return
+		
+
 		manualSkippingIndices = Array.from(hiddenWordsIndices)
 
 		previousWordsToSkip = wordsToSkip

@@ -29,6 +29,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 	manuallySelectInfo  = null
 
 	warningText = null
+	saveWarningText = null
 
 	infoBubbles = null
 	bigInfo    = null
@@ -73,6 +74,8 @@ Namespace('Wordguess').CreatorEvents = do ->
 		bigInfo    = document.getElementsByClassName('big-info')
 
 		warningText = document.getElementById('warning-text')
+
+		saveWarningText = document.getElementById('save-warning-text')
 
 		return this
 
@@ -356,7 +359,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 			index = parseInt(this.getAttribute('data-index'))
 			Wordguess.CreatorLogic.removeHiddenWord(this, index)
 
+		# adding a word to the hidden words
 		else
+			Wordguess.CreatorUI
+				.hideWarningText(saveWarningText)
+
 			# store the index of the word in the paragraph
 			index = parseInt(this.getAttribute('data-index'))
 
