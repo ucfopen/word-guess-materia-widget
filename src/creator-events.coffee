@@ -103,10 +103,14 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 			else # A paragraph has been entered.
 				menu = 2
-					
+
 				Wordguess.CreatorLogic
 					.resetWordsToSkip(paragraph, numWordsToSkip)
 					.analyzeParagraph(paragraphTextarea.value)
+
+				previousHiddenWords = Wordguess.CreatorLogic
+					.updateHiddenWords(paragraphTextarea.value, previousHiddenWords)
+
 
 				Wordguess.CreatorUI
 					.hideFirstMenu(paragraphTextarea, resetButton)

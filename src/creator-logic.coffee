@@ -162,8 +162,22 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		paragraph = cleanParagraph(paragraph)
 
+		# prepares hidden words for automatic hiding
 		for i in [wordsToSkip..paragraph.length - 1] by (wordsToSkip + 1)
 			hiddenWords.push paragraph[i]
+	
+	updateHiddenWords = (paragraph, previousHiddenWords) ->
+		paragraph = getParagraphChunks(paragraph)
+
+		# update hidden words at the same indices and remove indices out of bounds
+		newHiddenWords = []
+		hiddenWordsIndices.forEach (index) ->
+			if index < paragraph.length
+				newHiddenWords.push(paragraph[index])
+			else
+				hiddenWordsIndices.delete(index)
+		
+		previousHiddenWords = newHiddenWords
 	
 	initializeHiddenWords = (manualSkippingIndices, paragraph) ->
 		hiddenWordsIndices = new Set(manualSkippingIndices)
@@ -198,3 +212,4 @@ Namespace('Wordguess').CreatorLogic = do ->
 	turnOffManualHiding   : turnOffManualHiding
 	resetHiddenWordsIndices : resetHiddenWordsIndices
 	initializeHiddenWords : initializeHiddenWords
+	updateHiddenWords     : updateHiddenWords
