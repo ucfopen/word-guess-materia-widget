@@ -27,10 +27,12 @@ Namespace('Wordguess').Creator = do ->
 
 	onSaveClicked = (mode = 'save') ->
 		titleValue = document.getElementById('title').value
+		showAllOtherAnswersBoolean = document.getElementById('showAllResponsesInput').checked
 		if titleValue then widgetTitle = Wordguess.CreatorLogic.replaceTags(titleValue)
 		else widgetTitle = 'New Wordguess Widget'
 
-		_qset = Wordguess.CreatorLogic.buildSaveData()
+		_qset = Wordguess.CreatorLogic.buildSaveData(showAllOtherAnswersBoolean)
+		console.log _qset
 		Materia.CreatorCore.save widgetTitle, _qset
 
 	onSaveComplete = (title, widget, qset, version) -> true

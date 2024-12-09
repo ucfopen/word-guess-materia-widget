@@ -489,7 +489,11 @@
         184,
         192,
         195
-      ]
+      ],
+
+      "options": {
+         "showAllOtherAnswersBoolean": true,
+      }
     }
   }
 }
