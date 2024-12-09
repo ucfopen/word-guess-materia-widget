@@ -104,6 +104,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 		manuallyHide = off
 
 	removePunc = (string) ->
+		# null check
+		if string is undefined
+			return ''
+
 		for i in [0..string.length - 1]
 			first = string.charAt(0)
 			last = string.charAt(string.length - 1)
