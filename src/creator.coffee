@@ -25,13 +25,15 @@ Namespace('Wordguess').Creator = do ->
 		else
 			previousMode = 'automatic'
 
-
+		console.log 'words too skip', wordsToSkip
 		# set default value
 		if wordsToSkip == -1
 
-			if previousWordsToSkip != undefined
+			if previousWordsToSkip != undefined and previousWordsToSkip != -1
+				console.log 'previousWordsToSkip', previousWordsToSkip
 				wordsToSkip = previousWordsToSkip
 			else
+				console.log 'wordsToSkip', wordsToSkip
 				wordsToSkip = 3
 
 
