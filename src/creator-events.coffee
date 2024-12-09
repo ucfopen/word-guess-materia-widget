@@ -387,8 +387,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 			edit.removeEventListener 'mouseout', onEditableOut
 			edit.removeEventListener 'click', onEditableClick
 
-	getCurrentMode = ->
-		return mode
 
 	# Public methods.
 	cacheElements                 : cacheElements
@@ -396,7 +394,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 	setSecondMenuEventListeners   : setSecondMenuEventListeners
 	setManualChoiceEventListeners : setManualChoiceEventListeners
 	onNextClick                   : onNextClick
-	getCurrentMode				  : getCurrentMode
 	onManHideClick				  : onManHideClick
 	onAutoHideClick				  : onAutoHideClick
 	storeHiddenWords			  : storeHiddenWords

@@ -3,7 +3,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	
+
 	# Regex to match non-letter characters (non-Unicode letters)
 	regexNotAlpha = /[^\p{L}]/u
 
@@ -123,8 +123,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	buildQuestionsAnswers = (paragraph) ->
 		questionsAnswers = []
-		console.log 'manualSkippingIndices', manualSkippingIndices
-		console.log 'my paragraph', paragraph
 		j = 1
 
 		if manuallyHide is on
@@ -145,7 +143,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 					'answers'   :['text': removePunc(paragraph[i])]
 				j++
 
-		console.log "my questionsAnswers", questionsAnswers
 
 		return questionsAnswers
 
@@ -153,11 +150,15 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		manualSkippingIndices = Array.from(hiddenWordsIndices)
 
+		previousWordsToSkip = wordsToSkip
+
+		if manuallyHide is on
+			wordsToSkip = -1
+
 
 		paragraph = cleanParagraph(document.getElementById('paragraph').value)
 		questionsAnswers = buildQuestionsAnswers(paragraph)
 
-		currentMode = Wordguess.CreatorEvents.getCurrentMode()
 
 		return qset =
 			'questions_answers'     : questionsAnswers
@@ -165,7 +166,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 			'paragraph'             : replaceTags(paragraph.join ' ')
 			'wordsToSkip'           : wordsToSkip
 			'manualSkippingIndices' : manualSkippingIndices
-			'mode'				    : currentMode
+			'previousWordsToSkip'   : previousWordsToSkip
 
 	analyzeParagraph = (paragraph) ->
 		resetHiddenWords()

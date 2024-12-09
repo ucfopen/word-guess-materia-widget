@@ -15,9 +15,25 @@ Namespace('Wordguess').Creator = do ->
 			.setSecondMenuEventListeners()
 
 	initExistingWidget = (title, widget, qset, version, baseUrl) ->
-		previousMode = qset.mode
-
 		wordsToSkip = qset.wordsToSkip
+		previousWordsToSkip = qset.previousWordsToSkip
+		previousMode = undefined
+
+		# figure out if what was the previously selected mode
+		if wordsToSkip == -1
+			previousMode = 'manual'
+		else
+			previousMode = 'automatic'
+
+
+		# set default value
+		if wordsToSkip == -1
+
+			if previousWordsToSkip != undefined
+				wordsToSkip = previousWordsToSkip
+			else
+				wordsToSkip = 3
+
 
 		manualSkippingIndices = qset.manualSkippingIndices
 
