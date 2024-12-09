@@ -11,6 +11,9 @@ Namespace('Wordguess').CreatorLogic = do ->
 	manualSkippingIndices = []
 	manuallyHide = off
 
+	setWordsToSkip = (num) ->
+		wordsToSkip = num
+
 	resetHiddenWords = ->
 		hiddenWords = []
 
@@ -138,8 +141,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 		return questionsAnswers
 
 	buildSaveData = (titleValue) ->
-		if manuallyHide is on
-			wordsToSkip = -1
 
 		manualSkippingIndices = Array.from(hiddenWordsIndices)
 
@@ -170,8 +171,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 		paragraph = getParagraphChunks(paragraph)
 
 		# update hidden words at the same indices and remove indices out of bounds
+		sortedHiddenWordsIndices = Array.from(hiddenWordsIndices).sort()
+
 		newHiddenWords = []
-		hiddenWordsIndices.forEach (index) ->
+		sortedHiddenWordsIndices.forEach (index) ->
 			if index < paragraph.length
 				newHiddenWords.push(paragraph[index])
 			else
@@ -213,3 +216,4 @@ Namespace('Wordguess').CreatorLogic = do ->
 	resetHiddenWordsIndices : resetHiddenWordsIndices
 	initializeHiddenWords : initializeHiddenWords
 	updateHiddenWords     : updateHiddenWords
+	setWordsToSkip        : setWordsToSkip

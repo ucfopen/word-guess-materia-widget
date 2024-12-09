@@ -18,7 +18,6 @@ Namespace('Wordguess').Creator = do ->
 		previousMode = qset.mode
 
 		wordsToSkip = qset.wordsToSkip
-		if wordsToSkip is -1 then wordsToSkip = 3
 
 		manualSkippingIndices = qset.manualSkippingIndices
 
@@ -26,6 +25,7 @@ Namespace('Wordguess').Creator = do ->
 			.cacheElements()
 			.setEventListeners(isMobile)
 			.setSecondMenuEventListeners()
+			.initializeWordsToSkip(wordsToSkip)
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
 

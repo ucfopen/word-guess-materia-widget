@@ -81,6 +81,13 @@ Namespace('Wordguess').CreatorEvents = do ->
 		previousHiddenWords = Wordguess.CreatorLogic.getHiddenWords().slice()
 
 		return this
+
+	initializeWordsToSkip = (wordsToSkip) ->
+		numWordsToSkip.innerHTML = wordsToSkip
+		Wordguess.CreatorLogic
+			.setWordsToSkip(wordsToSkip)
+
+		return this
 	
 	onNextClick = (previousMode) ->
 
@@ -183,9 +190,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 		Wordguess.CreatorLogic
 			.turnOffManualHiding()
 
-		if wordsToSkip is -1
-			wordsToSkip = 3
-			numWordsToSkip.innerHTML = wordsToSkip
+		# if wordsToSkip is -1
+		# 	wordsToSkip = 3
+		# 	numWordsToSkip.innerHTML = wordsToSkip
 
 		options.children[2].style.display = 'block'
 		options.children[3].style.display = 'none'
@@ -393,3 +400,4 @@ Namespace('Wordguess').CreatorEvents = do ->
 	onManHideClick				  : onManHideClick
 	onAutoHideClick				  : onAutoHideClick
 	storeHiddenWords			  : storeHiddenWords
+	initializeWordsToSkip		  : initializeWordsToSkip
