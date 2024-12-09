@@ -15,6 +15,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 	nextButton     = null
 	backButton     = null
 	resetButton    = null
+	showAllResponsesDiv = null
+	showAllResponsesInput = null
+	showAllResponsesLabel = null
 	autoHide       = null
 	manHide        = null
 
@@ -49,6 +52,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 		numDown        = document.getElementById('num-down')
 		numWordsToSkip = document.getElementById('num-words-to-skip')
 		nextButton     = document.getElementById('next')
+		showAllResponsesDiv = document.getElementById('showAllResponsesDiv')
+		showAllResponsesInput = document.getElementById('showAllResponsesInput')
+		showAllResponsesLabel = document.getElementById('showAllResponsesLabel')
 		backButton     = document.getElementById('back')
 		resetButton    = document.getElementById('reset')
 		autoHide       = document.getElementById('auto-hide')
@@ -109,6 +115,16 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.setUpManualHiding(paragraph, editable)
 					.showHiddenWords(hiddenWordsBox)
 
+
+		showAllResponsesDiv.addEventListener 'click', ->
+			showAllResponsesInput.checked = !showAllResponsesInput.checked
+			if showAllResponsesInput.checked
+				showAllResponsesDiv.style.backgroundColor = 'lightgreen'
+				showAllResponsesLabel.textContent = 'Show All Responses:Off'
+			else
+				showAllResponsesDiv.style.backgroundColor = '#2E2E2E'
+				showAllResponsesLabel.textContent = 'Show All Responses:On'
+
 		nextButton.addEventListener 'click', ->
 			if not animating
 				animating = true
@@ -141,6 +157,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 						.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		return this
+
 
 	setSecondMenuEventListeners = ->
 		numUp.addEventListener 'click', ->
