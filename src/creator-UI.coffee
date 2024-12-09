@@ -3,7 +3,9 @@ Namespace('Wordguess').CreatorUI = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	regexNotAlpha          = /[^A-z]/
+	
+	# Regex to match non-letter characters (non-Unicode letters)
+	regexNotAlpha = /[^\p{L}]/u
 
 	setInputValues = (widgetTitle, paragraph, wordsToSkip) ->
 		document.getElementById('title').value = widgetTitle

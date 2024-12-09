@@ -3,7 +3,9 @@ Namespace('Wordguess').CreatorLogic = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	regexNotAlpha          = /[^A-z]/
+	
+	# Regex to match non-letter characters (non-Unicode letters)
+	regexNotAlpha = /[^\p{L}]/u
 
 	wordsToSkip = 3
 	hiddenWords = []
@@ -121,7 +123,8 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	buildQuestionsAnswers = (paragraph) ->
 		questionsAnswers = []
-
+		console.log 'manualSkippingIndices', manualSkippingIndices
+		console.log 'my paragraph', paragraph
 		j = 1
 
 		if manuallyHide is on
@@ -141,6 +144,8 @@ Namespace('Wordguess').CreatorLogic = do ->
 					'questions' :['text': 'word #' + j],
 					'answers'   :['text': removePunc(paragraph[i])]
 				j++
+
+		console.log "my questionsAnswers", questionsAnswers
 
 		return questionsAnswers
 
