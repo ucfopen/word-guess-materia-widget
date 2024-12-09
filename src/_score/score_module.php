@@ -11,6 +11,7 @@ class Score_Modules_Wordguess extends Score_Module
 	}
 
 	// use the question feedback area to display all guesses for the given word by all students
+	// hide the option when qset.data.options.showAllOtherAnswersBoolean is false(default)
 	protected function get_feedback($log, $answers)
 	{
 		$all_words = [];
@@ -36,6 +37,10 @@ class Score_Modules_Wordguess extends Score_Module
 		}
 
 		$final_words = [];
+		if(!$this->qset->data->options->showAllOtherAnswersBoolean)
+		{
+			return ''
+		}
 		if ( ! empty($all_words))
 		{
 			//second loop - condense words and their counts into single strings
