@@ -152,7 +152,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 			saveWarningText = document.getElementById('save-warning-text')
 			console.log saveWarningText
 			Wordguess.CreatorUI.showWarningText(saveWarningText)
-			return
+			return null
 		
 
 		manualSkippingIndices = Array.from(hiddenWordsIndices)
