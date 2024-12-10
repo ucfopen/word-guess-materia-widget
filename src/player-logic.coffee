@@ -1,5 +1,7 @@
 Namespace('Wordguess').Logic = do ->
-	regexNotAlpha = /[^A-z]/
+
+	# Regex to match non-letter characters (non-Unicode letters)
+	regexNotAlpha = /[^\p{L}]/u
 
 	# Sends back an input with leading/trailing punctuation.
 	replaceText = (text) ->

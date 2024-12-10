@@ -16,14 +16,43 @@ Namespace('Wordguess').Creator = do ->
 
 	initExistingWidget = (title, widget, qset, version, baseUrl) ->
 		wordsToSkip = qset.wordsToSkip
-		if wordsToSkip is -1 then wordsToSkip = 3
+		previousWordsToSkip = if qset.previousWordsToSkip? then qset.previousWordsToSkip else -1
+
+		# figure out if what was the previously selected mode
+		previousMode = undefined
+		if wordsToSkip == -1
+			previousMode = 'manual'
+		else
+			previousMode = 'automatic'
+
+		# set default value
+		if wordsToSkip == -1
+
+			if previousWordsToSkip != -1
+				wordsToSkip = previousWordsToSkip
+			else
+				wordsToSkip = 3
+
+
+		manualSkippingIndices = qset.manualSkippingIndices
 
 		Wordguess.CreatorEvents
 			.cacheElements()
 			.setEventListeners(isMobile)
 			.setSecondMenuEventListeners()
+			.initializeWordsToSkip(wordsToSkip)
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
+
+		Wordguess.CreatorLogic
+			.initializeHiddenWords(manualSkippingIndices, qset.paragraph)
+		
+		Wordguess.CreatorEvents
+			.storeHiddenWords()
+
+		# set screen to state after clicking next
+		Wordguess.CreatorEvents
+			.onNextClick(previousMode)
 
 	onSaveClicked = (mode = 'save') ->
 		titleValue = document.getElementById('title').value
@@ -31,6 +60,9 @@ Namespace('Wordguess').Creator = do ->
 		else widgetTitle = 'New Wordguess Widget'
 
 		_qset = Wordguess.CreatorLogic.buildSaveData()
+
+		if _qset == null then return false
+
 		Materia.CreatorCore.save widgetTitle, _qset
 
 	onSaveComplete = (title, widget, qset, version) -> true

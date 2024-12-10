@@ -3,7 +3,9 @@ Namespace('Wordguess').CreatorUI = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	regexNotAlpha          = /[^A-z]/
+
+	# Regex to match non-letter characters (non-Unicode letters)
+	regexNotAlpha = /[^\p{L}]/u
 
 	setInputValues = (widgetTitle, paragraph, wordsToSkip) ->
 		document.getElementById('title').value = widgetTitle
@@ -75,6 +77,17 @@ Namespace('Wordguess').CreatorUI = do ->
 		editable.className = 'edit-areas ease-out-quart'
 
 		return this
+	
+	showWarningText = (warningText) ->
+		warningText.style.display = 'block'
+
+		return this
+	
+	hideWarningText = (warningText) ->
+		warningText.style.display = 'none'
+
+		return this
+		
 
 	animateInSecondMenu = (editRegion, hiddenWords, options) ->
 		optionsH3  = options.children[0].style
@@ -183,3 +196,5 @@ Namespace('Wordguess').CreatorUI = do ->
 	animateOutSecondMenu : animateOutSecondMenu
 	showHiddenWords      : showHiddenWords
 	highlightWords       : highlightWords
+	hideWarningText	     : hideWarningText
+	showWarningText	     : showWarningText
