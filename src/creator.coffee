@@ -16,24 +16,21 @@ Namespace('Wordguess').Creator = do ->
 
 	initExistingWidget = (title, widget, qset, version, baseUrl) ->
 		wordsToSkip = qset.wordsToSkip
-		previousWordsToSkip = qset.previousWordsToSkip
-		previousMode = undefined
+		previousWordsToSkip = if qset.previousWordsToSkip? then qset.previousWordsToSkip else -1
 
 		# figure out if what was the previously selected mode
+		previousMode = undefined
 		if wordsToSkip == -1
 			previousMode = 'manual'
 		else
 			previousMode = 'automatic'
 
-		console.log 'words too skip', wordsToSkip
 		# set default value
 		if wordsToSkip == -1
 
-			if previousWordsToSkip != undefined and previousWordsToSkip != -1
-				console.log 'previousWordsToSkip', previousWordsToSkip
+			if previousWordsToSkip != -1
 				wordsToSkip = previousWordsToSkip
 			else
-				console.log 'wordsToSkip', wordsToSkip
 				wordsToSkip = 3
 
 
@@ -65,7 +62,7 @@ Namespace('Wordguess').Creator = do ->
 		_qset = Wordguess.CreatorLogic.buildSaveData()
 
 		if _qset == null then return false
-		
+
 		Materia.CreatorCore.save widgetTitle, _qset
 
 	onSaveComplete = (title, widget, qset, version) -> true

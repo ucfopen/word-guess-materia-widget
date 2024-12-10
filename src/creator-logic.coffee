@@ -36,7 +36,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		text = word.innerHTML
 		for hidden, i in hiddenWords
-			console.log i, hidden
 			if hidden == text
 				hiddenWords.splice i, 1
 				return

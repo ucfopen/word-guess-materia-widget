@@ -193,10 +193,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 		Wordguess.CreatorLogic
 			.turnOffManualHiding()
 
-		# if wordsToSkip is -1
-		# 	wordsToSkip = 3
-		# 	numWordsToSkip.innerHTML = wordsToSkip
-
 		options.children[2].style.display = 'block'
 		options.children[3].style.display = 'none'
 
