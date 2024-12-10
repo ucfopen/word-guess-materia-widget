@@ -76,9 +76,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 		cleansedParagraph = cleansedParagraph.replace(regexTwoOrMoreSpaces, ' ').split(regexWhitespace)
 		return cleansedParagraph
 
-	getParagraphChunks = (paragraph) ->
-		return paragraph.replace(regexNewlineMultiSpace, ' ').split(regexWhitespace)
-
 	setUpManualHiding = (paragraph, editable, previousHiddenWords) ->
 		manuallyHide = on
 		resetHiddenWords()
@@ -87,7 +84,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 		# show previous hidden words chosen by the user
 		hiddenWords = previousHiddenWords.slice()
 
-		paragraph = getParagraphChunks(paragraph)
+		paragraph = cleanParagraph(paragraph)
 
 		for i in [0..paragraph.length - 1]
 
@@ -183,7 +180,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 			hiddenWords.push paragraph[i]
 	
 	updateHiddenWords = (paragraph, previousHiddenWords) ->
-		paragraph = getParagraphChunks(paragraph)
+		paragraph = cleanParagraph(paragraph)
 
 		# update hidden words at the same indices and remove indices out of bounds
 		sortedHiddenWordsIndices = Array.from(hiddenWordsIndices).sort()
@@ -202,7 +199,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		# get the hidden words from the paragraph
 		previousHiddenWords = []
-		spanChunks = getParagraphChunks(paragraph)
+		spanChunks = cleanParagraph(paragraph)
 		hiddenWordsIndices.forEach (index) ->
 			previousHiddenWords.push spanChunks[index]
 
