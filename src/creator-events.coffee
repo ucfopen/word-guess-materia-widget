@@ -119,11 +119,11 @@ Namespace('Wordguess').CreatorEvents = do ->
 		showAllResponsesDiv.addEventListener 'click', ->
 			showAllResponsesInput.checked = !showAllResponsesInput.checked
 			if showAllResponsesInput.checked
-				showAllResponsesDiv.style.backgroundColor = 'lightgreen'
-				showAllResponsesLabel.textContent = 'Show All Responses:Off'
+				showAllResponsesDiv.style.backgroundColor = '#004f00' #dark green
+				showAllResponsesLabel.textContent = 'Show All Responses:On'
 			else
 				showAllResponsesDiv.style.backgroundColor = '#2E2E2E'
-				showAllResponsesLabel.textContent = 'Show All Responses:On'
+				showAllResponsesLabel.textContent = 'Show All Responses:Off'
 
 		nextButton.addEventListener 'click', ->
 			if not animating

@@ -37,9 +37,12 @@ class Score_Modules_Wordguess extends Score_Module
 		}
 
 		$final_words = [];
-		if(!$this->qset->data->options->showAllOtherAnswersBoolean)
+		//If options boolean is false it will show no feedback for other recorded responses
+		if ( isset($this->inst->qset->data['options']) &&
+				isset($this->inst->qset->data['options']['showAllOtherAnswersBoolean']) &&
+				$this->inst->qset->data['options']['showAllOtherAnswersBoolean'] === false)
 		{
-			return ''
+			return;
 		}
 		if ( ! empty($all_words))
 		{

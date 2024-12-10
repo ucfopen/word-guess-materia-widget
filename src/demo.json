@@ -492,7 +492,7 @@
       ],
 
       "options": {
-         "showAllOtherAnswersBoolean": true,
+         "showAllOtherAnswersBoolean": true
       }
     }
   }

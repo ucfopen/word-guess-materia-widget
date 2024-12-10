@@ -32,7 +32,6 @@ Namespace('Wordguess').Creator = do ->
 		else widgetTitle = 'New Wordguess Widget'
 
 		_qset = Wordguess.CreatorLogic.buildSaveData(showAllOtherAnswersBoolean)
-		console.log _qset
 		Materia.CreatorCore.save widgetTitle, _qset
 
 	onSaveComplete = (title, widget, qset, version) -> true
