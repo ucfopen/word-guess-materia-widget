@@ -191,9 +191,17 @@ body {
 				clip: rect(0 0 0 0);
 				position: absolute;
 			}
+			#enableScoringInput {
+				width: 1px;
+				clip: rect(0 0 0 0);
+				position: absolute;
+			}
 		}
 		#showAllResponsesDiv.button {
-			width:152px;
+			width:fit-content;
+		}
+		#enableScoringDiv.button {
+			width:fit-content;
 		}
 		#next.button  {
 
