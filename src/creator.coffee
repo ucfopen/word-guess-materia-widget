@@ -24,11 +24,39 @@ Namespace('Wordguess').Creator = do ->
 			.setSecondMenuEventListeners()
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
+		# update the toggle buttons based on qset
+		if qset.options
+			showAllResponsesInput = document.getElementById('showAllResponsesInput')
+			showAllResponsesDiv = document.getElementById('showAllResponsesDiv')
+			showAllResponsesLabel = document.getElementById('showAllResponsesLabel')
+			enableScoringInput = document.getElementById('enableScoringInput')
+			enableScoringDiv = document.getElementById('enableScoringDiv')
+			enableScoringLabel = document.getElementById('enableScoringLabel')
+
+			if qset?.options?.showAllOtherAnswersBoolean
+
+				showAllResponsesInput.checked = true
+				showAllResponsesDiv.style.backgroundColor = '#004f00' # dark green
+				showAllResponsesLabel.textContent = 'Show All Responses:On'
+			else
+				showAllResponsesInput.checked = false
+				showAllResponsesDiv.style.backgroundColor = '#2E2E2E' # default grey
+				showAllResponsesLabel.textContent = 'Show All Responses:Off'
+
+			if qset?.options?.enableScoring
+
+				enableScoringInput.checked = true
+				enableScoringDiv.style.backgroundColor = '#004f00' # dark green
+				enableScoringLabel.textContent = 'Enable Scoring:On'
+			else
+				enableScoringInput.checked = false
+				enableScoringDiv.style.backgroundColor = '#2E2E2E' # default grey
+				enableScoringLabel.textContent = 'Enable Scoring:Off'
 
 	onSaveClicked = (mode = 'save') ->
-		titleValue = document.getElementById('title').value
-		showAllOtherAnswersBoolean = document.getElementById('showAllResponsesInput').checked
 		enableScoringBoolean = document.getElementById('enableScoringInput').checked
+		showAllOtherAnswersBoolean = document.getElementById('showAllResponsesInput').checked
+		titleValue = document.getElementById('title').value
 		if titleValue then widgetTitle = Wordguess.CreatorLogic.replaceTags(titleValue)
 		else widgetTitle = 'New Wordguess Widget'
 

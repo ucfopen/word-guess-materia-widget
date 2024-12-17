@@ -34,7 +34,8 @@ class Score_Modules_Wordguess extends Score_Module
 			trace("Question ID $questionID not found.");
 			return 0;
 		}
-		return 0;
+		// else the option for scoring is not enabled, give them a 100
+		return 100;
 	}
 
 	// use the question feedback area to display all guesses for the given word by all students
