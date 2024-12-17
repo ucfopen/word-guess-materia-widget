@@ -6,7 +6,34 @@ class Score_Modules_Wordguess extends Score_Module
 {
 	public function check_answer($log)
 	{
-		if (isset($this->questions[$log->item_id])) return 100;
+		// if (isset($this->questions[$log->item_id])) return 100;
+		if (isset($this->inst->qset->data['options']) &&
+				isset($this->inst->qset->data['options']['enableScoring']) )
+		{
+			// trace("A LOG IS: " . print_r($log, true));
+			$questionID = $log->item_id;
+			$playerAnswer = trim($log->text);
+
+			if (isset($this->questions[$questionID]))
+			{
+				$correctAnswers = $this->questions[$questionID]->answers;
+				foreach ($correctAnswers as $answer)
+				{
+					// check if the answer and user input match
+					// should work regardless of capitalization or spaces
+					if (strcasecmp($playerAnswer, trim($answer['text'])) === 0)
+					{
+						// trace("Correct answer for question $questionID: $playerAnswer");
+						return 100; // return full score
+					}
+				}
+				trace("Incorrect answer for question $questionID: $playerAnswer");
+				return 0;
+			}
+
+			trace("Question ID $questionID not found.");
+			return 0;
+		}
 		return 0;
 	}
 

@@ -116,7 +116,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		return questionsAnswers
 
-	buildSaveData = ( showAllOtherAnswersBoolean) ->
+	buildSaveData = ( showAllOtherAnswersBoolean, enableScoring) ->
 		if manuallyHide is on
 			manualSkippingIndices = []
 
@@ -138,6 +138,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 			'manualSkippingIndices' : manualSkippingIndices
 			'options':
 				'showAllOtherAnswersBoolean'   : showAllOtherAnswersBoolean
+				'enableScoring'                : enableScoring
 
 	analyzeParagraph = (paragraph) ->
 		resetHiddenWords()
