@@ -46,7 +46,7 @@ Namespace('Wordguess').CreatorUI = do ->
 
 	showFirstMenu = (paragraphTextarea, resetButton) ->
 		paragraphTextarea.style.display = 'block'
-		resetButton.style.display = 'block'
+		resetButton.style.display = 'inline-block'
 		resetButton.style.opacity = 1
 
 		return this

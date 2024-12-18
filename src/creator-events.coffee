@@ -15,6 +15,12 @@ Namespace('Wordguess').CreatorEvents = do ->
 	nextButton     = null
 	backButton     = null
 	resetButton    = null
+	showAllResponsesDiv = null
+	showAllResponsesInput = null
+	showAllResponsesLabel = null
+	enableScoringDiv = null
+	enableScoringInput = null
+	enableScoringLabel = null
 	autoHide       = null
 	manHide        = null
 
@@ -49,6 +55,12 @@ Namespace('Wordguess').CreatorEvents = do ->
 		numDown        = document.getElementById('num-down')
 		numWordsToSkip = document.getElementById('num-words-to-skip')
 		nextButton     = document.getElementById('next')
+		showAllResponsesDiv = document.getElementById('showAllResponsesDiv')
+		showAllResponsesInput = document.getElementById('showAllResponsesInput')
+		showAllResponsesLabel = document.getElementById('showAllResponsesLabel')
+		enableScoringDiv = document.getElementById('enableScoringDiv')
+		enableScoringInput = document.getElementById('enableScoringInput')
+		enableScoringLabel = document.getElementById('enableScoringLabel')
 		backButton     = document.getElementById('back')
 		resetButton    = document.getElementById('reset')
 		autoHide       = document.getElementById('auto-hide')
@@ -109,6 +121,26 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.setUpManualHiding(paragraph, editable)
 					.showHiddenWords(hiddenWordsBox)
 
+
+		showAllResponsesDiv.addEventListener 'click', ->
+			showAllResponsesInput.checked = !showAllResponsesInput.checked
+			if showAllResponsesInput.checked
+				showAllResponsesDiv.style.backgroundColor = '#004f00' #dark green
+				showAllResponsesLabel.textContent = 'Show All Responses:On'
+			else
+				showAllResponsesDiv.style.backgroundColor = '#2E2E2E' #default grey color
+				showAllResponsesLabel.textContent = 'Show All Responses:Off'
+
+
+		enableScoringDiv.addEventListener 'click', ->
+			enableScoringInput.checked = !enableScoringInput.checked
+			if enableScoringInput.checked
+				enableScoringDiv.style.backgroundColor = '#004f00' #dark green
+				enableScoringLabel.textContent = 'Enable Scoring:On'
+			else
+				enableScoringDiv.style.backgroundColor = '#2E2E2E' #default grey color
+				enableScoringLabel.textContent = 'Enable Scoring:Off'
+
 		nextButton.addEventListener 'click', ->
 			if not animating
 				animating = true
@@ -141,6 +173,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 						.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
 
 		return this
+
 
 	setSecondMenuEventListeners = ->
 		numUp.addEventListener 'click', ->
