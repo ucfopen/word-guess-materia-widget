@@ -3,27 +3,39 @@ Namespace('Wordguess').CreatorLogic = do ->
 	regexWhitespace        = /\n|\s/
 	regexTwoOrMoreSpaces   = /\s{2,}/g
 	regexNewlineMultiSpace = /\s{2,}|\n/g
-	regexNotAlpha          = /[^A-z]/
+
+	# Regex to match non-letter characters (non-Unicode letters)
+	regexNotAlpha = /[^\p{L}]/u
 
 	wordsToSkip = 3
 	hiddenWords = []
+	hiddenWordsIndices = new Set()
 	manualSkippingIndices = []
 	manuallyHide = off
+
+	setWordsToSkip = (num) ->
+		wordsToSkip = num
 
 	resetHiddenWords = ->
 		hiddenWords = []
 
+	resetHiddenWordsIndices = ->
+		hiddenWordsIndices = new Set()
+
 	getHiddenWords = ->
 		return hiddenWords
 
-	pushHiddenWord = (word) ->
+	pushHiddenWord = (word, index) ->
 		hiddenWords.push(word)
+		hiddenWordsIndices.add(index)
 
 	# Return array of hidden words minus the clicked word.
-	removeHiddenWord = (word) ->
+	removeHiddenWord = (word, index) ->
+
+		hiddenWordsIndices.delete(index)
+
 		text = word.innerHTML
 		for hidden, i in hiddenWords
-			console.log i, hidden
 			if hidden == text
 				hiddenWords.splice i, 1
 				return
@@ -64,13 +76,23 @@ Namespace('Wordguess').CreatorLogic = do ->
 		cleansedParagraph = cleansedParagraph.replace(regexTwoOrMoreSpaces, ' ').split(regexWhitespace)
 		return cleansedParagraph
 
-	setUpManualHiding = (paragraph, editable) ->
+	setUpManualHiding = (paragraph, editable, previousHiddenWords) ->
 		manuallyHide = on
 		resetHiddenWords()
-		paragraph = replaceTags(paragraph.replace(regexTwoOrMoreSpaces, ' ')).split(regexWhitespace)
+
+
+		# show previous hidden words chosen by the user
+		hiddenWords = previousHiddenWords.slice()
+
+		paragraph = cleanParagraph(paragraph)
 
 		for i in [0..paragraph.length - 1]
-			paragraph[i] = "<span>#{paragraph[i]}</span>"
+
+			# make span yellow by default if it was previously chosen
+			if hiddenWordsIndices.has(i)
+				paragraph[i] = "<span data-index='#{i}' class='manually-selected'>#{paragraph[i]}</span>"
+			else
+				paragraph[i] = "<span data-index='#{i}'>#{paragraph[i]}</span>"
 
 		editable.innerHTML = paragraph.join ' '
 
@@ -80,6 +102,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 		manuallyHide = off
 
 	removePunc = (string) ->
+		# null check
+		if string is undefined
+			return ''
+
 		for i in [0..string.length - 1]
 			first = string.charAt(0)
 			last = string.charAt(string.length - 1)
@@ -93,7 +119,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 	buildQuestionsAnswers = (paragraph) ->
 		questionsAnswers = []
-
 		j = 1
 
 		if manuallyHide is on
@@ -114,21 +139,28 @@ Namespace('Wordguess').CreatorLogic = do ->
 					'answers'   :['text': removePunc(paragraph[i])]
 				j++
 
+
 		return questionsAnswers
 
 	buildSaveData = ( showAllOtherAnswersBoolean, enableScoring) ->
+
+		if manuallyHide is on and hiddenWordsIndices.size is 0
+			saveWarningText = document.getElementById('save-warning-text')
+			Wordguess.CreatorUI.showWarningText(saveWarningText)
+			return null
+
+
+		manualSkippingIndices = Array.from(hiddenWordsIndices)
+
+		previousWordsToSkip = wordsToSkip
+
 		if manuallyHide is on
-			manualSkippingIndices = []
-
-			editables = document.querySelectorAll('#editable span')
-			for edit, i in editables
-				if edit.classList.contains 'manually-selected'
-					manualSkippingIndices.push i
-
 			wordsToSkip = -1
+
 
 		paragraph = cleanParagraph(document.getElementById('paragraph').value)
 		questionsAnswers = buildQuestionsAnswers(paragraph)
+
 
 		return qset =
 			'questions_answers'     : questionsAnswers
@@ -139,14 +171,46 @@ Namespace('Wordguess').CreatorLogic = do ->
 			'options':
 				'showAllOtherAnswersBoolean'   : showAllOtherAnswersBoolean
 				'enableScoring'                : enableScoring
+			'previousWordsToSkip'   : previousWordsToSkip
 
 	analyzeParagraph = (paragraph) ->
 		resetHiddenWords()
 
 		paragraph = cleanParagraph(paragraph)
 
+		# prepares hidden words for automatic hiding
 		for i in [wordsToSkip..paragraph.length - 1] by (wordsToSkip + 1)
 			hiddenWords.push paragraph[i]
+
+	updateHiddenWords = (paragraph, previousHiddenWords) ->
+		paragraph = cleanParagraph(paragraph)
+
+		# update hidden words at the same indices and remove indices out of bounds
+		sortedHiddenWordsIndices = Array.from(hiddenWordsIndices).sort()
+
+		newHiddenWords = []
+		sortedHiddenWordsIndices.forEach (index) ->
+			if index < paragraph.length
+				newHiddenWords.push(paragraph[index])
+			else
+				hiddenWordsIndices.delete(index)
+
+		previousHiddenWords = newHiddenWords
+
+	initializeHiddenWords = (manualSkippingIndices, paragraph) ->
+		hiddenWordsIndices = new Set(manualSkippingIndices)
+
+		# get the hidden words from the paragraph
+		previousHiddenWords = []
+		spanChunks = cleanParagraph(paragraph)
+		hiddenWordsIndices.forEach (index) ->
+			previousHiddenWords.push spanChunks[index]
+
+		# save hidden words
+		Wordguess.CreatorEvents.previousHiddenWords = previousHiddenWords.slice()
+		hiddenWords = previousHiddenWords.slice()
+
+		return this
 
 	# Public methods.
 	resetHiddenWords      : resetHiddenWords
@@ -164,3 +228,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 	analyzeParagraph      : analyzeParagraph
 	setUpManualHiding     : setUpManualHiding
 	turnOffManualHiding   : turnOffManualHiding
+	resetHiddenWordsIndices : resetHiddenWordsIndices
+	initializeHiddenWords : initializeHiddenWords
+	updateHiddenWords     : updateHiddenWords
+	setWordsToSkip        : setWordsToSkip

@@ -16,12 +16,31 @@ Namespace('Wordguess').Creator = do ->
 
 	initExistingWidget = (title, widget, qset, version, baseUrl) ->
 		wordsToSkip = qset.wordsToSkip
-		if wordsToSkip is -1 then wordsToSkip = 3
+		previousWordsToSkip = if qset.previousWordsToSkip? then qset.previousWordsToSkip else -1
+
+		# figure out if what was the previously selected mode
+		previousMode = undefined
+		if wordsToSkip == -1
+			previousMode = 'manual'
+		else
+			previousMode = 'automatic'
+
+		# set default value
+		if wordsToSkip == -1
+
+			if previousWordsToSkip != -1
+				wordsToSkip = previousWordsToSkip
+			else
+				wordsToSkip = 3
+
+
+		manualSkippingIndices = qset.manualSkippingIndices
 
 		Wordguess.CreatorEvents
 			.cacheElements()
 			.setEventListeners(isMobile)
 			.setSecondMenuEventListeners()
+			.initializeWordsToSkip(wordsToSkip)
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
 		# update the toggle buttons based on qset
@@ -53,6 +72,16 @@ Namespace('Wordguess').Creator = do ->
 				enableScoringDiv.style.backgroundColor = '#2E2E2E' # default grey
 				enableScoringLabel.textContent = 'Enable Scoring:Off'
 
+		Wordguess.CreatorLogic
+			.initializeHiddenWords(manualSkippingIndices, qset.paragraph)
+
+		Wordguess.CreatorEvents
+			.storeHiddenWords()
+
+		# set screen to state after clicking next
+		Wordguess.CreatorEvents
+			.onNextClick(previousMode)
+
 	onSaveClicked = (mode = 'save') ->
 		enableScoringBoolean = document.getElementById('enableScoringInput').checked
 		showAllOtherAnswersBoolean = document.getElementById('showAllResponsesInput').checked
@@ -61,7 +90,9 @@ Namespace('Wordguess').Creator = do ->
 		else widgetTitle = 'New Wordguess Widget'
 
 		_qset = Wordguess.CreatorLogic.buildSaveData(showAllOtherAnswersBoolean, enableScoringBoolean)
-		console.log _qset
+
+		if _qset == null then return false
+
 		Materia.CreatorCore.save widgetTitle, _qset
 
 	onSaveComplete = (title, widget, qset, version) -> true
