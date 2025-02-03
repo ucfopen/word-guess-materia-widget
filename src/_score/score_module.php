@@ -43,6 +43,7 @@ class Score_Modules_Wordguess extends Score_Module
 	protected function get_feedback($log, $answers)
 	{
 		$all_words = [];
+		$final_words = [];
 		if (strlen($log->text)) $all_words[$log->text] = 1;
 
 		$where = [
@@ -64,7 +65,6 @@ class Score_Modules_Wordguess extends Score_Module
 			}
 		}
 
-		$final_words = [];
 		//If options boolean is false it will show no feedback for other recorded responses
 		if ( isset($this->inst->qset->data['options']) &&
 				isset($this->inst->qset->data['options']['showAllOtherAnswersBoolean']) &&

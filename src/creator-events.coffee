@@ -248,7 +248,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 		resetButton.addEventListener 'click', ->
 			if menu is 1
 				paragraphTextarea.value  = ''
-				console.log('reset paragraph', paragraphTextarea.value)
 				editable.innerHTML       = ''
 				hiddenWordsBox.innerHTML = ''
 				Wordguess.CreatorLogic
