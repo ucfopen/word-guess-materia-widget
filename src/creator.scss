@@ -473,7 +473,22 @@ body {
 			border-width: 5px;
 			border-style: solid;
 			border-color: black transparent transparent transparent;
+            white-space: wrap;
 		}
+
+        .tooltip-text-title{
+            width: 200px;
+            white-space: normal;
+            word-wrap: break-word;
+            left:562%;
+            top: -1rem;
+            height: 68px;
+            transform: translateX(-50%);
+        }
+        .tooltip-text-title::after{
+            left: 50%;
+            transform: rotate(90deg) translateY(1250%) translateX(-500%) scale(200%);
+        }
 	}
 }
 
