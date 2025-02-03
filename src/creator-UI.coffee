@@ -46,18 +46,22 @@ Namespace('Wordguess').CreatorUI = do ->
 			noParagraph.opacity = 0.6
 		, 10
 
-	showFirstMenu = (paragraphTextarea, resetButton) ->
+	showFirstMenu = (paragraphTextarea, resetButton, nextButton) ->
 		paragraphTextarea.style.display = 'block'
 		resetButton.style.display = 'inline-block'
 		resetButton.style.opacity = 1
+		nextButton.style.opacity = 1
+		nextButton.style.display = 'inline-block'
 
 		return this
 
-	hideFirstMenu = (paragraphTextarea, resetButton) ->
+	hideFirstMenu = (paragraphTextarea, resetButton, nextButton) ->
 		paragraphTextarea.style.display = 'none'
 		resetButton.style.opacity = 0
+		nextButton.style.opacity = 0
 		setTimeout ->
 			resetButton.style.display = 'none'
+			nextButton.style.display = 'none'
 		, 300
 
 		return this
@@ -77,17 +81,17 @@ Namespace('Wordguess').CreatorUI = do ->
 		editable.className = 'edit-areas ease-out-quart'
 
 		return this
-	
+
 	showWarningText = (warningText) ->
 		warningText.style.display = 'block'
 
 		return this
-	
+
 	hideWarningText = (warningText) ->
 		warningText.style.display = 'none'
 
 		return this
-		
+
 
 	animateInSecondMenu = (editRegion, hiddenWords, options) ->
 		optionsH3  = options.children[0].style

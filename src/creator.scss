@@ -178,6 +178,25 @@ body {
 				width: 93%;
 			}
 		}
+		.next {
+
+			cursor: pointer;
+			font-size: 14px;
+			// position: absolute;
+			text-align: center;
+			width: 70px;
+			display: inline;
+			padding: 10px;
+			background-color: rgb(164, 217, 67);
+			color: black;
+			border-radius: 10px;
+			transition: 0.1s;
+			&:hover {
+				background-color: rgb(164, 217, 67, 0.8);
+				border-bottom-color: #3B3B3B;
+				transition: 0.1s;
+			}
+		}
 		.button {
 			cursor: pointer;
 			font-size: 14px;
