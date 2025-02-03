@@ -7,8 +7,7 @@ class Score_Modules_Wordguess extends Score_Module
 	public function check_answer($log)
 	{
 		// if (isset($this->questions[$log->item_id])) return 100;
-		if (isset($this->inst->qset->data['options']) &&
-				isset($this->inst->qset->data['options']['enableScoring']) )
+		if (isset($this->inst->qset->data['options']) && isset($this->inst->qset->data['options']['enableScoring']) )
 		{
 			// trace("A LOG IS: " . print_r($log, true));
 			$questionID = $log->item_id;
