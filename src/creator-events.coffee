@@ -280,11 +280,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 		nextButton.addEventListener 'click', ->
 			previousMode = mode
-
 			# default mode is automatic
 			mode = 'automatic'
 			onNextClick(previousMode)
-
 
 		return this
 
