@@ -10,10 +10,6 @@ const copy = [
 const entries = {
 	'player': [
 		path.join(srcPath, 'player.html'),
-		// path.join(srcPath, 'player-events.js'),
-		// path.join(srcPath, 'player-logic.js'),
-		// path.join(srcPath, 'player-UI.js'),
-		// path.join(srcPath, 'player.js'),
 		path.join(srcPath, 'player-events.coffee'),
 		path.join(srcPath, 'player-logic.coffee'),
 		path.join(srcPath, 'player-UI.coffee'),
@@ -22,15 +18,16 @@ const entries = {
 	],
 	'creator': [
 		path.join(srcPath, 'creator.html'),
-		// path.join(srcPath, 'creator-events.js'),
-		// path.join(srcPath, 'creator-logic.js'),
-		// path.join(srcPath, 'creator-UI.js'),
-		// path.join(srcPath, 'creator.js'),
 		path.join(srcPath, 'creator-events.coffee'),
 		path.join(srcPath, 'creator-logic.coffee'),
 		path.join(srcPath, 'creator-UI.coffee'),
 		path.join(srcPath, 'creator.coffee'),
 		path.join(srcPath, 'creator.scss')
+	],
+	'scoreScreen': [
+		path.join(srcPath, 'scoreScreen.html'),
+		path.join(srcPath, 'scoreScreen.js'),
+		path.join(srcPath, 'scoreScreen.scss'),
 	]
 }
 

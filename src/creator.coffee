@@ -43,10 +43,25 @@ Namespace('Wordguess').Creator = do ->
 			.initializeWordsToSkip(wordsToSkip)
 		Wordguess.CreatorUI
 			.setInputValues(title, qset.paragraph, wordsToSkip)
+		# update the toggle buttons based on qset
+		if qset.options
+			enableScoringInput = document.getElementById('enableScoringInput')
+			enableScoringDiv = document.getElementById('enableScoringDiv')
+			enableScoringLabel = document.getElementById('enableScoringLabel')
+
+			if qset?.options?.enableScoring
+
+				enableScoringInput.checked = true
+				enableScoringDiv.style.backgroundColor = '#004f00' # dark green
+				enableScoringLabel.textContent = 'Enable Scoring:On'
+			else
+				enableScoringInput.checked = false
+				enableScoringDiv.style.backgroundColor = '#2E2E2E' # default grey
+				enableScoringLabel.textContent = 'Enable Scoring:Off'
 
 		Wordguess.CreatorLogic
 			.initializeHiddenWords(manualSkippingIndices, qset.paragraph)
-		
+
 		Wordguess.CreatorEvents
 			.storeHiddenWords()
 
@@ -55,11 +70,12 @@ Namespace('Wordguess').Creator = do ->
 			.onNextClick(previousMode)
 
 	onSaveClicked = (mode = 'save') ->
+		enableScoringBoolean = document.getElementById('enableScoringInput').checked
 		titleValue = document.getElementById('title').value
 		if titleValue then widgetTitle = Wordguess.CreatorLogic.replaceTags(titleValue)
 		else widgetTitle = 'New Wordguess Widget'
 
-		_qset = Wordguess.CreatorLogic.buildSaveData()
+		_qset = Wordguess.CreatorLogic.buildSaveData(enableScoringBoolean)
 
 		if _qset == null then return false
 

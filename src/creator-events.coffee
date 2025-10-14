@@ -15,6 +15,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 	nextButton     = null
 	backButton     = null
 	resetButton    = null
+	enableScoringDiv = null
+	enableScoringInput = null
+	enableScoringLabel = null
 	autoHide       = null
 	manHide        = null
 
@@ -56,6 +59,9 @@ Namespace('Wordguess').CreatorEvents = do ->
 		numDown        = document.getElementById('num-down')
 		numWordsToSkip = document.getElementById('num-words-to-skip')
 		nextButton     = document.getElementById('next')
+		enableScoringDiv = document.getElementById('enableScoringDiv')
+		enableScoringInput = document.getElementById('enableScoringInput')
+		enableScoringLabel = document.getElementById('enableScoringLabel')
 		backButton     = document.getElementById('back')
 		resetButton    = document.getElementById('reset')
 		autoHide       = document.getElementById('auto-hide')
@@ -91,7 +97,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 			.setWordsToSkip(wordsToSkip)
 
 		return this
-	
+
 	onNextClick = (previousMode) ->
 
 
@@ -123,13 +129,13 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 
 				Wordguess.CreatorUI
-					.hideFirstMenu(paragraphTextarea, resetButton)
+					.hideFirstMenu(paragraphTextarea, resetButton, nextButton)
 					.showSecondMenu(title, backButton, editable)
 					.hideWarningText(warningText)
 					.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
 					.showHiddenWords(hiddenWordsBox)
 					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable)
-			
+
 				# set mode to previous mode
 				if previousMode is 'manual'
 					Wordguess.CreatorEvents
@@ -176,7 +182,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 		setTimeout ->
 			document.addEventListener 'click', removeManHideBox
 		, 1
-	
+
 	onAutoHideClick = ->
 		# if im already on automatic mode, dont do anything
 		if mode is 'automatic'
@@ -187,7 +193,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 
 		autoHide.classList.add 'selected'
 		manHide.classList.remove 'selected'
-	
+
 		mode = 'automatic'
 		manuallyHide = off
 		Wordguess.CreatorLogic
@@ -235,8 +241,6 @@ Namespace('Wordguess').CreatorEvents = do ->
 		# or clear the manually selected words on the second.
 		resetButton.addEventListener 'click', ->
 			if menu is 1
-				title.value              = ''
-				paragraphTitle.value     = ''
 				paragraphTextarea.value  = ''
 				editable.innerHTML       = ''
 				hiddenWordsBox.innerHTML = ''
@@ -248,15 +252,24 @@ Namespace('Wordguess').CreatorEvents = do ->
 					.setUpManualHiding(paragraph, editable)
 					.showHiddenWords(hiddenWordsBox)
 
+
+		enableScoringDiv.addEventListener 'click', ->
+			enableScoringInput.checked = !enableScoringInput.checked
+			if enableScoringInput.checked
+				enableScoringDiv.style.backgroundColor = '#004f00' #dark green
+				enableScoringLabel.textContent = 'Enable Scoring:On'
+			else
+				enableScoringDiv.style.backgroundColor = '#2E2E2E' #default grey color
+				enableScoringLabel.textContent = 'Enable Scoring:Off'
+
 		nextButton.addEventListener 'click', ->
 			previousMode = mode
-
 			# default mode is automatic
 			mode = 'automatic'
 			onNextClick(previousMode)
 
-
 		return this
+
 
 	setSecondMenuEventListeners = ->
 		numUp.addEventListener 'click', ->
@@ -281,7 +294,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 		autoHide.addEventListener 'click', ->
 			onAutoHideClick()
 
-		
+
 		backButton.addEventListener 'click', ->
 			if not animating
 				animating = true
@@ -292,7 +305,7 @@ Namespace('Wordguess').CreatorEvents = do ->
 				menu = 1
 
 				Wordguess.CreatorUI
-					.showFirstMenu(paragraphTextarea, resetButton)
+					.showFirstMenu(paragraphTextarea, resetButton, nextButton)
 					.hideSecondMenu(title, backButton, editable)
 					.showWarningText(warningText)
 					.animateOutSecondMenu(editRegion.style, hiddenWords.style, options)

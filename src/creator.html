@@ -1,129 +1,156 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Word Guess Creator</title>
-		<meta charset="utf-8" />
 
-		<!-- STYLESHEETS -->
-		<link rel="stylesheet" type="text/css" href="creator.css">
+    <head>
+        <title>Word Guess Creator</title>
+        <meta charset="utf-8" />
 
-		<!-- REQUIRED MATERIA JAVASCRIPT -->
-		<script src="materia.creatorcore.js"></script>
+        <!-- STYLESHEETS -->
+        <link rel="stylesheet" type="text/css" href="creator.css">
 
-		<!-- MAIN CREATOR SCRIPT -->
-		<script src="creator.js"></script>
-	</head>
-	<body>
-		<section class="outer">
+        <!-- REQUIRED MATERIA JAVASCRIPT -->
+        <script src="materia.creatorcore.js"></script>
 
-			<section id="edit-region" class="inner ease-out-quart">
+        <!-- MAIN CREATOR SCRIPT -->
+        <script src="creator.js"></script>
+    </head>
 
-				<!-- title area -->
-				<div class="information">
-					<div id="title-info-box" class="info-box ease-elastic">
-						<center>
-							<p>This will appear directly above your finished paragraph. Leave this area unchanged if you don't want to display a title.</p>
-						</center>
-						<div class="arrow-down"></div>
-					</div>
-					<span class="info-bubble"><p>?</p></span>
-					<!-- <img class="info-bubble" id="title-info"> -->
-					<p>Title:</p>
-				</div>
+    <body>
+        <section class="outer">
 
-				<input class="ease-out-quart" id="title" type="text" placeholder="New WordGuess Widget"/>
+            <section id="edit-region" class="inner ease-out-quart">
 
-				<!-- paragraph area -->
-				<div class="information">
-					<div id="paragraph-info-box" class="info-box ease-elastic">
-						<center>
-							<p>This will be displayed with removed words for students to fill in. To alter how words are removed, change the options.</p>
-						</center>
-						<div class="arrow-down"></div>
-					</div>
-					<span class="info-bubble"><p>?</p></span>
-					<p>Paragraph:</p>
-				</div>
+                <!-- title area -->
+                <div class="information">
 
-				<div class="edit-areas ease-out-quart" id="editable">Enter a paragraph here.</div>
+                    <div class="tooltip tooltip-title">
+                        ?
+                        <span class="tooltiptext tooltip-text-title"> This will appear directly above your finished
+                            paragraph. Leave this area unchanged if you don't want to display a title.</span>
+                    </div>
+                    <!-- <img class="info-bubble" id="title-info"> -->
+                    <p>Title:</p>
+                </div>
 
-				<div id="no-paragraph" class="big-info ease-elastic">
-					<div class="arrow-up"></div>
-					Enter a paragraph first.
-				</div>
-				<div id="manually-select-info" class="big-info ease-elastic">
-					Click on words to hide here.
-					<div class="arrow-down"></div>
-				</div>
+                <input class="ease-out-quart" id="title" type="text" placeholder="New WordGuess Widget" />
 
-				<textarea class="edit-areas ease-out-quart" id="paragraph" placeholder="Enter a paragraph here."></textarea>
+                <!-- paragraph area -->
+                <div class="information">
+                    <div id="paragraph-info-box" class="info-box ease-elastic">
+                        <center>
+                            <p>This will be displayed with removed words for students to fill in. To alter how words are
+                                removed, change the options.</p>
+                        </center>
+                        <div class="arrow-down"></div>
+                    </div>
+                    <span class="info-bubble">
+                        <p>?</p>
+                    </span>
+                    <p>Paragraph:</p>
+                </div>
+
+                <div class="edit-areas ease-out-quart" id="editable">Enter a paragraph here.</div>
+
+                <div id="no-paragraph" class="big-info ease-elastic">
+                    <div class="arrow-up"></div>
+                    Enter a paragraph first.
+                </div>
+                <div id="manually-select-info" class="big-info ease-elastic">
+                    Click on words to hide here.
+                    <div class="arrow-down"></div>
+                </div>
+
+                <textarea class="edit-areas ease-out-quart" id="paragraph"
+                    placeholder="Enter a paragraph here."></textarea>
 
 
-				<div id="go-back" class="big-info ease-elastic">
-					Go back to edit your paragraph.
-					<div class="arrow-down"></div>
-				</div>
+                <div id="go-back" class="big-info ease-elastic">
+                    Go back to edit your paragraph.
+                    <div class="arrow-down"></div>
+                </div>
 
+                <span class="warning-text" id="warning-text">Note: Please finish typing your paragraph before choosing
+                    what words to hide. Adding or removing words may affect the list of hidden words
+                </span>
 
-				<span class = "warning-text" id = "warning-text">Note: Please finish typing your paragraph before choosing what words to hide. Adding or removing words may affect the list of hidden words
-				</span>
+                <span class="warning-text" id="save-warning-text">Please select at least one word to hide.</span>
+                <!-- buttons -->
+                <div class="flex">
+                    <button id="next" class="next">Next</button>
+                    <button id="back" class="button">Edit Paragraph</button>
+                    <button id="reset" class="button">Reset</button>
+                    <!-- <div id="showAllResponsesDiv" class="button"> -->
+                    <!--     <label id="showAllResponsesLabel" class="noselect" for="showAllResponses">Show All -->
+                    <!--         Responses:Off</label> -->
+                    <!--     <input type="checkbox" id="showAllResponsesInput"> -->
+                    <!-- </div> -->
+                    <div class="tooltip">
+                        ?
+                        <span class="tooltiptext">This determines whether or not a player will be able to see all other
+                            recorded responses in the scorescreen </span>
+                    </div>
+                    <div id="enableScoringDiv" class="button">
+                        <label id="enableScoringLabel" class="noselect" for="enableScoringInput">Enable
+                            Scoring:Off</label>
+                        <input type="checkbox" id="enableScoringInput">
+                    </div>
+                    <div class="tooltip">
+                        ?
+                        <span class="tooltiptext">With this enabled, the player will be graded based on if they enter in
+                            the correct word or not</span>
+                    </div>
 
-				<span class = "warning-text" id = "save-warning-text">Please select at least one word to hide.</span>
+                </div>
 
-				<div id = "paragraph-buttons">
+            </section> <!-- edit-region -->
 
-					<!-- buttons -->
-					<div id="next" class="button">Next</div>
-					<div id="back" class="button">Edit Paragraph</div>
-					<div id="reset" class="button">Reset</div>
+            <section id="hidden-words" class="inner ease-out-quart">
+                <div class="information">
+                    <div id="hidden-words-info-box" class="info-box ease-elastic">
+                        <center>
+                            <p>Words that will be removed for students to fill in are shown here. Punctuation will not
+                                be hidden from your paragraph.</p>
+                        </center>
+                        <div class="arrow-down"></div>
+                    </div>
+                    <span class="info-bubble">
+                        <p>?</p>
+                    </span>
+                    <p>Hidden Words:</p>
+                </div>
 
-				</div>
+                <div id="hidden-words-box"></div>
+            </section> <!-- hidden-words -->
 
-			</section> <!-- edit-region -->
+            <section id="options">
+                <h3 class="ease-out-quart">Decide how to hide words</h3>
+                <nav class="ease-out-quart">
+                    <div class="selected button" id="auto-hide">Automatic</div>
+                    <div class="selected button" id="man-hide">Let Me Choose</div>
+                </nav>
 
-			<section id="hidden-words" class="inner ease-out-quart">
-				<div class="information">
-					<div id="hidden-words-info-box" class="info-box ease-elastic">
-						<center>
-							<p>Words that will be removed for students to fill in are shown here. Punctuation will not be hidden from your paragraph.</p>
-						</center>
-						<div class="arrow-down"></div>
-					</div>
-					<span class="info-bubble"><p>?</p></span>
-					<p>Hidden Words:</p>
-				</div>
+                <div id="option1" class="option ease-out-quart">
+                    <p class="rule">Number of words between a hidden word:</p>
 
-				<div id="hidden-words-box"></div>
-			</section> <!-- hidden-words -->
+                    <div id="words-to-skip">
+                        <span class="quick-anim" id="num-up"></span>
+                        <span class="quick-anim" id="num-down"></span>
+                        <span id="num-words-to-skip">3</span>
+                    </div>
+                </div>
 
-			<section id="options">
-				<h3 class="ease-out-quart">Decide how to hide words</h3>
-				<nav class="ease-out-quart">
-					<div class="selected button" id="auto-hide">Automatic</div>
-					<div class="selected button" id="man-hide">Let Me Choose</div>
-				</nav>
+                <div id="option2" class="option ease-out-quart">
+                    Select words from the paragraph area to hide them.
+                </div>
+            </section>
 
-				<div id="option1" class="option ease-out-quart">
-					<p class="rule">Number of words between a hidden word:</p>
+        </section> <!-- outer -->
 
-					<div id="words-to-skip">
-						<span class="quick-anim" id="num-up"></span>
-						<span class="quick-anim" id="num-down"></span>
-						<span id="num-words-to-skip">3</span>
-					</div>
-				</div>
+        <!-- INITIALIZE -->
+        <script>
+        Materia.CreatorCore.start(Wordguess.Creator);
+        </script>
 
-				<div id="option2" class="option ease-out-quart">
-					Select words from the paragraph area to hide them.
-				</div>
-			</section>
+    </body>
 
-		</section> <!-- outer -->
-
-<!-- INITIALIZE -->
-<script>
-	Materia.CreatorCore.start(Wordguess.Creator);
-</script>
-
-	</body>
 </html>

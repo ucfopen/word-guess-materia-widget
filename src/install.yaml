@@ -16,7 +16,8 @@ files:
   flash_version: 0
 score:
   is_scorable: Yes
-  score_module: Wordguess
+  score_screen: scoreScreen.html
+  score_module: WordGuess
 meta_data:
   features:
     - Customizable

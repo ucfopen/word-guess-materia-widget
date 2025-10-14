@@ -121,6 +121,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 		questionsAnswers = []
 		j = 1
 
+		# we have to sort the array based on their data index or else will be out of alignment
+		#TS is SO DUMB cause doing myArray.sort() puts 11 before 2 cause strings >:(
+		manualSkippingIndices.sort (a, b) -> a - b
+
 		if manuallyHide is on
 			for i in [0..manualSkippingIndices.length - 1]
 				questionsAnswers.push
@@ -142,21 +146,17 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		return questionsAnswers
 
-	buildSaveData = (titleValue) ->
+	buildSaveData = (enableScoring) ->
 
 		if manuallyHide is on and hiddenWordsIndices.size is 0
 			saveWarningText = document.getElementById('save-warning-text')
 			Wordguess.CreatorUI.showWarningText(saveWarningText)
 			return null
-		
+
 
 		manualSkippingIndices = Array.from(hiddenWordsIndices)
 
 		previousWordsToSkip = wordsToSkip
-
-		if manuallyHide is on
-			wordsToSkip = -1
-
 
 		paragraph = cleanParagraph(document.getElementById('paragraph').value)
 		questionsAnswers = buildQuestionsAnswers(paragraph)
@@ -166,8 +166,10 @@ Namespace('Wordguess').CreatorLogic = do ->
 			'questions_answers'     : questionsAnswers
 			'title'                 : replaceTags(document.getElementById('title').value)
 			'paragraph'             : replaceTags(paragraph.join ' ')
-			'wordsToSkip'           : wordsToSkip
+			'wordsToSkip'           : if manuallyHide is on then -1 else wordsToSkip
 			'manualSkippingIndices' : manualSkippingIndices
+			'options':
+				'enableScoring'                : enableScoring
 			'previousWordsToSkip'   : previousWordsToSkip
 
 	analyzeParagraph = (paragraph) ->
@@ -178,7 +180,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 		# prepares hidden words for automatic hiding
 		for i in [wordsToSkip..paragraph.length - 1] by (wordsToSkip + 1)
 			hiddenWords.push paragraph[i]
-	
+
 	updateHiddenWords = (paragraph, previousHiddenWords) ->
 		paragraph = cleanParagraph(paragraph)
 
@@ -191,9 +193,9 @@ Namespace('Wordguess').CreatorLogic = do ->
 				newHiddenWords.push(paragraph[index])
 			else
 				hiddenWordsIndices.delete(index)
-		
+
 		previousHiddenWords = newHiddenWords
-	
+
 	initializeHiddenWords = (manualSkippingIndices, paragraph) ->
 		hiddenWordsIndices = new Set(manualSkippingIndices)
 
