@@ -45,22 +45,9 @@ Namespace('Wordguess').Creator = do ->
 			.setInputValues(title, qset.paragraph, wordsToSkip)
 		# update the toggle buttons based on qset
 		if qset.options
-			showAllResponsesInput = document.getElementById('showAllResponsesInput')
-			showAllResponsesDiv = document.getElementById('showAllResponsesDiv')
-			showAllResponsesLabel = document.getElementById('showAllResponsesLabel')
 			enableScoringInput = document.getElementById('enableScoringInput')
 			enableScoringDiv = document.getElementById('enableScoringDiv')
 			enableScoringLabel = document.getElementById('enableScoringLabel')
-
-			if qset?.options?.showAllOtherAnswersBoolean
-
-				showAllResponsesInput.checked = true
-				showAllResponsesDiv.style.backgroundColor = '#004f00' # dark green
-				showAllResponsesLabel.textContent = 'Show All Responses:On'
-			else
-				showAllResponsesInput.checked = false
-				showAllResponsesDiv.style.backgroundColor = '#2E2E2E' # default grey
-				showAllResponsesLabel.textContent = 'Show All Responses:Off'
 
 			if qset?.options?.enableScoring
 
@@ -84,12 +71,11 @@ Namespace('Wordguess').Creator = do ->
 
 	onSaveClicked = (mode = 'save') ->
 		enableScoringBoolean = document.getElementById('enableScoringInput').checked
-		showAllOtherAnswersBoolean = document.getElementById('showAllResponsesInput').checked
 		titleValue = document.getElementById('title').value
 		if titleValue then widgetTitle = Wordguess.CreatorLogic.replaceTags(titleValue)
 		else widgetTitle = 'New Wordguess Widget'
 
-		_qset = Wordguess.CreatorLogic.buildSaveData(showAllOtherAnswersBoolean, enableScoringBoolean)
+		_qset = Wordguess.CreatorLogic.buildSaveData(enableScoringBoolean)
 
 		if _qset == null then return false
 

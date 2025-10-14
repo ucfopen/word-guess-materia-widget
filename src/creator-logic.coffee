@@ -146,7 +146,7 @@ Namespace('Wordguess').CreatorLogic = do ->
 
 		return questionsAnswers
 
-	buildSaveData = ( showAllOtherAnswersBoolean, enableScoring) ->
+	buildSaveData = (enableScoring) ->
 
 		if manuallyHide is on and hiddenWordsIndices.size is 0
 			saveWarningText = document.getElementById('save-warning-text')
@@ -169,7 +169,6 @@ Namespace('Wordguess').CreatorLogic = do ->
 			'wordsToSkip'           : if manuallyHide is on then -1 else wordsToSkip
 			'manualSkippingIndices' : manualSkippingIndices
 			'options':
-				'showAllOtherAnswersBoolean'   : showAllOtherAnswersBoolean
 				'enableScoring'                : enableScoring
 			'previousWordsToSkip'   : previousWordsToSkip
 
