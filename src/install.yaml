@@ -16,7 +16,7 @@ files:
   flash_version: 0
 score:
   is_scorable: Yes
-  score_module: Wordguess
+  score_module: WordGuess
 meta_data:
   features:
     - Customizable
@@ -29,3 +29,5 @@ meta_data:
     answers differed from the original text.
   excerpt: >
     Students fill blanks within a paragraph with words they think belong.
+  update_method: github
+  repo: ucfopen/word-guess-materia-widget
