@@ -5,22 +5,60 @@
 #no-paragraph,
 #option2
  {
-	display: none;
+	display:none;
 }
 
 body {
 	cursor: default;
-	font-family: "Lato", "Arial", sans-serif;
-	background-color: rgba(0,0,0,0.1);
-	padding: 0;
-	margin: 0;
-	overflow-x: hidden;
+	background-image: url("source-images/backgroundimg.jpeg");
+	background-repeat: repeat;
+	background-position: top center;
+	background-size: auto;
+	font-family: "Paytone One", sans-serif;
+	font-weight: 10;
+	font-style: normal;
+	// margin: 0;
+	// overflow-x: hidden;
+	// user-select: none;
 
-	user-select: none;
+
+
+	.creator-logo{
+		position:absolute;
+		display: grid;
+		top: 0px;
+		left:-145px;
+
+		height: 135px;
+		width: 174px;
+
+		z-index: 10;
+	}
+
+
+	.edit-button{
+		position:absolute;
+		top: 70px;
+		left:120px;
+
+		height: 0px;
+		width: inherit;
+
+		z-index: 10;
+
+	}
+	
+	.newIcon{
+
+		position: relative;
+	}
+	
+
 	input {
 		border: 5px solid white;
 		padding: 10px;
-		background-color: #ADADAD;
+		background-color: #FFFFFF;
+		border-radius: 15px;
 		margin: 10px 10px 0 10px;
 		color: black;
 		font-size: 16px;
@@ -51,7 +89,7 @@ body {
 		padding-bottom: 10px;
 		p {
 			margin-left: 40px;
-			margin-right: 0;
+			margin-right: 90px;
 			color: black;
 			font-size: 16px;
 			display: inline;
@@ -59,20 +97,37 @@ body {
 	}
 	section.outer {
 		position: relative;
-		width: 960px;
-		height: 625px;
-		margin: 25px auto 0px auto;
-		background-color: #2c4b5f;
+		display: flex;
+		flex-direction: row;
+		gap: 4px;
+		justify-content: space-between;
+		width: auto;
+		height: 740px;
+		margin: 50px 150px 0px 150px;
+		background-color: #7538D3;
+		border-style:solid;
+		border-width: 5px;
+		border-color: #8D57DF;
 		color: #FFF;
-		font-size: 12px;
+		font-size: 30px;
 		border-radius: 10px;
+
+		.options-container{
+			// position: absolute;
+			// height:300px;
+			// width:485px;
+			background-color:#FFFFFF;
+			border-radius: 15px;
+			// right:10px;
+		}
 	}
 	section.inner {
-		padding: 10px 20px;
+		padding: 45px 20px;
 		margin: 1%;
-		background-color: #233c4d;
+		bottom: 20px;
 		border-radius: 10px;
-		font-size: 20px;
+		font-size: 30px;
+
 		.information {
 			.info-bubble {
 				cursor: help;
@@ -110,7 +165,9 @@ body {
 				}
 			}
 			p {
-				margin-left: 30px;
+				margin-left: 35px;
+				margin-top: 35px;
+				margin-bottom: 10px;
 			}
 		}
 		p {
@@ -118,16 +175,30 @@ body {
 			margin: 0;
 		}
 		input {
-			margin: 10px 0 10px 0;
+			margin: 5px 0 10px 0;
 			display: block;
+			box-shadow: 8px 9px 4px 0px rgba(88, 42, 158, 0.67);
+			border-radius: 15px;
 			width: 870px;
 		}
+		
+	}
+	#bank-container {
+		display: flex; 
+		flex-direction: column; 
+		gap: 16px;
+
+		top: 35px;
+		bottom: 0px;
+		border-radius: 15px;
+		width: auto;
 	}
 	#edit-region {
-		position: absolute;
+		// position: absolute;
 		top: 0;
-		bottom: 0;
-		width: 900px;
+		bottom: 0px;
+		border-radius: 15px;
+		width: auto;
 
 		.warning-text {
 			color: #eed202;
@@ -146,13 +217,16 @@ body {
 			overflow: auto;
 			margin: 10px 0 10px 0;
 			border: 5px solid white;
-			background-color: #ADADAD;
-			padding: 10px;
+			background-color: #FFFFFF;
+			border-radius: 15px;
+			padding: 20px;
 			color: black;
+			box-shadow: 8px 9px 4px 0px rgba(88, 42, 158, 0.67);;
 			font-size: 16px;
-			height: 310px;
+			height: 450px;
 			width: 97%;
 			resize: none;
+			bottom: 20px;
 		}
 		textarea {
 			display: block;
@@ -178,35 +252,36 @@ body {
 				width: 93%;
 			}
 		}
-		.button {
-			cursor: pointer;
-			font-size: 14px;
-			position: absolute;
-			text-align: center;
-			width: 70px;
-			display: inline;
-			padding: 10px;
-			background-color: #2E2E2E;
-			color: white;
-			border-radius: 10px;
-			border-bottom: 3px solid #252525;
-			transition: 0.1s;
-			&:hover {
-				background-color: #484848;
-				border-bottom-color: #3B3B3B;
-				transition: 0.1s;
-			}
-		}
-		#next.button  {
+		// .button {
+		// 	cursor: pointer;
+		// 	font-size: 14px;
+		// 	position: absolute;
+		// 	text-align: center;
+		// 	width: 70px;
+		// 	bottom: 10px;
+		// 	display: inline;
+		// 	padding: 10px;
+		// 	background-color: #2E2E2E;
+		// 	color: white;
+		// 	border-radius: 10px;
+		// 	border-bottom: 3px solid #252525;
+		// 	transition: 0.1s;
+		// 	&:hover {
+		// 		background-color: #484848;
+		// 		border-bottom-color: #3B3B3B;
+		// 		transition: 0.1s;
+		// 	}
+		// }
+		// #next.button  {
 
-		}
-		#reset.button {
-			margin-left: 100px;
-		}
-		#back.button  {
-			width: 100px;
-			display: none;
-		}
+		// }
+		// #reset.button {
+		// 	margin-left: 100px;
+		// }
+		//  #back.button  {
+		//  	width: 100px;
+		//  	display: none;
+		//  }
 		.big-info {
 			position: absolute;
 			background-color: black;
@@ -247,18 +322,24 @@ body {
 		}
 	}
 	#hidden-words {
-		position: absolute;
+		// position: absolute;
 		opacity: 0;
-		right: -500px;
-		width: 390px;
+		// right: -500px;
+		// bottom: -23px;
+		// max-width: 500px;
+		display: flex;
+		flex-direction: column;
+		height: auto;
 	}
 
 	#hidden-words-box {
 		cursor: default;
 		margin: 10px 0 10px 0;
 		height: 230px;
-		border: 5px solid white;
-		background-color: #ADADAD;
+		width: auto;
+		border: 5px solid #70A0F9;
+		background-color: #70A0F9;
+		border-radius: 15px;
 		padding: 10px;
 		color: white;
 		font-size: 16px;
@@ -276,12 +357,15 @@ body {
 		}
 	}
 	#options {
-		position: absolute;
+		// position: absolute;
 		display: none;
-		right: 10px;
-		bottom: 10px;
+		right: 30px;
+		top: 50px;
 		width: 430px;
 		height: 200px;
+
+		
+	
 		h3 {
 			margin: 0 -300px 5px 0;
 			opacity: 0;
@@ -317,15 +401,17 @@ body {
 			}
 		}
 		.option {
-			position: absolute;
+			// position: absolute;
 			right: -300px;
 			opacity: 0;
 			font-size: 16px;
 			padding: 10px;
-			width: 410px;
-			background-color: #233c4d;
-			margin: 10px 0;
-			border-radius: 10px;
+			width: 480px;
+			height: 250px;
+			background-color: #ffffff;
+			margin: -80px 0;
+			border-radius: 15px;
+
 			.rule {
 				font-size: 16px;
 				display: inline-block;
@@ -336,13 +422,13 @@ body {
 					border: 5px solid white;
 					padding: 10px;
 					background-color: #ADADAD;
-					margin: 10px 10px 0 10px;
+					margin: 10px 15px 0 10px;
 					color: white;
 					font-size: 16px;
 					text-align: center;
 					margin: 0 0 0 10px;
 					display: inline;
-					height: 20px; width: 20px;
+					height: 15px; width: 20px;
 				}
 				#num-up,
 				#num-down {
@@ -408,3 +494,4 @@ body {
 	transition: all 300ms cubic-bezier(0.520, -0.430, 0.405, 1.350);
 	transition-timing-function: cubic-bezier(0.520, -0.430, 0.405, 1.350);
 }
+

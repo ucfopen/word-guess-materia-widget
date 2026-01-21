@@ -5,6 +5,7 @@
  * DS205: Consider reworking code to avoid use of IIFEs
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
+
 Namespace('Wordguess').CreatorEvents = (function() {
 	// Divs:
 	let editRegion        = null;
@@ -63,7 +64,7 @@ Namespace('Wordguess').CreatorEvents = (function() {
 		numDown        = document.getElementById('num-down');
 		numWordsToSkip = document.getElementById('num-words-to-skip');
 		nextButton     = document.getElementById('next');
-		backButton     = document.getElementById('back');
+		// backButton     = document.getElementById('back');
 		resetButton    = document.getElementById('reset');
 		autoHide       = document.getElementById('auto-hide');
 		manHide        = document.getElementById('man-hide');
@@ -102,22 +103,25 @@ Namespace('Wordguess').CreatorEvents = (function() {
 		return this;
 	};
 	
-	const onNextClick = function(previousMode) {
+	const onNextClick = function(previousMode, skipValidation = false) {
 
 
-		if (!animating) {
-			animating = true;
-			setTimeout(() => animating = false
-			, 400);
+		// if (!animating) {
+		// 	animating = true;
+		// 	setTimeout(() => animating = false
+		// 	, 400);
 
-			autoHide.classList.add('selected');
-			manHide.classList.remove('selected');
+		// 	autoHide.classList.add('selected');
+		// 	manHide.classList.remove('selected');
 
-			if (Wordguess.CreatorLogic.noParagraph(paragraphTextarea)) {
-				document.removeEventListener('click', removeNoParagraphBox);
-				Wordguess.CreatorUI
-					.alertNoParagraph(noParagraph.style);
-				return setTimeout(() => document.addEventListener('click', removeNoParagraphBox));
+			// if no paragraph then alert user to enter one 
+			if (!skipValidation & Wordguess.CreatorLogic.noParagraph(paragraphTextarea)) {
+				alert('please enter paragraph');
+				return;
+				// document.removeEventListener('click', removeNoParagraphBox);
+				// Wordguess.CreatorUI
+				// 	.alertNoParagraph(noParagraph.style);
+				// return setTimeout(() => document.addEventListener('click', removeNoParagraphBox));
 
 			} else { // A paragraph has been entered.
 				menu = 2;
@@ -132,7 +136,7 @@ Namespace('Wordguess').CreatorEvents = (function() {
 
 				Wordguess.CreatorUI
 					.hideFirstMenu(paragraphTextarea, resetButton)
-					.showSecondMenu(title, backButton, editable)
+					.showSecondMenu(title, editable)
 					.hideWarningText(warningText)
 					.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
 					.showHiddenWords(hiddenWordsBox)
@@ -148,8 +152,10 @@ Namespace('Wordguess').CreatorEvents = (function() {
 						.onAutoHideClick();
 				}
 			}
-		}
-	};
+		};
+	
+
+	
 
 
 	const onManHideClick = function() {
@@ -224,11 +230,11 @@ Namespace('Wordguess').CreatorEvents = (function() {
 
 
 	const setEventListeners = function(isMobile) {
-		// Disable right click.
-		document.oncontextmenu = () => false;
-		document.addEventListener('mousedown', function(e) {
-			if (e.button === 2) { return false; } else { return true; }
-		});
+	// 	// Disable right click.
+	// 	document.oncontextmenu = () => false;
+	// 	document.addEventListener('mousedown', function(e) {
+	// 		if (e.button === 2) { return false; } else { return true; }
+	// 	});
 
 		// Events for information bubbles.
 		if (!isMobile) {
@@ -273,13 +279,13 @@ Namespace('Wordguess').CreatorEvents = (function() {
 			}
 		});
 
-		nextButton.addEventListener('click', function() {
-			const previousMode = mode;
+		// nextButton.addEventListener('click', function() {
+		// 	const previousMode = mode;
 
-			// default mode is automatic
-			mode = 'automatic';
-			return onNextClick(previousMode);
-		});
+		// 	// default mode is automatic
+		// 	mode = 'automatic';
+		// 	return onNextClick(previousMode);
+		// });
 
 
 		return this;
@@ -309,25 +315,25 @@ Namespace('Wordguess').CreatorEvents = (function() {
 		autoHide.addEventListener('click', () => onAutoHideClick());
 
 		
-		backButton.addEventListener('click', function() {
-			if (!animating) {
-				animating = true;
-				setTimeout(() => animating = false
-				, 400);
+		// backButton.addEventListener('click', function() {
+		// 	if (!animating) {
+		// 		animating = true;
+		// 		setTimeout(() => animating = false
+		// 		, 400);
 
-				menu = 1;
+		// 		menu = 1;
 
-				Wordguess.CreatorUI
-					.showFirstMenu(paragraphTextarea, resetButton)
-					.hideSecondMenu(title, backButton, editable)
-					.showWarningText(warningText)
-					.animateOutSecondMenu(editRegion.style, hiddenWords.style, options);
+		// 		Wordguess.CreatorUI
+		// 			.showFirstMenu(paragraphTextarea, resetButton)
+		// 			.hideSecondMenu(title, backButton, editable)
+		// 			.showWarningText(warningText)
+		// 			.animateOutSecondMenu(editRegion.style, hiddenWords.style, options);
 
-				if (manuallyHide === false) {
-					return resetButton.style.opacity = 1;
-				}
-			}
-		});
+		// 		if (manuallyHide === false) {
+		// 			return resetButton.style.opacity = 1;
+		// 		}
+		// 	}
+		// });
 
 		editable.addEventListener('click', function() {
 			document.removeEventListener('click', removeGoBackBox);

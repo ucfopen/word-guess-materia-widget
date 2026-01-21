@@ -18,8 +18,14 @@ Namespace('Wordguess').Creator = (function() {
 		return Wordguess.CreatorEvents
 			.cacheElements()
 			.setEventListeners(isMobile)
-			.setSecondMenuEventListeners();
+			.setSecondMenuEventListeners()
+			.onNextClick('automatic', true);
+
+	    
+		
 	};
+	
+	
 
 	const initExistingWidget = function(title, widget, qset, version, baseUrl) {
 		({

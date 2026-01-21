@@ -1,10 +1,16 @@
 const path = require('path')
 const srcPath = path.join(__dirname, 'src') + path.sep
+const outputPath = path.join(process.cwd(), 'build') + path.sep
 const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 
 const rules = widgetWebpack.getDefaultRules()
 const copy = [
-	...widgetWebpack.getDefaultCopyList()
+	...widgetWebpack.getDefaultCopyList(),
+	{
+		from: `${srcPath}source-images`,
+		to: `${outputPath}source-images`,
+		toType: 'dir'
+	}
 ]
 
 const entries = {

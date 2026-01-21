@@ -75,9 +75,9 @@ Namespace('Wordguess').CreatorUI = (function() {
 		return this;
 	};
 
-	const showSecondMenu = function(paragraphTitle, backButton, editable) {
+	const showSecondMenu = function(paragraphTitle,  editable) {
 		paragraphTitle.style.width = '93%';
-		backButton.style.display = 'inline';
+	// 	backButton.style.display = 'inline';
 
 		editable.className = 'edit-areas ease-out-quart shown';
 
@@ -108,9 +108,9 @@ Namespace('Wordguess').CreatorUI = (function() {
 
 	const animateInSecondMenu = function(editRegion, hiddenWords, options) {
 		const optionsH3  = options.children[0].style;
-		const optionsNav = options.children[1].style;
-		const option1    = options.children[2].style;
-		const option2    = options.children[3].style;
+		// const optionsNav = options.children[1].style;
+		// const option1    = options.children[2].style;
+		// const option2    = options.children[3].style;
 
 		editRegion.width = '450px';       // Shrink the paragraph region.
 		options.style.display = 'block';  // Display the options region.
