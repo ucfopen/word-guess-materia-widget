@@ -27,43 +27,34 @@
 				/>
 		
 				<!-- edit button assest -->
-				<div class="edit-button">
+				<!-- <div class="edit-button">
 					<img
 					src="/source-images/Pencil.png"
 					alt="edit-but"/>
-				</div>
-
+				</div> -->
+			
 			<section id="edit-region" class="inner ease-out-quart">
-
-				<!-- title area -->
 				<div class="information">
 					<div id="title-info-box" class="info-box ease-elastic">
-						<center>
-							<p>This will appear directly above your finished paragraph. Leave this area unchanged if you don't want to display a title.</p>
-						</center>
+						<p>This will appear directly above your finished paragraph. Leave this area unchanged if you don't want to display a title.</p>
 						<div class="arrow-down"></div>
 					</div>
 					<span class="info-bubble"><p>?</p></span>
 					<!-- <img class="info-bubble" id="title-info"> -->
 					<p>Add Title:</p>
 				</div>
-
 				<input class="ease-out-quart" id="title" type="text" placeholder="New WordGuess Widget"/>
 
-				<!-- paragraph area -->
 				<div class="information">
 					<div id="paragraph-info-box" class="info-box ease-elastic">
-						<center>
-							<p>This will be displayed with removed words for students to fill in. To alter how words are removed, change the options.</p>
-						</center>
+						<p>This will be displayed with removed words for students to fill in. To alter how words are removed, change the options.</p>
 						<div class="arrow-down"></div>
 					</div>
 					<span class="info-bubble"><p>?</p></span>
 					<p>Add Passage:</p>
 				</div>
-
+				
 				<div class="edit-areas ease-out-quart" id="editable">Enter a paragraph here.</div>
-
 				<div id="no-paragraph" class="big-info ease-elastic">
 					<div class="arrow-up"></div>
 					Enter a paragraph first.
@@ -75,63 +66,48 @@
 
 				<textarea class="edit-areas ease-out-quart" id="paragraph" placeholder="Enter a paragraph here."></textarea>
 
-
-					<div class="arrow-down"></div>
-				</div>
-
-
 				<span class = "warning-text" id = "warning-text">Note: Please finish typing your paragraph before choosing what words to hide. Adding or removing words may affect the list of hidden words
 				</span>
 
 				<span class = "warning-text" id = "save-warning-text">Please select at least one word to hide.</span>
-
-				<div id = "paragraph-buttons">
-
-					<!-- buttons -->
-					<!-- <div id="next" class="button">Next</div> -->
-					<!-- <div id="back" class="button">Edit Paragraph</div> -->
-					<div id="reset" class="button">Reset</div>
-
-				</div>
-
+			
+				<!-- id of "next"/"back" triggered swap between input and word bank buttons -->
 			</section> <!-- edit-region -->
 
 			<div class="bank-container">
-				
-	
 				<!-- HOW TO HIDE WORDS OPTION-->
-				
-	
 				<section id="options">
 	
 					<div class="options-container">
-					
-					<!--AUTOMATIC HIDDEN WORDS -->
-					<h3 class="ease-out-quart">Decide how to hide words</h3>
-					<nav class="ease-out-quart">
-						<div class="selected button" id="auto-hide">Automatic</div>
-						<div class="selected button" id="man-hide">Let Me Choose</div>
-					</nav>
-	
-					<!-- <div id="option1" class="option ease-out-quart"> -->
-						<p class="rule">Number of words between a hidden word:</p>
-	
-						<div id="words-to-skip">
-							<span class="quick-anim" id="num-up"></span>
-							<span class="quick-anim" id="num-down"></span>
-							<span id="num-words-to-skip">3</span>
+						
+						<!--AUTOMATIC HIDDEN WORDS -->
+						<h2 class="ease-out-quart">How should words be hidden?</h2>
+						<h3 class="ease-out-quart">Select how Word Guess should hide words from the text.</h3>
+						<nav class="ease-out-quart">
+							<div class="selected button" id="auto-hide">Automatic</div>
+							<div class="button" id="man-hide">Let Me Choose</div>
+						</nav>
+
+						<!-- 
+						<div id="option1" class="option ease-out-quart">
+							<p class="rule">Number of words between a hidden word:</p>
+		
+							<div id="words-to-skip">
+								<span class="quick-anim" id="num-up"></span>
+								<span class="quick-anim" id="num-down"></span>
+								<span id="num-words-to-skip">3</span>
+							</div>
 						</div>
-					<!-- </div> -->
 	
-					<div id="option2" class="option ease-out-quart">
-						Select words from the paragraph area to hide them.
+						<div id="option2" class="option ease-out-quart">
+							Select words from the paragraph area to hide them.
+						</div> -->
 					</div>
-				</div>
-	
+		
 				</section>
 				<section id="hidden-words" class="inner ease-out-quart">
 
-					<div class="information">
+					<div id="hidden-info" class="information">
 						<div id="hidden-words-info-box" class="info-box ease-elastic">
 							<center>
 								<p>Words that will be removed for students to fill in are shown here. Punctuation will not be hidden from your paragraph.</p>

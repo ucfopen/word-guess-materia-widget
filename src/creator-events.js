@@ -53,8 +53,8 @@ Namespace('Wordguess').CreatorEvents = (function() {
 	const cacheElements = function() {
 		// Divs:
 		editRegion        = document.getElementById('edit-region');
-		paragraphTextarea = document.getElementById('paragraph');
-		editable          = document.getElementById('editable');
+		paragraphTextarea = document.getElementById('paragraph'); // this is the input box to type the paragraph
+		editable          = document.getElementById('editable'); // these have the buttons for the word bank
 		hiddenWords       = document.getElementById('hidden-words');
 		hiddenWordsBox    = document.getElementById('hidden-words-box');
 		const options           = document.getElementById('options');
@@ -111,8 +111,8 @@ Namespace('Wordguess').CreatorEvents = (function() {
 		// 	setTimeout(() => animating = false
 		// 	, 400);
 
-		// 	autoHide.classList.add('selected');
-		// 	manHide.classList.remove('selected');
+		autoHide.classList.add('selected');
+		manHide.classList.remove('selected');
 
 			// if no paragraph then alert user to enter one 
 			if (!skipValidation & Wordguess.CreatorLogic.noParagraph(paragraphTextarea)) {
@@ -134,13 +134,13 @@ Namespace('Wordguess').CreatorEvents = (function() {
 					.updateHiddenWords(paragraphTextarea.value, previousHiddenWords);
 
 
-				Wordguess.CreatorUI
-					.hideFirstMenu(paragraphTextarea, resetButton)
-					.showSecondMenu(title, editable)
-					.hideWarningText(warningText)
-					.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
-					.showHiddenWords(hiddenWordsBox)
-					.highlightWords(numWordsToSkip, paragraphTextarea.value, editable);
+				// Wordguess.CreatorUI
+				// 	.hideFirstMenu(paragraphTextarea, resetButton)
+				// 	.showSecondMenu(title, editable)
+				// 	.hideWarningText(warningText)
+				// 	.animateInSecondMenu(editRegion.style, hiddenWords.style, options)
+				// 	.showHiddenWords(hiddenWordsBox)
+				// 	.highlightWords(numWordsToSkip, paragraphTextarea.value, editable);
 			
 				// set mode to previous mode
 				if (previousMode === 'manual') {
