@@ -1,8 +1,8 @@
 general:
   name: Word Guess
   group: Materia
-  height: 670
-  width: 800
+  height: 0
+  width: 0
   in_catalog: No
   is_editable: Yes
   is_playable: Yes
