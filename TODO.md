@@ -1,6 +1,6 @@
 # TODO
 
-# Creator
+## Creator
 
 - add manual progress bar
 - style initial popup
@@ -15,10 +15,10 @@
   - save
   - load from draft
 
-# Player
+## Player
 
 - write html
 - style html
 - write backend code
 
-# Score Screen
+## Score Screen
