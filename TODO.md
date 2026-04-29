@@ -10,6 +10,8 @@
 - redesign automatic controls
   - We can talk about "frequency", and give it a value 1-100
 
+- add info popups on hover
+
 - add materia functionality
   - qset export
   - save
