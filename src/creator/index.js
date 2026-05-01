@@ -68,14 +68,25 @@ class App {
     mouseClick: document.getElementById("mouse-click"),
     pencilEdit: document.getElementById("pencil-edit"),
     slideToggle: document.getElementById("slide-knob"),
+
+    helpDialog: document.getElementById("instructionalDialog"),
+    helpDialogCloseButton: document.getElementById("closeButton"),
+
+    errorDialog: document.getElementById("error-dialog"),
+    errorMsg: document.getElementById("error-message"),
+    errorDialogCloseButton: document.getElementById(
+      "error-dialog-close-button"
+    ),
   };
 
   activeMode = null;
   sliderUsed = false;
   bound = false;
 
-  constructor() {
+  constructor({ qset, title } = {}) {
     this.bind();
+
+    this.openWarningDialog("TESTING THAT THIS WORKS!");
 
     // switch to expected modes
     this.switchToManual();
@@ -84,6 +95,25 @@ class App {
     // render everything
     this.renderWordBank();
     this.renderWords();
+
+    if (!qset) this.openHelpDialog();
+  }
+
+  openHelpDialog() {
+    // this.el.helpDialog.showModal();
+  }
+
+  closeHelpDialog() {
+    this.el.helpDialog.close();
+  }
+
+  openWarningDialog(message = "") {
+    this.el.errorMsg.innerText = message;
+    // this.el.errorDialog.showModal();
+  }
+
+  closeWarningDialog() {
+    this.el.errorDialog.close();
   }
 
   bind() {
@@ -149,6 +179,13 @@ class App {
     this.el.mouseClick.addEventListener("click", () => this.switchToPickMode());
     this.el.pencilEdit.addEventListener("click", () =>
       this.switchToWriteMode()
+    );
+
+    this.el.helpDialogCloseButton.addEventListener("click", () =>
+      this.closeHelpDialog()
+    );
+    this.el.errorDialogCloseButton.addEventListener("click", () =>
+      this.closeWarningDialog()
     );
   }
 
@@ -245,7 +282,6 @@ class App {
           WARNING_LEVEL.INFO
         );
 
-      this.hideRefreshButton();
       this.hideTrashButton();
       return;
     }
@@ -263,7 +299,10 @@ class App {
           WARNING_LEVEL.WARNING
         );
       else {
-        this.wordBankInfo(`${this.highlighted.size} words`, WARNING_LEVEL.INFO);
+        this.wordBankInfo(
+          `${this.highlighted.size} word${this.highlighted.size == 1 ? "" : "s"}`,
+          WARNING_LEVEL.INFO
+        );
       }
     }
 
@@ -319,7 +358,7 @@ class App {
         100 +
       "%";
 
-    this.el.sliderMask.dataset.percentage = this.el.slider.value;
+    this.el.sliderMask.dataset.percentage = "1:" + this.el.slider.value;
     this.el.sliderMsg.textContent = `${this.el.slider.value} words between`;
   }
 
@@ -363,10 +402,6 @@ class App {
 
     this.el.modeToggle.classList.add("slid");
 
-    // TODO:
-    document.getElementById("options-container").style.height = "130px";
-    document.getElementById("word-bank-container").style.height = "370px";
-
     this.renderManualProgress();
     this.renderWordBank();
   }
@@ -381,10 +416,6 @@ class App {
 
       this.refreshAutoWords();
     }
-
-    // TODO:
-    document.getElementById("options-container").style.height = "230px";
-    document.getElementById("word-bank-container").style.height = "270px";
 
     this.el.modeToggle.classList.remove("slid");
 
@@ -459,11 +490,10 @@ class App {
 
 window.addEventListener("load", () => {
   // TODO
-  const _app = new App();
-
-  const dialog = document.getElementById("instructionalDialog");
-  const closeButton = document.getElementById("closeButton");
-
-  dialog.showModal();
-  closeButton.onclick = () => dialog.close();
+  Materia.CreatorCore.start({
+    initExistingWidget: (title, widgetInstance, qset, qsetVersion) => {},
+    initNewWidget: () => {
+      const app = new App();
+    },
+  });
 });

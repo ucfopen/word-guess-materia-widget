@@ -20,7 +20,7 @@
       <img src="/source-images/newIcon.png" alt="WordGuess logo" class="logo" />
 
       <section id="edit-region" class="inner">
-        <section class="inner title-box">
+        <section class="title-box">
           <!-- TODO -->
           <!-- <div class="information">
             <div id="title-info-box" class="info-box ">
@@ -43,7 +43,7 @@
           />
         </section>
 
-        <section class="inner passage-box">
+        <section class="passage-box">
           <div class="segment">
             <div class="section-header">
               <div class="information">
@@ -57,22 +57,24 @@
               <span class="info-icon"></span>
               <h2>Add Passage:</h2>
             </div>
-            <div class="toggle-slider" id="temp-toggle-mode">
+            <div
+              class="toggle-slider"
+              id="temp-toggle-mode"
+              style="width: 100px"
+            >
               <span id="slide-knob" class="slide-knob"></span>
 
-              <span
-                role="button"
+              <button
                 tabindex="0"
                 class="toggle-btn pencil-btn"
                 id="pencil-edit"
-              ></span>
+              ></button>
 
-              <span
-                role="button"
+              <button
                 tabindex="0"
                 class="toggle-btn mouse-btn"
                 id="mouse-click"
-              ></span>
+              ></button>
             </div>
           </div>
 
@@ -89,7 +91,7 @@
       </section>
 
       <section id="bank-region" class="inner">
-        <section class="inner options">
+        <section class="options">
           <div class="info-wrap">
             <!-- <div class="information">
                 <div id="title-info-box" class="info-box ">
@@ -112,21 +114,13 @@
                 <div class="toggle-slider" id="temp-toggle-mode">
                   <span id="mode-slide-knob" class="slide-knob slid"></span>
 
-                  <span
-                    role="button"
-                    tabindex="0"
-                    id="auto-button"
-                    class="toggle-btn"
-                    >Automatic</span
-                  >
+                  <button tabindex="0" id="auto-button" class="toggle-btn">
+                    Automatic
+                  </button>
 
-                  <span
-                    role="button"
-                    tabindex="0"
-                    id="manual-button"
-                    class="toggle-btn"
-                    >Let Me Choose</span
-                  >
+                  <button tabindex="0" id="manual-button" class="toggle-btn">
+                    Let Me Choose
+                  </button>
                 </div>
               </div>
 
@@ -145,7 +139,7 @@
               <!--AUTOMATIC BUTTON -->
 
               <div id="auto-info-container" class="mode-info-container">
-                <p class="info">Set visible words between hidden ones.</p>
+                <p class="info">Set the frequency of words hidden.</p>
 
                 <div class="progress-bar-container">
                   <div id="slider-mask"></div>
@@ -165,7 +159,7 @@
           </div>
         </section>
 
-        <section id="hidden-words" class="inner">
+        <section id="hidden-words" class="passage-box">
           <div id="hidden-info" class="information">
             <div id="hidden-words-info-box" class="info-box">
               <!-- <div class="arrow-down"></div> -->
@@ -226,6 +220,15 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="error-dialog">
+      <div class="dialog-shell">
+        <div class="dialog-box">
+          <button id="error-dialog-close-button">X</button>
+          <div class="dialog-content" id="error-message">hello!</div>
         </div>
       </div>
     </dialog>

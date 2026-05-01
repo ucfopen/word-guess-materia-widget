@@ -1,8 +1,68 @@
-#rec-message-man,
-#rec-message-auto {
-  display: none;
+// RESET
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+}
+
+::before,
+::after {
+  pointer-events: none;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flow-root;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 // This stuff is needed so the scroll bar shows up always on mac
 // source: https://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar
 ::-webkit-scrollbar {
@@ -14,6 +74,13 @@
   background-color: rgba(207, 149, 149, 0.5);
   box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
+// RESET
+
+// hide these for now
+#rec-message-man,
+#rec-message-auto {
+  display: none;
+}
 
 .info-box,
 .big-info,
@@ -21,13 +88,6 @@
 #no-paragraph,
 #option2 {
   display: none;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
 }
 
 textarea::placeholder,
@@ -63,8 +123,6 @@ body {
 
   font-family: "Montserrat", sans-serif;
 
-  margin: 0;
-  overflow: hidden;
   user-select: none;
 
   font-size: 16px;
@@ -110,14 +168,13 @@ input {
 }
 
 .outer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   flex-direction: row;
   gap: 60px;
 
-  width: auto;
-  max-width: 1200px;
-
-  margin: 50px 5rem 0px 15rem;
+  height: calc(100% - 10vh);
+  margin: 5vh 5vw 5vh 250px;
 
   color: #fff;
   background-color: #7538d3;
@@ -129,16 +186,20 @@ input {
   border-radius: 10px;
   padding: 35px;
 
-  height: 90vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 // 1 column
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
   .outer {
+    display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .inner {
+    min-height: 90vh; // TODO
   }
 }
 
@@ -181,12 +242,24 @@ nav {
 }
 
 section.inner {
-  flex: 1;
+  // min-height: 0;
+  // flex: 1;
+
+  // max-height: calc(100% - 70px);
+  max-height: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 1rem;
+}
+
+// TODO rename passage-box
+.passage-box {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .passage {
@@ -195,8 +268,7 @@ section.inner {
 
   font-family: "Montserrat", "Arial", sans-serif;
 
-  height: 457px;
-
+  height: 100%;
   margin-top: 5px;
   padding: 10px;
 
@@ -280,7 +352,7 @@ section.inner {
   grid-template-columns: 1fr 1fr;
   align-items: center;
 
-  width: fit-content;
+  width: 80%;
   height: 50px;
 
   background: #3b038e;
@@ -312,19 +384,16 @@ section.inner {
 .toggle-btn {
   z-index: 1;
 
-  // TODO: full width
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: white;
+  background-color: unset;
 
   font-family: "Paytone One", sans-serif;
 
-  width: max-content;
+  width: 100%;
   height: 100%;
 
-  margin: auto 15px;
-  padding: 0;
+  margin: 0 auto;
+  padding: 0 15px;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -379,7 +448,7 @@ section.inner {
 
   position: relative;
 
-  height: 270px;
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-gutter: stable;
@@ -441,6 +510,7 @@ section.inner {
   align-content: flex-start;
 
   // TODO: add border or shadow for the bottom
+  height: 100%;
 
   gap: 8px;
 
@@ -504,7 +574,7 @@ section.inner {
 
   position: relative;
   top: 20px;
-  left: 0%;
+  left: 0;
 
   width: 5%;
   height: 20px;
