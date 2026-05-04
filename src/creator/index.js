@@ -1,5 +1,3 @@
-import { QSetUtil, QSet } from "../utils/qset";
-
 class Utils {
   static conjunctions = new Set([
     "and",
@@ -88,30 +86,40 @@ class App {
   bound = false;
 
   /**
-   * @param {QSet?} qset
+   * @param {{
+   *  title: string;
+   *  version: number;
+   *  qset: any;
+   * }?} options
    */
-  constructor(qset) {
+  constructor(options = undefined) {
     this.bind();
 
-    this.switchToManual();
+    if (options) {
+      const { title, qset, version } = options;
 
-    if (qset) {
-      const { title, paragraph, highlighted } = QSetUtil.QSetToInfo(qset);
+      if (version != 2)
+        this.openWarningDialog(`QSet version ${version} is not supported yet.`);
+
       this.setTitle(title);
+      this.setParagraph(qset.options.paragraph);
 
-      this.setParagraph(paragraph);
-      this.highlighted = new Set(highlighted.map((x) => x.id));
+      this.highlighted = new Set(qset.items.map((x) => x.options.index));
       this.generateWords();
+
+      if (qset.options.mode == "manual") this.switchToManual();
+      else this.switchToAuto();
 
       this.switchToPickMode();
     } else {
+      this.switchToManual();
       this.switchToWriteMode();
     }
 
     this.renderWordBank();
     this.renderWords();
 
-    if (!qset) this.openHelpDialog();
+    if (!options) this.openHelpDialog();
   }
 
   openHelpDialog() {
@@ -497,23 +505,49 @@ class App {
   }
 
   buildSaveData() {
-    return QSetUtil.DataToQSet(
-      this.getTitle(),
-      this.getParagraph(),
-      this.getHighlighted()
-    );
+    const data = {
+      items: [],
+      options: {
+        paragraph: this.getParagraph(),
+        mode: this.activeMode ?? "manual",
+      },
+    };
+
+    for (const { index, text } of this.getHighlighted())
+      data.items.push({
+        id: null,
+        type: "wordguess",
+        materiaType: "question",
+        questions: [{ text: `Word ${index}` }],
+        answers: [{ text }],
+        options: { index },
+      });
+
+    return data;
   }
 }
 
 window.addEventListener("load", () => {
   let app = null;
   Materia.CreatorCore.start({
-    initExistingWidget: (_title, _widgetInstance, qset, _version) =>
-      (app = new App(qset)),
+    initExistingWidget: (title, _widgetInstance, qset, version) =>
+      (app = new App({ title, qset, version })),
     initNewWidget: () => (app = new App()),
-    onSaveComplete: () => true,
-    onSaveClicked: () => {
-      Materia.CreatorCore.save(app.getTitle(), app.buildSaveData(), 2);
+    onSaveComplete: () => app.openWarningDialog("Saved!"),
+    onSaveClicked: (mode = "save") => {
+      mode = "publish";
+      if (mode == "publish") {
+        if (!app.getParagraph()) {
+          app.openWarningDialog("Passage is required to publish widget.");
+          return;
+        }
+      }
+
+      Materia.CreatorCore.save(
+        app.getTitle() || "New WordGuess Widget",
+        app.buildSaveData(),
+        2
+      );
     },
     manualResize: false,
   });
