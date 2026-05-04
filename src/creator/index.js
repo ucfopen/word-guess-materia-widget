@@ -360,7 +360,7 @@ class App {
       span.textContent = word.text;
 
       const button = document.createElement("button");
-      button.textContent = "x";
+      button.className = "x-btn"
       button.dataset.id = id;
 
       pill.appendChild(span);
@@ -533,12 +533,14 @@ window.addEventListener("load", () => {
     initExistingWidget: (title, _widgetInstance, qset, version) =>
       (app = new App({ title, qset, version })),
     initNewWidget: () => (app = new App()),
-    onSaveComplete: () => app.openWarningDialog("Saved!"),
+    onSaveComplete: () => true,
     onSaveClicked: (mode = "save") => {
       mode = "publish";
       if (mode == "publish") {
         if (!app.getParagraph()) {
-          app.openWarningDialog("Passage is required to publish widget.");
+          app.openWarningDialog(
+            "No passage Entered for this fill-in-the-blank activity. Please enter more text."
+          );
           return;
         }
       }

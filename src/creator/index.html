@@ -191,9 +191,8 @@
             <div class="dialog-left">
               <img src="/source-images/IconBig.png" alt="" />
             </div>
-
             <div class="dialog-right">
-              <h2>Welcome to Word Guess !</h2>
+              <h2>Welcome to Word Guess!</h2>
               <p class="subtitle">
                 Create a fun fill-in-the-blank activity from any passage.
               </p>
@@ -209,7 +208,7 @@
                   </li>
                 </ol>
 
-                <h4>Students will</h4>
+                <h3>Students will</h3>
                 <p>
                   Read the passage and use the word bank to fill in the blanks.
                 </p>
@@ -227,8 +226,15 @@
     <dialog id="error-dialog">
       <div class="dialog-shell">
         <div class="dialog-box">
-          <button id="error-dialog-close-button">X</button>
-          <div class="dialog-content" id="error-message">hello!</div>
+          <div>
+            <button
+              title="close-error-dialog"
+              id="error-dialog-close-button"
+              class="close-btn x-btn"
+            ></button>
+            <h2 class="error-heading">Error!</h2>
+          </div>
+          <p class="error-text" id="error-message">!!!</p>
         </div>
       </div>
     </dialog>

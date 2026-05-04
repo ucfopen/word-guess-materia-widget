@@ -1,3 +1,5 @@
+@use "dialog";
+
 // RESET
 *,
 *::before,
@@ -407,6 +409,14 @@ section.inner {
   }
 }
 
+.x-btn {
+  width: 12px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("/source-images/Trash.svg");
+}
+
 .pencil-btn {
   width: 35px;
   height: 35px;
@@ -524,6 +534,7 @@ section.inner {
   cursor: pointer;
 
   display: inline-flex;
+  gap: 0.25rem;
   align-items: center;
   justify-content: center;
 
