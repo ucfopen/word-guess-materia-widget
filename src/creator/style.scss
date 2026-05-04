@@ -1,5 +1,4 @@
-@use "../shared/reset.scss";
-@use "dialog.scss";
+@use "../shared/style.scss";
 @use "slider.scss";
 
 // hide these for now
@@ -20,11 +19,6 @@ input::placeholder {
 
 body {
   cursor: default;
-
-  background-image: url("source-images/Background.jpeg");
-  background-repeat: repeat;
-  background-position: top center;
-  background-size: auto;
 
   font-family: "Montserrat", sans-serif;
 

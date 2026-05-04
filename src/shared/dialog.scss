@@ -115,28 +115,6 @@ dialog {
   }
 }
 
-.create-btn {
-  font-family: "Paytone One";
-  margin-top: 18px;
-  background: #bfee78;
-  color: #2e0073;
-  border: 3px solid #93d82d;
-  border-radius: 15px;
-  padding: 10px 24px;
-
-  font-size: 17px;
-  font-weight: 400;
-  cursor: pointer;
-
-  box-shadow: 0 4px 0 #a6c51b;
-  transition: transform 0.15s ease;
-  justify-content: center;
-
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
 .close-btn {
   position: absolute;
   top: 14px;

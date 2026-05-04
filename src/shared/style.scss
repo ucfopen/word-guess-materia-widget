@@ -1,0 +1,33 @@
+@use "reset.scss";
+@use "dialog.scss";
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: url("source-images/Background.jpeg") top center / auto repeat;
+  font-size: 16px;
+}
+
+// TODO: clean?
+.action-btn {
+  font-family: "Paytone One";
+  font-size: 17px;
+  font-weight: 400;
+
+  margin-top: 18px;
+  padding: 10px 24px;
+
+  background: #bfee78;
+  color: #2e0073;
+  border: 3px solid #93d82d;
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 0 #a6c51b;
+  transition: transform 0.2s ease;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}

@@ -9,13 +9,9 @@ const rules = widgetWebpack.getDefaultRules();
 const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
   entries: {
     player: [
-      // TODO
-      path.join(srcPath, "player", "player.html"),
-      path.join(srcPath, "player", "player-events.js"),
-      path.join(srcPath, "player", "player-logic.js"),
-      path.join(srcPath, "player", "player-UI.js"),
-      path.join(srcPath, "player", "player.js"),
-      path.join(srcPath, "player", "player.scss"),
+      path.join(srcPath, "player", "index.html"),
+      path.join(srcPath, "player", "index.js"),
+      path.join(srcPath, "player", "style.scss"),
     ],
     creator: [
       path.join(srcPath, "creator", "index.html"),
