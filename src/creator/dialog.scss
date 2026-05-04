@@ -1,0 +1,160 @@
+dialog {
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  h1 {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  h2 {
+    font-family: "Paytone One";
+  }
+
+  h3,
+  h4 {
+    font-family: "Paytone One";
+    -webkit-text-stroke: 0.3em #451b87;
+    paint-order: stroke fill;
+  }
+
+  p,
+  li {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  margin: auto;
+  border-radius: 15px;
+  border-color: transparent;
+}
+
+.dialog-box {
+  position: relative;
+  width: fit-content;
+  max-width: min(92vw, 700px);
+  border-radius: 16px;
+  padding: 10px 20px;
+}
+
+.dialog-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.dialog-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  border-radius: 12px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.dialog-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-family: "Paytone One";
+    margin: 0 0 6px;
+    font-size: 34px;
+    text-align: center;
+    white-space: nowrap;
+    color: #2a0b57;
+  }
+}
+
+.subtitle {
+  text-align: center;
+  font-weight: 600;
+  margin: 0 0 18px;
+  font-size: 15px;
+  color: #8a8a8a;
+}
+
+.info-card {
+  background: #7538d3;
+  color: #fff;
+  border-radius: 14px;
+  padding: 25px 40px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  h3,
+  h4 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0 0 10px;
+  }
+
+  ol {
+    padding-left: 18px;
+    margin: 0 0 16px;
+  }
+
+  li {
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+.create-btn {
+  font-family: "Paytone One";
+  margin-top: 18px;
+  background: #bfee78;
+  color: #2e0073;
+  border: 3px solid #93d82d;
+  border-radius: 15px;
+  padding: 10px 24px;
+
+  font-size: 17px;
+  font-weight: 400;
+  cursor: pointer;
+
+  box-shadow: 0 4px 0 #a6c51b;
+  transition: transform 0.15s ease;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+
+  scale: 2;
+}
+
+.error-heading {
+  font-size: 2rem;
+  color: #2e0073;
+  text-align: center;
+  font-weight: normal;
+}
+
+.error-text {
+  max-width: 15rem;
+  text-align: center;
+  color: #2e0073;
+  font-weight: bold;
+}
