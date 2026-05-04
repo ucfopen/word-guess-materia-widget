@@ -28,6 +28,7 @@ class Utils {
   }
 }
 
+// See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
   INFO: Symbol("INFO"),
   WARNING: Symbol("WARNING"),
@@ -69,8 +70,8 @@ class App {
     pencilEdit: document.getElementById("pencil-edit"),
     slideToggle: document.getElementById("slide-knob"),
 
-    helpDialog: document.getElementById("instructionalDialog"),
-    helpDialogCloseButton: document.getElementById("closeButton"),
+    helpDialog: document.getElementById("help-dialog"),
+    helpDialogCloseButton: document.getElementById("close-button"),
 
     titleInput: document.getElementById("title"),
 
@@ -106,6 +107,9 @@ class App {
 
       this.highlighted = new Set(qset.items.map((x) => x.options.index));
       this.generateWords();
+
+      this.sliderUsed = true;
+      this.updateSlider(qset.options.slider);
 
       if (qset.options.mode == "manual") this.switchToManual();
       else this.switchToAuto();
@@ -176,8 +180,6 @@ class App {
     this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
 
     this.el.pickarea.addEventListener("click", (e) => {
-      e.stopPropagation();
-
       if (this.activeMode == "automatic") this.switchToManual();
 
       const span = e.target;
@@ -273,16 +275,16 @@ class App {
     this.el.pickarea.innerHTML = "";
 
     for (const word of this.words) {
-      const span = document.createElement("span");
-      span.className = "word-span-pill";
-      span.textContent = word.text;
-      span.dataset.id = word.id;
+      const pill = document.createElement("button");
+      pill.className = "word-span-pill";
+      pill.textContent = word.text;
+      pill.dataset.id = word.id;
 
       if (this.highlighted.has(word.id)) {
-        span.classList.add("highlighted");
+        pill.classList.add("highlighted");
       }
 
-      this.el.pickarea.appendChild(span);
+      this.el.pickarea.appendChild(pill);
     }
   }
 
@@ -360,7 +362,7 @@ class App {
       span.textContent = word.text;
 
       const button = document.createElement("button");
-      button.className = "x-btn"
+      button.className = "x-btn";
       button.dataset.id = id;
 
       pill.appendChild(span);
@@ -400,6 +402,7 @@ class App {
         100 +
       "%";
 
+    this.el.slider.value = value;
     this.el.sliderMask.dataset.percentage = "1:" + this.el.slider.value;
     this.el.sliderMsg.textContent = `${this.el.slider.value} words between`;
   }
@@ -510,6 +513,7 @@ class App {
       options: {
         paragraph: this.getParagraph(),
         mode: this.activeMode ?? "manual",
+        slider: this.el.slider.value,
       },
     };
 

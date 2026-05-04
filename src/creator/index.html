@@ -21,18 +21,15 @@
 
       <section id="edit-region" class="inner">
         <section class="title-box">
-          <!-- TODO -->
-          <!-- <div class="information">
-            <div id="title-info-box" class="info-box ">
-              <p>
-                This will appear directly above your finished paragraph. Leave
-                this area unchanged if you don't want to display a title.
-              </p>
-              <div class="arrow-down"></div>
-            </div>
-          </div> -->
           <div class="section-header">
-            <span class="info-icon"></span>
+            <span class="info-icon">
+              <div class="info-box bottom">
+                <p>
+                  This will appear above your paragraph. Leave unchanged to hide
+                  the title.
+                </p>
+              </div>
+            </span>
             <h2>Add Title:</h2>
           </div>
           <input
@@ -46,15 +43,14 @@
         <section class="passage-box">
           <div class="segment">
             <div class="section-header">
-              <div class="information">
-                <div id="paragraph-info-box" class="info-box">
+              <span class="info-icon">
+                <div class="info-box top">
                   <p>
-                    This will be displayed with removed words for students to
-                    fill in. To alter how words are removed, change the options.
+                    Passage will display with the removed words for students to
+                    fill in. Change options to adjust removal.
                   </p>
                 </div>
-              </div>
-              <span class="info-icon"></span>
+              </span>
               <h2>Add Passage:</h2>
             </div>
             <div
@@ -65,26 +61,26 @@
               <span id="slide-knob" class="slide-knob"></span>
 
               <button
-                tabindex="0"
                 class="toggle-btn pencil-btn"
                 id="pencil-edit"
+                title="edit"
               ></button>
 
               <button
-                tabindex="0"
                 class="toggle-btn mouse-btn"
                 id="mouse-click"
+                title="pick"
               ></button>
             </div>
           </div>
 
           <div class="passage container">
-            <div id="pickarea"></div>
             <textarea
               id="textarea"
               class=""
               placeholder="Enter a paragraph here."
             ></textarea>
+            <div id="pickarea"></div>
             <p><span id="word-count"></span></p>
           </div>
         </section>
@@ -92,51 +88,40 @@
 
       <section id="bank-region" class="inner">
         <section class="options">
-          <div class="info-wrap">
-            <!-- <div class="information">
-                <div id="title-info-box" class="info-box ">
-                  <p>
-                    This will appear directly above your finished paragraph. Leave
-                    this area unchanged if you don't want to display a title.
-                  </p>
-                  <div class="arrow-down"></div>
-                </div>
-              </div> -->
-            <div class="section-header">
-              <span class="info-icon"></span>
-              <h2>How should words be hidden?</h2>
-            </div>
+          <div class="section-header">
+            <span class="info-icon">
+              <div class="info-box bottom">
+                <p>
+                  Select how Word Guess should hide the words. Pick the specific
+                  words with "let me choose", or get an automatic selection.
+                </p>
+              </div>
+            </span>
+            <h2>How should words be hidden?</h2>
           </div>
-
           <div class="container" id="options-container">
-            <nav class="">
+            <nav>
               <div class="center">
                 <div class="toggle-slider" id="temp-toggle-mode">
                   <span id="mode-slide-knob" class="slide-knob slid"></span>
 
-                  <button tabindex="0" id="auto-button" class="toggle-btn">
-                    Automatic
-                  </button>
+                  <button id="auto-button" class="toggle-btn">Automatic</button>
 
-                  <button tabindex="0" id="manual-button" class="toggle-btn">
+                  <button id="manual-button" class="toggle-btn">
                     Let Me Choose
                   </button>
                 </div>
               </div>
 
-              <!--LET ME CHOOSE BUTTON -->
-
               <div id="manual-info-container" class="mode-info-container">
                 <p class="info">Click the words in the text to hide.</p>
-
-                <!-- <div class="progress-bar-container">
+                <!-- TODO -->
+                <div class="progress-bar-container">
                   <div id="manual-bar"></div>
-                </div> -->
-
+                </div>
                 <p id="rec-message-man" class="info">mmm</p>
+                <!-- TODO -->
               </div>
-
-              <!--AUTOMATIC BUTTON -->
 
               <div id="auto-info-container" class="mode-info-container">
                 <p class="info">Set the frequency of words hidden.</p>
@@ -153,7 +138,9 @@
                   />
                 </div>
 
+                <!-- TODO -->
                 <p id="rec-message-auto" class="info">aaa</p>
+                <!-- TODO -->
               </div>
             </nav>
           </div>
@@ -161,22 +148,22 @@
 
         <section id="hidden-words" class="passage-box">
           <div id="hidden-info" class="information">
-            <div id="hidden-words-info-box" class="info-box">
-              <!-- <div class="arrow-down"></div> -->
-            </div>
             <div class="section-header">
               <h2>Word Bank:</h2>
             </div>
             <p>Word bank students will use to fill the blanks.</p>
           </div>
-
           <div id="word-bank-container" class="container">
             <div id="word-bank"></div>
             <div class="word-bank-info-container">
               <span id="word-bank-info" class="warning"></span>
               <div class="word-bank-buttons">
-                <span class="trash-btn" id="trash-btn"></span>
-                <span class="refresh-btn" id="refresh-btn"></span>
+                <button class="trash-btn" id="trash-btn" title="clear"></button>
+                <button
+                  class="refresh-btn"
+                  id="refresh-btn"
+                  title="refresh"
+                ></button>
               </div>
             </div>
           </div>
@@ -184,7 +171,7 @@
       </section>
     </section>
 
-    <dialog id="instructionalDialog">
+    <dialog id="help-dialog">
       <div class="dialog-shell">
         <div class="dialog-box">
           <div class="dialog-content">
@@ -196,7 +183,6 @@
               <p class="subtitle">
                 Create a fun fill-in-the-blank activity from any passage.
               </p>
-
               <div class="info-card">
                 <h3>Create your Word Guess!</h3>
                 <ol>
@@ -207,14 +193,12 @@
                     you
                   </li>
                 </ol>
-
                 <h3>Students will</h3>
                 <p>
                   Read the passage and use the word bank to fill in the blanks.
                 </p>
               </div>
-
-              <button id="closeButton" class="create-btn">
+              <button id="close-button" class="create-btn">
                 Create Activity
               </button>
             </div>
