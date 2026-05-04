@@ -46,7 +46,7 @@ class App {
     wordBank: document.getElementById("word-bank"),
     wordBankInfo: document.getElementById("word-bank-info"),
 
-    slider: document.getElementById("myRange"),
+    slider: document.getElementById("slider"),
     sliderMask: document.getElementById("slider-mask"),
 
     manualBtn: document.getElementById("manual-button"),
@@ -508,26 +508,21 @@ class App {
   }
 
   buildSaveData() {
-    const data = {
-      items: [],
-      options: {
-        paragraph: this.getParagraph(),
-        mode: this.activeMode ?? "manual",
-        slider: this.el.slider.value,
-      },
-    };
-
-    for (const { index, text } of this.getHighlighted())
-      data.items.push({
+    return {
+      items: this.getHighlighted().map(({ text, index }) => ({
         id: null,
         type: "wordguess",
         materiaType: "question",
         questions: [{ text: `Word ${index}` }],
         answers: [{ text }],
         options: { index },
-      });
-
-    return data;
+      })),
+      options: {
+        paragraph: this.getParagraph(),
+        mode: this.activeMode ?? "manual",
+        slider: this.el.slider.value,
+      },
+    };
   }
 }
 

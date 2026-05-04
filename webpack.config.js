@@ -26,8 +26,8 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
   copyList: [
     ...widgetWebpack.getDefaultCopyList(),
     {
-      from: `${srcPath}source-images`,
-      to: `${outputPath}source-images`,
+      from: path.join(srcPath, "source-images"),
+      to: path.join(outputPath, "source-images"),
       toType: "dir",
     },
   ],
