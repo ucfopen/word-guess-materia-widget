@@ -1,3 +1,5 @@
+import { QSetUtil, QSet } from "../utils/qset";
+
 class Utils {
   static conjunctions = new Set([
     "and",
@@ -19,12 +21,12 @@ class Utils {
     "into",
   ]);
 
-  // its important to have these separate so that the logic can be changed imo
+  // Its important to have these separate so that the logic can be changed imo
   static getMaxSelected(count) {
-    return Math.round(this.getUpperLimitSelected(count)) + 5;
+    return Infinity;
   }
   static getUpperLimitSelected(count) {
-    return Math.sqrt(count);
+    return Infinity;
   }
 }
 
@@ -72,6 +74,8 @@ class App {
     helpDialog: document.getElementById("instructionalDialog"),
     helpDialogCloseButton: document.getElementById("closeButton"),
 
+    titleInput: document.getElementById("title"),
+
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
@@ -83,16 +87,27 @@ class App {
   sliderUsed = false;
   bound = false;
 
-  constructor({ qset, title } = {}) {
+  /**
+   * @param {QSet?} qset
+   */
+  constructor(qset) {
     this.bind();
 
-    this.openWarningDialog("TESTING THAT THIS WORKS!");
-
-    // switch to expected modes
     this.switchToManual();
-    this.switchToWriteMode();
 
-    // render everything
+    if (qset) {
+      const { title, paragraph, highlighted } = QSetUtil.QSetToInfo(qset);
+      this.setTitle(title);
+
+      this.setParagraph(paragraph);
+      this.highlighted = new Set(highlighted.map((x) => x.id));
+      this.generateWords();
+
+      this.switchToPickMode();
+    } else {
+      this.switchToWriteMode();
+    }
+
     this.renderWordBank();
     this.renderWords();
 
@@ -100,7 +115,7 @@ class App {
   }
 
   openHelpDialog() {
-    // this.el.helpDialog.showModal();
+    this.el.helpDialog.showModal();
   }
 
   closeHelpDialog() {
@@ -109,7 +124,7 @@ class App {
 
   openWarningDialog(message = "") {
     this.el.errorMsg.innerText = message;
-    // this.el.errorDialog.showModal();
+    this.el.errorDialog.showModal();
   }
 
   closeWarningDialog() {
@@ -160,16 +175,16 @@ class App {
       const span = e.target;
       if (!span.classList.contains("word-span-pill")) return;
 
-      const id = span.dataset.id;
+      const id = Number(span.dataset.id);
 
       if (this.highlighted.has(id)) {
         this.highlighted.delete(id);
         span.classList.remove("highlighted");
-      } else {
-        if (this.highlighted.size < Utils.getMaxSelected(this.words.length)) {
-          this.highlighted.add(id);
-          span.classList.add("highlighted");
-        }
+      } else if (
+        this.highlighted.size < Utils.getMaxSelected(this.words.length)
+      ) {
+        this.highlighted.add(id);
+        span.classList.add("highlighted");
       }
 
       this.renderWordBank();
@@ -189,6 +204,30 @@ class App {
     );
   }
 
+  getParagraph() {
+    return this.el.textarea.value.trim();
+  }
+  setParagraph(paragraph) {
+    this.el.textarea.value = paragraph;
+  }
+
+  setTitle(title) {
+    this.el.titleInput.value = title;
+  }
+  getTitle() {
+    return this.el.titleInput.value;
+  }
+
+  getHighlighted() {
+    return this.words
+      .map((word, index) => ({
+        id: word.id,
+        text: word.text,
+        index,
+      }))
+      .filter((word) => this.highlighted.has(word.id));
+  }
+
   generateWords() {
     const text = this.el.textarea.value.trim();
     if (!text) {
@@ -197,22 +236,18 @@ class App {
       return;
     }
 
-    const parts = text.split(/\s+/);
+    const words = text.split(/\s+/);
     const newWords = [];
 
-    let prevIndex = 0;
+    let oldIndex = 0;
 
-    for (const word of parts) {
-      const existing = this.words.find(
-        (w, i) => i >= prevIndex && w.text === word
-      );
-
-      if (existing) {
-        newWords.push(existing);
-        prevIndex++;
+    for (const word of words) {
+      if (oldIndex < this.words.length && this.words[oldIndex].text === word) {
+        newWords.push(this.words[oldIndex]);
+        oldIndex++;
       } else {
         newWords.push({
-          id: String(this.wordIdCounter++),
+          id: this.wordIdCounter++,
           text: word,
         });
       }
@@ -343,7 +378,6 @@ class App {
     value = value ?? Math.floor((24 / 100) * this.words.length);
     this.el.slider.max = Math.max(value, 3);
   }
-
   updateSliderMin(value = 3) {
     this.el.slider.min = Math.max(value, 3);
   }
@@ -452,26 +486,6 @@ class App {
 
   renderManualProgress() {
     // TODO
-    this.el.manualProgressInfo.style.display = "none";
-    return;
-    const max = Math.floor((15 / 100) * this.words.length);
-    const min = 1;
-
-    const count = this.highlighted.size;
-
-    if (this.words.length === 0) return;
-
-    this.el.manualProgressBar.style.width = `${(count / max) * 100}%`;
-
-    if (count === 0) {
-      this.el.manualProgressInfo.textContent = `Recommended ${min} - ${max}`;
-    } else if (count < min) {
-      this.el.manualProgressInfo.textContent = "Too few hidden words";
-    } else if (count <= max) {
-      this.el.manualProgressInfo.textContent = "Good choice";
-    } else {
-      this.el.manualProgressInfo.textContent = "Too many hidden words";
-    }
   }
 
   clearHighlighted() {
@@ -482,18 +496,25 @@ class App {
     this.renderManualProgress();
   }
 
-  // TODO
   buildSaveData() {
-    return {};
+    return QSetUtil.DataToQSet(
+      this.getTitle(),
+      this.getParagraph(),
+      this.getHighlighted()
+    );
   }
 }
 
 window.addEventListener("load", () => {
-  // TODO
+  let app = null;
   Materia.CreatorCore.start({
-    initExistingWidget: (title, widgetInstance, qset, qsetVersion) => {},
-    initNewWidget: () => {
-      const app = new App();
+    initExistingWidget: (_title, _widgetInstance, qset, _version) =>
+      (app = new App(qset)),
+    initNewWidget: () => (app = new App()),
+    onSaveComplete: () => true,
+    onSaveClicked: () => {
+      Materia.CreatorCore.save(app.getTitle(), app.buildSaveData(), 2);
     },
+    manualResize: false,
   });
 });
