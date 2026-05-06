@@ -508,12 +508,13 @@ class App {
   }
 
   buildSaveData() {
+    let cnt = 0;
     return {
       items: this.getHighlighted().map(({ text, index }) => ({
         id: null,
         type: "wordguess",
         materiaType: "question",
-        questions: [{ text: `Word ${index}` }],
+        questions: [{ text: `Word #${++cnt}` }],
         answers: [{ text }],
         options: { index },
       })),
