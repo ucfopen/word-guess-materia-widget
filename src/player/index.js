@@ -94,7 +94,16 @@ class App {
     return span;
   }
 
-  constructor({ items, options, title }) {
+  constructor({ items, options, title, version }) {
+    if (version != 2) {
+      // TODO: add version 1 support
+      Materia.Engine.alert(
+        "Unsupported QSet Version",
+        "QSet version 1 isn't supported yet."
+      );
+      return;
+    }
+
     this.title = title;
     this.paragraph = options.paragraph;
     this.words = Object.fromEntries(
@@ -204,8 +213,7 @@ window.addEventListener("load", () => {
   let app;
   Materia.Engine.start({
     start: (instance, qset, qsetVersion) => {
-      console.log(qset);
-      app = new App({ ...qset, title: instance.name });
+      app = new App({ ...qset, title: instance.name, version: qsetVersion });
     },
     manualResize: false,
   });
