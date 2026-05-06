@@ -28,3 +28,9 @@
 
 - write html
 - write style
+
+## Other
+
+- Redo icons
+- Redo screenshots
+- Rewrite the README.md

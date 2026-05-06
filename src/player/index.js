@@ -122,7 +122,7 @@ class App {
     this.el.title.innerText = this.title;
 
     const homes = [];
-    for (const [index, { text, _id }] of Object.entries(this.words)) {
+    for (const [index, { text, id: _id }] of Object.entries(this.words)) {
       const h = this.makeWordPillHome();
       h.appendChild(this.makeWordPill(index, text));
       homes.push(h);

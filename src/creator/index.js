@@ -35,6 +35,9 @@ const WARNING_LEVEL = Object.freeze({
   ERROR: Symbol("ERROR"),
 });
 
+// Driver App handles logic, events, and rendering.
+// In the future we should think about separating such that each unit only has
+// one job.
 class App {
   words = [];
   highlighted = new Set();
@@ -78,7 +81,7 @@ class App {
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
-      "error-dialog-close-button"
+      "error-dialog-close-button",
     ),
   };
 
@@ -203,14 +206,14 @@ class App {
 
     this.el.mouseClick.addEventListener("click", () => this.switchToPickMode());
     this.el.pencilEdit.addEventListener("click", () =>
-      this.switchToWriteMode()
+      this.switchToWriteMode(),
     );
 
     this.el.helpDialogCloseButton.addEventListener("click", () =>
-      this.closeHelpDialog()
+      this.closeHelpDialog(),
     );
     this.el.errorDialogCloseButton.addEventListener("click", () =>
-      this.closeWarningDialog()
+      this.closeWarningDialog(),
     );
   }
 
@@ -324,7 +327,7 @@ class App {
       if (this.activeMode == "manual" && this.words.length)
         this.wordBankInfo(
           "Select some words to get started!",
-          WARNING_LEVEL.INFO
+          WARNING_LEVEL.INFO,
         );
 
       this.hideTrashButton();
@@ -341,12 +344,12 @@ class App {
       )
         this.wordBankInfo(
           "You've picked a lot of words!",
-          WARNING_LEVEL.WARNING
+          WARNING_LEVEL.WARNING,
         );
       else {
         this.wordBankInfo(
           `${this.highlighted.size} word${this.highlighted.size == 1 ? "" : "s"}`,
-          WARNING_LEVEL.INFO
+          WARNING_LEVEL.INFO,
         );
       }
     }
@@ -396,6 +399,8 @@ class App {
     this.updateSliderMax();
     this.updateSliderMin();
 
+    // Plus one so it looks a bit better. Will need to be changed when the
+    // slider is Re:Styled.
     this.el.sliderMask.style.width =
       ((value - this.el.slider.min + 1) /
         (this.el.slider.max - this.el.slider.min + 1)) *
@@ -539,7 +544,7 @@ window.addEventListener("load", () => {
       if (mode == "publish") {
         if (!app.getParagraph()) {
           app.openWarningDialog(
-            "No passage Entered for this fill-in-the-blank activity. Please enter more text."
+            "No passage Entered for this fill-in-the-blank activity. Please enter more text.",
           );
           return;
         }
@@ -548,7 +553,7 @@ window.addEventListener("load", () => {
       Materia.CreatorCore.save(
         app.getTitle() || "New WordGuess Widget",
         app.buildSaveData(),
-        2
+        2,
       );
     },
     manualResize: false,
