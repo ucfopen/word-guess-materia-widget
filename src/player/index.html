@@ -5,43 +5,32 @@
     <meta charset="utf-8" />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Frijole&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Sedan+SC&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Montserrat:wght@100..900&display=swap"
       rel="stylesheet"
     />
 
+    <link rel="stylesheet" href="player.css" />
     <script src="materia.enginecore.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="player.css" />
-    <script src="player.js"></script>
+    <script src="player.js" defer></script>
   </head>
+
   <body>
     <main>
       <div class="logo-container">
-        <img src="/source-images/Icon.png" alt="" class="logo" />
+        <img src="/assets/Icon.png" alt="Game logo" class="logo" />
       </div>
+
       <section class="word-bank-container">
         <h2>Word Bank</h2>
-        <div class="container word-bank">
-          <span class="word-pill active" draggable="true">hello</span>
-          <span class="word-pill inactive" draggable="true">apples</span>
-          <span class="word-pill active" draggable="true"
-            >this is a long word</span
-          >
-          <span class="word-pill inactive" draggable="true"
-            >this is a short word</span
-          >
-          <span class="word-pill active" draggable="true">abcdefg</span>
-        </div>
+
+        <div class="word-bank" id="word-bank"></div>
         <button id="submit-button" class="action-btn">Submit</button>
       </section>
-      <section class="container passage">
-        <h2>This is a Title!</h2>
-        This is where some content will be. Need to style a
-        <span class="word-spot">
-          <span class="word-pill active" draggable="true">hello</span>
-        </span>
-        <span class="word-spot"></span>
-        component now.
+
+      <section class="passage">
+        <h2 id="title">Placeholder</h2>
+
+        <div id="passage">Placeholder</div>
       </section>
     </main>
   </body>

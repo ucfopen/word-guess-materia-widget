@@ -60,7 +60,7 @@ input {
     margin: 5px;
     cursor: pointer;
 
-    background: url("/source-images/InfoBubble.svg") no-repeat center;
+    background: url("/assets/InfoBubble.svg") no-repeat center;
     background-size: contain;
 
     .info-box {
@@ -364,38 +364,47 @@ section.inner {
   }
 }
 
+.close-btn {
+  // IDK WHY THIS NEEDS TO BE HERE
+  outline: none;
+  scale: 1;
+  
+  width: 12px;
+  height: 12px;
+  background: transparent url("/assets/CloseButton.svg") no-repeat center;
+}
+
 .x-btn {
   width: 12px;
   height: 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: url("/source-images/Trash.svg");
+  background: transparent url("/assets/WordPillXButton.svg") no-repeat
+    center;
 }
 
 .pencil-btn {
   width: 35px;
   height: 35px;
-  background: transparent url("/source-images/Pencil.svg") no-repeat center;
+  background: transparent url("/assets/Pencil.svg") no-repeat center;
 }
 
 .mouse-btn {
   width: 35px;
   height: 35px;
-  background: transparent url("/source-images/MouseClick.svg") no-repeat center;
+  background: transparent url("/assets/MouseClick.svg") no-repeat center;
 }
 
 .refresh-btn {
   display: block;
   width: 35px;
   height: 35px;
-  background: transparent url("/source-images/Refresh.svg") no-repeat center;
+  background: transparent url("/assets/Refresh.svg") no-repeat center;
 }
 
 .trash-btn {
   display: block;
   width: 35px;
   height: 35px;
-  background: transparent url("/source-images/Trash.svg") no-repeat center;
+  background: transparent url("/assets/Trash.svg") no-repeat center;
 }
 
 #word-bank-container {
@@ -448,7 +457,7 @@ section.inner {
   content: "";
   width: 30px;
   height: 30px;
-  background: url("/source-images/InfoBubble.svg") no-repeat center/contain;
+  background: url("/assets/InfoBubble.svg") no-repeat center/contain;
 }
 
 .word-bank-buttons {
