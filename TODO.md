@@ -8,18 +8,23 @@
 - redesign automatic controls
   - need to talk to someone about this
 
-- I need the svg for the x button to put everywhere
-  - close popup
-  - remove word from wordbank
-
 - clean up html
 - clean up css
-  - I need these to be sort of a restructure and cleanup to remove a lot of the headaches maintaining in the future
 
 ## Player
 
-- write html
-- style html
-- write backend code
+- add popups
+
+- add responsiveness
+
+- add confetti
+
+- style buttons
+
+- clean up html
+- clean up css
 
 ## Score Screen
+
+- write html
+- write style
