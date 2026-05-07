@@ -11,7 +11,7 @@ Word Guess is designed for use with [Materia](https://github.com/ucfopen/Materia
 
 ### Basic Use
 
-In a production evironment, Word Guess is installed to your Materia instance and is accessed via the Widget Catalog. For development, Word Guess is bundled with the [Materia Widget Development Kit](https://github.com/ucfopen/Materia-Widget-Dev-Kit), which allows for rapid development in a local context using express.js.
+In a production environment, Word Guess is installed to your Materia instance and is accessed via the Widget Catalog. For development, Word Guess is bundled with the [Materia Widget Development Kit](https://github.com/ucfopen/Materia-Widget-Dev-Kit), which allows for rapid development in a local context using express.js.
 
 ### Local Development
 
