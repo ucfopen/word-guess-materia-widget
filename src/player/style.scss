@@ -207,6 +207,9 @@ section {
     font-size: 20px;
 
     color: #2e0073;
+    -webkit-text-stroke: 1pt #2e0073;
+    letter-spacing: 6%;
+    paint-order: stroke fill;
     background-color: white;
 
     border: 1px solid #0a0909;
@@ -304,4 +307,18 @@ section {
       margin: 0;
     }
   }
+}
+
+// TODO: not do !important
+.left-arrow {
+  width: 36px !important;
+  height: 36px !important;
+  background: url("/assets/LeftArrow.svg") no-repeat center;
+  background-size: contain;
+}
+.right-arrow {
+  width: 36px !important;
+  height: 36px !important;
+  background: url("/assets/RightArrow.svg") no-repeat center;
+  background-size: contain;
 }
