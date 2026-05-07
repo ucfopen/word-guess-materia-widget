@@ -20,10 +20,10 @@ class Utils {
   ]);
 
   // Its important to have these separate so that the logic can be changed imo
-  static getMaxSelected(count) {
+  static getMaxSelected(_count) {
     return Infinity;
   }
-  static getUpperLimitSelected(count) {
+  static getUpperLimitSelected(_count) {
     return Infinity;
   }
 }
@@ -102,7 +102,7 @@ class App {
     if (options) {
       const { title, qset, version } = options;
 
-      if (version != 2)
+      if (version !== 2)
         this.openWarningDialog(`QSet version ${version} is not supported yet.`);
 
       this.setTitle(title);
@@ -115,7 +115,7 @@ class App {
       this.sliderUsed = true;
       this.updateSlider(qset.options.slider);
 
-      if (qset.options.mode == "manual") this.switchToManual();
+      if (qset.options.mode === "manual") this.switchToManual();
       else this.switchToAuto();
 
       this.switchToPickMode();
@@ -149,6 +149,7 @@ class App {
 
   bind() {
     if (this.bound) return;
+
     this.bound = true;
 
     this.el.textarea.addEventListener("input", () => {
@@ -184,7 +185,7 @@ class App {
     this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
 
     this.el.pickarea.addEventListener("click", (e) => {
-      if (this.activeMode == "automatic") this.switchToManual();
+      if (this.activeMode === "automatic") this.switchToManual();
 
       const span = e.target;
       if (!span.classList.contains("word-span-pill")) return;
@@ -270,9 +271,8 @@ class App {
     this.words = newWords;
 
     const valid = new Set(this.words.map((w) => w.id));
-    for (const id of this.highlighted) {
+    for (const id of this.highlighted)
       if (!valid.has(id)) this.highlighted.delete(id);
-    }
   }
 
   renderWords() {
@@ -284,9 +284,7 @@ class App {
       pill.textContent = word.text;
       pill.dataset.id = word.id;
 
-      if (this.highlighted.has(word.id)) {
-        pill.classList.add("highlighted");
-      }
+      if (this.highlighted.has(word.id)) pill.classList.add("highlighted");
 
       this.el.pickarea.appendChild(pill);
     }
@@ -325,11 +323,12 @@ class App {
     this.el.wordBank.innerHTML = "";
 
     if (this.highlighted.size === 0) {
-      if (this.activeMode == "manual" && this.words.length)
+      if (this.activeMode === "manual" && this.words.length) {
         this.wordBankInfo(
           "Select some words to get started!",
           WARNING_LEVEL.INFO,
         );
+      }
 
       this.hideTrashButton();
       return;
@@ -337,19 +336,19 @@ class App {
 
     this.wordBankInfo();
 
-    if (this.activeMode == "manual") {
+    if (this.activeMode === "manual") {
       if (this.highlighted.size === Utils.getMaxSelected(this.words.length))
         this.wordBankInfo("Thats enough!", WARNING_LEVEL.ERROR);
       else if (
         this.highlighted.size > Utils.getUpperLimitSelected(this.words.length)
-      )
+      ) {
         this.wordBankInfo(
           "You've picked a lot of words!",
           WARNING_LEVEL.WARNING,
         );
-      else {
+      } else {
         this.wordBankInfo(
-          `${this.highlighted.size} word${this.highlighted.size == 1 ? "" : "s"}`,
+          `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
           WARNING_LEVEL.INFO,
         );
       }
@@ -382,14 +381,13 @@ class App {
       this.el.wordBank.appendChild(pill);
     }
 
-    if (this.activeMode == "automatic") this.showRefreshButton();
+    if (this.activeMode === "automatic") this.showRefreshButton();
     else this.hideRefreshButton();
 
     this.showTrashButton();
   }
 
-  updateSliderMax(value = undefined) {
-    value = value ?? Math.floor((24 / 100) * this.words.length);
+  updateSliderMax(value = Math.floor((24 / 100) * this.words.length)) {
     this.el.slider.max = Math.max(value, 3);
   }
   updateSliderMin(value = 3) {
@@ -402,14 +400,14 @@ class App {
 
     // Plus one so it looks a bit better. Will need to be changed when the
     // slider is Re:Styled.
-    this.el.sliderMask.style.width =
+    this.el.sliderMask.style.width = `${
       ((value - this.el.slider.min + 1) /
         (this.el.slider.max - this.el.slider.min + 1)) *
-        100 +
-      "%";
+      100
+    }%`;
 
     this.el.slider.value = value;
-    this.el.sliderMask.dataset.percentage = "1:" + this.el.slider.value;
+    this.el.sliderMask.dataset.percentage = `1:${this.el.slider.value}`;
     this.el.sliderMsg.textContent = `${this.el.slider.value} words between`;
   }
 
@@ -431,7 +429,7 @@ class App {
     // On the off chance that 0 words are selected or they are the same
     // we reroll
     if (
-      (this.highlighted.size == 0 && this.words.length) ||
+      (this.highlighted.size === 0 && this.words.length) ||
       (oldHighlighted.length &&
         oldHighlighted.every((x) => this.highlighted.has(x)) &&
         this.words.length > 1)
@@ -460,7 +458,7 @@ class App {
   switchToAuto() {
     this.activeMode = "automatic";
 
-    // case where its not been updated yet
+    // Case where its not been updated yet
     if (!this.sliderUsed) {
       this.sliderUsed = true;
       this.updateSlider(3);
@@ -536,13 +534,15 @@ class App {
 window.addEventListener("load", () => {
   let app = null;
   Materia.CreatorCore.start({
-    initExistingWidget: (title, _widgetInstance, qset, version) =>
-      (app = new App({ title, qset, version })),
-    initNewWidget: () => (app = new App()),
+    initExistingWidget: (title, _widgetInstance, qset, version) => {
+      app = new App({ title, qset, version });
+    },
+    initNewWidget: () => {
+      app = new App();
+    },
     onSaveComplete: () => true,
     onSaveClicked: (mode = "save") => {
-      mode = "publish";
-      if (mode == "publish") {
+      if (mode === "publish") {
         if (!app.getParagraph()) {
           app.openWarningDialog(
             "No passage Entered for this fill-in-the-blank activity. Please enter more text.",

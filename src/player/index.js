@@ -95,11 +95,11 @@ class App {
   }
 
   constructor({ items, options, title, version }) {
-    if (version != 2) {
+    if (version !== 2) {
       // TODO: add version 1 support
       Materia.Engine.alert(
         "Unsupported QSet Version",
-        "QSet version 1 isn't supported yet."
+        "QSet version 1 isn't supported yet.",
       );
       return;
     }
@@ -107,9 +107,10 @@ class App {
     this.title = title;
     this.paragraph = options.paragraph;
     this.words = Object.fromEntries(
-      items.map((i) => {
-        return [i.options.index, { text: i.answers[0].text, id: i.id }];
-      })
+      items.map((i) => [
+        i.options.index,
+        { text: i.answers[0].text, id: i.id },
+      ]),
     );
 
     this.bind();
@@ -117,6 +118,7 @@ class App {
 
   bind() {
     if (this.bound) return;
+
     this.bound = true;
 
     this.el.title.innerText = this.title;
@@ -136,6 +138,7 @@ class App {
       if (this.words[i])
         innerHTML += this.makeWordPillContainer(this.words[i].id).outerHTML;
       else innerHTML += paragraphWords[i];
+
       innerHTML += " ";
     }
     this.el.passage.innerHTML = innerHTML;
@@ -179,6 +182,7 @@ class App {
 
     document.addEventListener("drop", (e) => {
       if (!this.draggedItem) return;
+
       e.preventDefault();
 
       this.clearHighlights();
@@ -187,9 +191,8 @@ class App {
       if (closest) {
         if (closest.children.length) {
           const existing = closest.childNodes[0];
-          if (existing && existing !== this.draggedItem) {
+          if (existing && existing !== this.draggedItem)
             this.originSlot.appendChild(existing);
-          }
         }
 
         closest.appendChild(this.draggedItem);
@@ -202,7 +205,7 @@ class App {
       }
 
       const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
-        (slot) => slot.children.length === 0
+        (slot) => slot.children.length === 0,
       );
       if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
     });
@@ -210,10 +213,10 @@ class App {
 }
 
 window.addEventListener("load", () => {
-  let app;
+  let _app;
   Materia.Engine.start({
     start: (instance, qset, qsetVersion) => {
-      app = new App({ ...qset, title: instance.name, version: qsetVersion });
+      _app = new App({ ...qset, title: instance.name, version: qsetVersion });
     },
     manualResize: false,
   });
