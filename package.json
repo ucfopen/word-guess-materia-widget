@@ -12,8 +12,10 @@
     "build-dev": "mwdk-build-dev",
     "test": "echo 'Tests no yet implemented'",
     "test-ci": "echo 'CI tests no yet implemented'",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier . --check",
+    "format:write": "prettier . --write"
   },
   "version": "1.0.3",
   "author": "University of Central Florida, Center for Distributed Learning",
@@ -22,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.3.0",
-    "globals": "^17.6.0"
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
   }
 }
