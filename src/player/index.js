@@ -24,6 +24,15 @@ class App {
     passage: document.getElementById("passage"),
     title: document.getElementById("title"),
     submit: document.getElementById("submit-button"),
+    greeting: document.getElementById("greeting-dialog"),
+    playGameButton: document.getElementById("play-game-btn"),
+    howToPlayButton: document.getElementById("how-to-play-btn"),
+    welcomeMessage: document.getElementById("welcome-message"),
+    instructions: document.getElementById("instructions"),
+    controlsPointerButton: document.getElementById("pointer-btn"),
+    controlsKeyboardButton: document.getElementById("keyboard-btn"),
+    controlsKeyboard: document.getElementById("keyboard-controls"),
+    controlsPointer: document.getElementById("pointer-controls"),
     get allSlots() {
       return [...this.passageSlots, ...this.wordBankSlots];
     },
@@ -120,6 +129,39 @@ class App {
     if (this.bound) return;
 
     this.bound = true;
+
+    this.el.greeting.showModal();
+
+    this.el.howToPlayButton.addEventListener("click", () => {
+      this.el.welcomeMessage.style.display = "none";
+      this.el.instructions.style.display = "flex";
+    });
+
+    this.el.playGameButton.addEventListener("click", () => {
+      this.el.greeting.close();
+    });
+
+    document
+      .getElementsByClassName("page-selector")[0]
+      .addEventListener("click", (e) => {
+        console.log(e.target);
+      });
+
+    this.el.controlsKeyboardButton.addEventListener("click", () => {
+      this.el.controlsKeyboardButton.classList.add("selected");
+      this.el.controlsPointerButton.classList.remove("selected");
+
+      this.el.controlsKeyboard.style.display = "flex";
+      this.el.controlsPointer.style.display = "none";
+    });
+
+    this.el.controlsPointerButton.addEventListener("click", () => {
+      this.el.controlsPointerButton.classList.add("selected");
+      this.el.controlsKeyboardButton.classList.remove("selected");
+
+      this.el.controlsPointer.style.display = "flex";
+      this.el.controlsKeyboard.style.display = "none";
+    });
 
     this.el.title.innerText = this.title;
 

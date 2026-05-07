@@ -39,6 +39,148 @@
 
         <div id="passage"></div>
       </section>
+
+      <dialog id="greeting-dialog">
+        <div class="dialog-shell">
+          <div class="dialog-box">
+            <div class="dialog-content">
+              <div class="dialog-left">
+                <img src="/assets/IconBig.png" alt="" />
+              </div>
+              <div class="dialog-right">
+                <div id="welcome-message" style="display: block">
+                  <h2>Welcome to Word Guess!</h2>
+                  <div class="dialog-info">
+                    <p>
+                      Fill in the missing words and bring the passages back to
+                      life.
+                    </p>
+                    <p>Its simple to start, but harder to master...</p>
+                    <p>Ready to learn how it works?</p>
+                    <button id="how-to-play-btn" class="action-btn variant-2">
+                      How To Play
+                    </button>
+                  </div>
+                </div>
+                <div id="instructions" style="display: none" class="container">
+                  <h2>How To Play</h2>
+                  <div>
+                    <div class="page-selector">
+                      <button id="pointer-btn" class="selected">
+                        Pointer Controls
+                      </button>
+                      <button id="keyboard-btn">Keyboard Controls</button>
+                    </div>
+                    <div id="pointer-controls" class="dialog-info">
+                      <div class="item">
+                        <img alt="" />
+                        <div>
+                          <h3>Drag and Drop</h3>
+                          <p>
+                            Drag and Drop the word into where you think it
+                            belongs. Return a word to the bank by clicking it or
+                            dragging it back into its previous spot.
+                          </p>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="item">
+                        <img alt="" />
+                        <div>
+                          <h3>Tap / Click</h3>
+                          <p>
+                            Tap or Click the word once to select it or to return
+                            it to the bank
+                            <br />
+                            When a word is selected tap or click it again to
+                            place it in the spot where you think it belongs
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      id="keyboard-controls"
+                      style="display: none"
+                      class="dialog-info"
+                    >
+                      <table>
+                        <thead>
+                          <tr>
+                            <th scope="col">Control</th>
+                            <th scope="col">Function</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>
+                              <p class="key">Tab</p>
+                            </th>
+                            <td>
+                              <p>Navigate between words on screen</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">Enter</p>
+                            </th>
+                            <td>
+                              <p>
+                                Press <i>once</i> to select a word. Press again
+                                to place it into its destination.
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">A</p>
+                              <p class="key">A</p>
+                            </th>
+                            <td>
+                              <p>
+                                Once a word is selected, use the arrow keys to
+                                cycle through the spots.
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">H</p>
+                            </th>
+                            <td>
+                              <p>Open or close instructions</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">R</p>
+                            </th>
+                            <td>
+                              <p>Reset the selected word.</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">Ctrl</p>
+                              +
+                              <p class="key">R</p>
+                            </th>
+                            <td>
+                              <p>Reset all words.</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <button id="play-game-btn" class="action-btn">
+                    Play Game
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </main>
   </body>
 </html>

@@ -90,7 +90,7 @@ export default [
         "warn",
         {
           ignore: [-1, 0, 1],
-          ignoreArrayIndexes: true,
+          ignoreIndexes: true,
           ignoreDefaultValues: true,
           ignoreClassFieldInitialValues: true,
           enforceConst: true,

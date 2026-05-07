@@ -24,6 +24,8 @@
 - clean up html
 - clean up css
 
+- style text with border on popup
+
 ## Score Screen
 
 - write html
