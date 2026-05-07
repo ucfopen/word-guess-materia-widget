@@ -8,6 +8,10 @@
       href="https://fonts.googleapis.com/css2?family=Frijole&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Sedan+SC&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="materia.creatorcore.js"></script>
 
@@ -124,7 +128,13 @@
 
                 <div class="progress-bar-container">
                   <div id="slider-mask"></div>
-                  <input type="range" class="slider" id="slider" />
+                  <input
+                    type="range"
+                    min="1"
+                    max="100"
+                    class="slider"
+                    id="slider"
+                  />
                 </div>
 
                 <!-- TODO -->
@@ -136,11 +146,13 @@
         </section>
 
         <section id="hidden-words" class="passage-box">
-          <div id="hidden-info" class="information">
-            <div class="section-header">
-              <h2>Word Bank:</h2>
-            </div>
-            <p>Word bank students will use to fill the blanks.</p>
+          <div class="section-header">
+            <span class="info-icon">
+              <div class="info-box top">
+                <p>The word bank students will use to fill in the blanks.</p>
+              </div>
+            </span>
+            <h2>Word Bank:</h2>
           </div>
           <div id="word-bank-container" class="container">
             <div id="word-bank"></div>

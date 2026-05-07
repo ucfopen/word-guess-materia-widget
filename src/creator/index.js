@@ -110,6 +110,7 @@ class App {
 
       this.highlighted = new Set(qset.items.map((x) => x.options.index));
       this.generateWords();
+      this.updateWordCount();
 
       this.sliderUsed = true;
       this.updateSlider(qset.options.slider);

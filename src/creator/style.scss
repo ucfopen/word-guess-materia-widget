@@ -20,7 +20,7 @@ input::placeholder {
 body {
   cursor: default;
 
-  font-family: "Montserrat", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
 
   user-select: none;
 
@@ -46,7 +46,7 @@ input {
   align-items: center;
 
   h2 {
-    font-family: "Paytone One", sans-serif;
+    font-family: "Paytone One", serif;
     margin: 0;
     font-size: 24px;
   }
@@ -152,7 +152,8 @@ input {
   }
 
   .inner {
-    min-height: 90vh; // TODO
+    min-height: 70vh!important; // TODO
+    max-height: 90vh!important; // TODO
   }
 }
 
@@ -189,16 +190,13 @@ nav {
   padding: 15px;
 
   .info {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Instrument Sans", sans-serif;
     color: #3b038e;
   }
 }
 
 section.inner {
-  // min-height: 0;
-  // flex: 1;
-
-  // max-height: calc(100% - 70px);
+  min-height: 0;
   max-height: 100%;
 
   display: flex;
@@ -219,8 +217,9 @@ section.inner {
   display: flex;
   flex-direction: column;
 
-  font-family: "Montserrat", "Arial", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
 
+  min-height: 0;
   height: 100%;
   margin-top: 5px;
   padding: 10px;
@@ -250,6 +249,8 @@ section.inner {
 
   #pickarea {
     flex: 1;
+    min-height: 0;
+
     height: 100%;
     width: 100%;
 
@@ -344,7 +345,7 @@ section.inner {
   color: white;
   background-color: unset;
 
-  font-family: "Paytone One", sans-serif;
+  font-family: "Paytone One", serif;
 
   width: 100%;
   height: 100%;
@@ -368,7 +369,7 @@ section.inner {
   // IDK WHY THIS NEEDS TO BE HERE
   outline: none;
   scale: 1;
-  
+
   width: 12px;
   height: 12px;
   background: transparent url("/assets/CloseButton.svg") no-repeat center;
@@ -377,8 +378,7 @@ section.inner {
 .x-btn {
   width: 12px;
   height: 12px;
-  background: transparent url("/assets/WordPillXButton.svg") no-repeat
-    center;
+  background: transparent url("/assets/WordPillXButton.svg") no-repeat center;
 }
 
 .pencil-btn {
@@ -450,14 +450,8 @@ section.inner {
   visibility: hidden;
   display: inline-flex;
   align-items: center;
+  padding: 0.5rem;
   gap: 6px;
-}
-
-#word-bank-info::before {
-  content: "";
-  width: 30px;
-  height: 30px;
-  background: url("/assets/InfoBubble.svg") no-repeat center/contain;
 }
 
 .word-bank-buttons {
@@ -501,7 +495,7 @@ section.inner {
   border-radius: 999px;
 
   color: black;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-size: 14px;
   font-weight: 700;
 
