@@ -1,7 +1,9 @@
 import globals from "globals";
 import js from "@eslint/js";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-export default [
+export default defineConfig([
+  globalIgnores(["build/"]),
   js.configs.recommended,
   {
     languageOptions: {
@@ -90,7 +92,7 @@ export default [
         "warn",
         {
           ignore: [-1, 0, 1],
-          ignoreIndexes: true,
+          ignoreArrayIndexes: true,
           ignoreDefaultValues: true,
           ignoreClassFieldInitialValues: true,
           enforceConst: true,
@@ -113,4 +115,4 @@ export default [
       ],
     },
   },
-];
+]);
