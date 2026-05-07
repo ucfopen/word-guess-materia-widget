@@ -30,7 +30,6 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
   moduleRules: [
     rules.loadHTMLAndReplaceMateriaScripts,
     rules.loadAndPrefixSASS,
-    rules.loaderCompileCoffee,
     rules.copyImages,
   ],
 });
