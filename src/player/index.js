@@ -1,3 +1,6 @@
+// TODO: Add QSET V1 support
+const ALLOWED_QSET_VERSIONS = [2];
+
 class Utils {
   static SNAP_DISTANCE = 120;
 
@@ -104,11 +107,10 @@ class App {
   }
 
   constructor({ items, options, title, version }) {
-    if (version !== 2) {
-      // TODO: add version 1 support
+    if (!ALLOWED_QSET_VERSIONS.includes(version)) {
       Materia.Engine.alert(
         "Unsupported QSet Version",
-        "QSet version 1 isn't supported yet.",
+        `QSet version ${version} isn't supported.`,
       );
       return;
     }

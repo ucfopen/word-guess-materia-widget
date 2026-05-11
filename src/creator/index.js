@@ -1,4 +1,17 @@
-const MAX_HIDEEN = 30;
+// TODO: Add QSET V1 support
+const ALLOWED_QSET_VERSIONS = [2];
+const QSET_VERSION = 2;
+
+const SLIDER_MIN = 3;
+const SLIDER_DEFAULT = 10;
+const SLIDER_MAX_PERCENT = 0.24;
+
+// These are in percents
+const PROGRESS_BAR_GOOD_THRESHOLD = 20;
+const PROGRESS_BAR_BAD_THRESHOLD = 100;
+
+const MAX_HIDDEN = 30;
+const MAX_WORD_COUNT = 250;
 
 class Utils {
   static conjunctions = new Set([
@@ -95,7 +108,7 @@ class App {
     if (options) {
       const { title, qset, version } = options;
 
-      if (version !== 2)
+      if (!ALLOWED_QSET_VERSIONS.includes(version))
         this.openWarningDialog(`QSet version ${version} is not supported yet.`);
 
       this.setTitle(title);
@@ -186,7 +199,7 @@ class App {
       if (this.highlighted.has(id)) {
         this.highlighted.delete(id);
         span.classList.remove("highlighted");
-      } else if (this.highlighted.size < MAX_HIDEEN) {
+      } else if (this.highlighted.size < MAX_HIDDEN) {
         this.highlighted.add(id);
         span.classList.add("highlighted");
       }
@@ -355,10 +368,15 @@ class App {
   }
 
   updateSlider(percentage) {
-    const max = Math.max(Math.floor((24 / 100) * this.words.length), 3);
-    const value = Math.round((percentage / 100) * (max - 3) + 3);
+    const max = Math.max(
+      Math.floor(SLIDER_MAX_PERCENT * this.words.length),
+      SLIDER_MIN,
+    );
+    const value = Math.round(
+      (percentage / 100) * (max - SLIDER_MIN) + SLIDER_MIN,
+    );
 
-    this.el.sliderMask.style.width = `${Number(percentage) + 0.03}%`;
+    this.el.sliderMask.style.width = `${Math.min(Number(percentage) + SLIDER_MIN, 100)}%`;
     this.el.slider.value = percentage;
 
     this.el.slider.dataset.mappedValue = value;
@@ -416,7 +434,7 @@ class App {
     // Case where its not been updated yet
     if (!this.sliderUsed) {
       this.sliderUsed = true;
-      this.updateSlider(10);
+      this.updateSlider(SLIDER_DEFAULT);
 
       this.refreshAutoWords();
     }
@@ -432,18 +450,12 @@ class App {
   }
 
   switchToPickMode() {
-    // TODO
-    // document.getElementById("bank-region").style.display = "flex";
-
     this.el.textarea.style.display = "none";
     this.el.pickarea.style.display = "flex";
     this.el.slideToggle.classList.add("slid");
   }
 
   switchToWriteMode() {
-    // TODO
-    // document.getElementById("bank-region").style.display = "none";
-
     this.el.textarea.style.display = "block";
     this.el.pickarea.style.display = "none";
     this.el.slideToggle.classList.remove("slid");
@@ -451,20 +463,20 @@ class App {
 
   updateWordCount() {
     const count = this.el.textarea.value.trim().split(/\s+/).length;
-    this.el.wordCount.textContent = `${count} / 250 words`;
+    this.el.wordCount.textContent = `${count} / ${MAX_WORD_COUNT} words`;
   }
 
   renderManualProgress() {
     const words = this.highlighted.size;
-    const percent = Math.round((100 * words) / 30);
+    const percent = Math.round((100 * words) / MAX_HIDDEN);
 
-    if (percent === 100) {
+    if (percent >= PROGRESS_BAR_BAD_THRESHOLD) {
       this.el.manualProgressBar.style.width = `100%`;
       this.el.manualProgressBar.className = "progress-bar high";
       this.el.manualProgressInfo.className = "status high";
       this.el.manualProgressInfo.innerText = "Max hidden words reached";
-    } else if (percent >= 20) {
-      const width = Math.round(percent / 30) * 30;
+    } else if (percent >= PROGRESS_BAR_GOOD_THRESHOLD) {
+      const width = Math.round(percent / MAX_HIDDEN) * MAX_HIDDEN;
       this.el.manualProgressBar.style.width = `${width}%`;
       this.el.manualProgressBar.className = "progress-bar medium";
       this.el.manualProgressInfo.className = "status medium";
@@ -524,9 +536,9 @@ window.addEventListener("load", () => {
           return;
         }
 
-        if (app.words.length > 250) {
+        if (app.words.length > MAX_WORD_COUNT) {
           app.openWarningDialog(
-            "Max passage length is 250 words. Please update the passage.",
+            `Max passage length is ${MAX_WORD_COUNT} words. Please update the passage.`,
           );
           return;
         }
@@ -535,7 +547,7 @@ window.addEventListener("load", () => {
       Materia.CreatorCore.save(
         app.getTitle() || "New WordGuess Widget",
         app.buildSaveData(),
-        2,
+        QSET_VERSION,
       );
     },
     manualResize: false,

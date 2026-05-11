@@ -91,7 +91,7 @@ export default defineConfig([
       "no-magic-numbers": [
         "warn",
         {
-          ignore: [-1, 0, 1],
+          ignore: [-1, 0, 1, 100],
           ignoreArrayIndexes: true,
           ignoreDefaultValues: true,
           ignoreClassFieldInitialValues: true,
