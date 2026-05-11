@@ -1,3 +1,5 @@
+const MAX_HIDEEN = 30;
+
 class Utils {
   static conjunctions = new Set([
     "and",
@@ -18,14 +20,6 @@ class Utils {
     "an",
     "into",
   ]);
-
-  // Its important to have these separate so that the logic can be changed imo
-  static getMaxSelected(_count) {
-    return Infinity;
-  }
-  static getUpperLimitSelected(_count) {
-    return Infinity;
-  }
 }
 
 // See: enums in JavaScript
@@ -65,7 +59,7 @@ class App {
     wordCount: document.getElementById("word-count"),
 
     manualProgressBar: document.getElementById("manual-bar"),
-    manualProgressInfo: document.getElementById("rec-message-man"),
+    manualProgressInfo: document.getElementById("manual-message"),
 
     sliderMsg: document.getElementById("rec-message-auto"),
 
@@ -195,9 +189,7 @@ class App {
       if (this.highlighted.has(id)) {
         this.highlighted.delete(id);
         span.classList.remove("highlighted");
-      } else if (
-        this.highlighted.size < Utils.getMaxSelected(this.words.length)
-      ) {
+      } else if (this.highlighted.size < MAX_HIDEEN) {
         this.highlighted.add(id);
         span.classList.add("highlighted");
       }
@@ -323,36 +315,14 @@ class App {
     this.el.wordBank.innerHTML = "";
 
     if (this.highlighted.size === 0) {
-      if (this.activeMode === "manual" && this.words.length) {
-        this.wordBankInfo(
-          "Select some words to get started!",
-          WARNING_LEVEL.INFO,
-        );
-      }
-
       this.hideTrashButton();
       return;
     }
 
-    this.wordBankInfo();
-
-    if (this.activeMode === "manual") {
-      if (this.highlighted.size === Utils.getMaxSelected(this.words.length))
-        this.wordBankInfo("Thats enough!", WARNING_LEVEL.ERROR);
-      else if (
-        this.highlighted.size > Utils.getUpperLimitSelected(this.words.length)
-      ) {
-        this.wordBankInfo(
-          "You've picked a lot of words!",
-          WARNING_LEVEL.WARNING,
-        );
-      } else {
-        this.wordBankInfo(
-          `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
-          WARNING_LEVEL.INFO,
-        );
-      }
-    }
+    this.wordBankInfo(
+      `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
+      WARNING_LEVEL.INFO,
+    );
 
     for (const id of this.highlighted) {
       const word = this.words.find((w) => w.id === id);
@@ -500,7 +470,26 @@ class App {
   }
 
   renderManualProgress() {
-    // TODO
+    const words = this.highlighted.size;
+    const percent = Math.round((100 * words) / 30);
+
+    if (percent === 100) {
+      this.el.manualProgressBar.style.width = `100%`;
+      this.el.manualProgressBar.className = "progress-bar high";
+      this.el.manualProgressInfo.className = "status high";
+      this.el.manualProgressInfo.innerText = "Max hidden words reached";
+    } else if (percent >= 20) {
+      const width = Math.round(percent / 30) * 30;
+      this.el.manualProgressBar.style.width = `${width}%`;
+      this.el.manualProgressBar.className = "progress-bar medium";
+      this.el.manualProgressInfo.className = "status medium";
+      this.el.manualProgressInfo.innerText = "Good choice for this passage";
+    } else {
+      this.el.manualProgressBar.style.width = `10%`;
+      this.el.manualProgressBar.className = "progress-bar low";
+      this.el.manualProgressInfo.className = "status low";
+      this.el.manualProgressInfo.innerText = "Recommended 8 - 13 hidden words";
+    }
   }
 
   clearHighlighted() {
@@ -546,6 +535,13 @@ window.addEventListener("load", () => {
         if (!app.getParagraph()) {
           app.openWarningDialog(
             "No passage Entered for this fill-in-the-blank activity. Please enter more text.",
+          );
+          return;
+        }
+
+        if (app.words.length > 250) {
+          app.openWarningDialog(
+            "Max passage length is 250 words. Please update the passage.",
           );
           return;
         }

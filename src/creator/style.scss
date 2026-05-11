@@ -2,7 +2,6 @@
 @use "slider.scss";
 
 // hide these for now
-#rec-message-man,
 #rec-message-auto {
   display: none;
 }
@@ -509,5 +508,30 @@ section.inner {
     border: unset;
     background-color: unset;
     color: grey;
+  }
+}
+
+.info-container {
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.status {
+  margin-top: 0.5rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+
+  &.low {
+    color: #888888;
+  }
+
+  &.medium {
+    color: #6ac63f;
+  }
+
+  &.high {
+    color: #eb2400;
   }
 }
