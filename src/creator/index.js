@@ -2,8 +2,8 @@
 const ALLOWED_QSET_VERSIONS = [2];
 const QSET_VERSION = 2;
 
-const SLIDER_MIN = 3;
-const SLIDER_DEFAULT = 10;
+const SLIDER_MIN = 1;
+const SLIDER_DEFAULT = 4;
 const SLIDER_MAX_PERCENT = 0.24;
 
 // These are in percents
@@ -366,35 +366,63 @@ class App {
   }
 
   updateSlider(percentage) {
-    const max = Math.max(
-      Math.floor(SLIDER_MAX_PERCENT * this.words.length),
-      SLIDER_MIN,
-    );
-    const value = Math.round(
-      (percentage / 100) * (max - SLIDER_MIN) + SLIDER_MIN,
-    );
+    const value = this.autoHiddenCount(percentage);
 
-    this.el.sliderMask.style.width = `${Math.min(Number(percentage) + SLIDER_MIN, 100)}%`;
+    const normalized = (Number(percentage) - SLIDER_MIN) / (100 - SLIDER_MIN);
+
+    this.el.sliderMask.style.width = `${normalized * 100}%`;
     this.el.slider.value = percentage;
 
     this.el.slider.dataset.mappedValue = value;
     this.el.sliderMask.dataset.percentage = `${value}`;
-    this.el.sliderMsg.textContent = `${value} words between`;
+
+    this.el.sliderMsg.textContent = `${value} words hidden`;
+  }
+
+  autoHiddenCount(percentage = this.el.slider.value) {
+    const max = Math.min(
+      Math.floor(this.words.length * SLIDER_MAX_PERCENT),
+      MAX_HIDDEN,
+    );
+
+    const normalized = (Number(percentage) - SLIDER_MIN) / (100 - SLIDER_MIN);
+
+    return Math.max(1, Math.round(normalized * (max - 1) + 1));
   }
 
   refreshAutoWords() {
-    const shuffle = Number(this.el.slider.value) + 1;
-    const offset = Math.floor(Math.random() * shuffle);
+    const target = Math.min(this.autoHiddenCount(), this.words.length);
 
     const oldHighlighted = [...this.highlighted];
     this.highlighted.clear();
 
-    for (const [i, w] of this.words.entries()) {
-      if (
-        (i + offset) % shuffle === 0 &&
-        !CONJUNCTIONS.has(w.text.toLowerCase())
-      )
-        this.highlighted.add(w.id);
+    const candidates = this.words.filter(
+      (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
+    );
+
+    if (candidates.length <= target)
+      this.highlighted = new Set(candidates.map((w) => w.id));
+    else {
+      const shuffle = Math.max(1, Math.floor(candidates.length / target));
+      const offset = Math.floor(Math.random() * shuffle);
+
+      for (const [i, w] of candidates.entries()) {
+        if ((i + offset) % shuffle === 0) {
+          this.highlighted.add(w.id);
+
+          if (this.highlighted.size === target) break;
+        }
+      }
+
+      if (this.highlighted.size < target) {
+        for (const w of candidates) {
+          if (!this.highlighted.has(w.id)) {
+            this.highlighted.add(w.id);
+
+            if (this.highlighted.size === target) break;
+          }
+        }
+      }
     }
 
     // On the off chance that 0 words are selected or they are the same
@@ -402,6 +430,7 @@ class App {
     if (
       (this.highlighted.size === 0 && this.words.length) ||
       (oldHighlighted.length &&
+        oldHighlighted.length === this.highlighted.size &&
         oldHighlighted.every((x) => this.highlighted.has(x)) &&
         this.words.length > 1)
     ) {

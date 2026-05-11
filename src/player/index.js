@@ -286,9 +286,9 @@ class App {
         }
 
         closest.appendChild(this.draggedItem);
-      } else if (this.originSlot?.classList.contains("word-pill-home")) {
+      } else if (this.originSlot?.classList.contains("word-pill-home")) 
         this.originSlot.appendChild(this.draggedItem);
-      } else {
+       else {
         const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
           (slot) => slot.children.length === 0,
         );
