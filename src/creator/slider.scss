@@ -73,6 +73,8 @@
   border-radius: 999px;
   overflow: hidden;
 
+  width: 100%;
+
   margin-right: auto;
   margin-left: auto;
 
@@ -80,7 +82,6 @@
 }
 
 .progress-bar {
-  width: 65%;
   height: 100%;
   background: #69c53f;
   border-radius: 999px 0 0 999px;

@@ -45,6 +45,7 @@ class App {
 
     slider: document.getElementById("slider"),
     sliderMask: document.getElementById("slider-mask"),
+    sliderMsg: document.getElementById("automatic-message"),
 
     manualBtn: document.getElementById("manual-button"),
     autoBtn: document.getElementById("auto-button"),
@@ -60,8 +61,6 @@ class App {
 
     manualProgressBar: document.getElementById("manual-bar"),
     manualProgressInfo: document.getElementById("manual-message"),
-
-    sliderMsg: document.getElementById("rec-message-auto"),
 
     mouseClick: document.getElementById("mouse-click"),
     pencilEdit: document.getElementById("pencil-edit"),
@@ -151,8 +150,6 @@ class App {
       this.updateWordCount();
 
       // This makes the slider respoooonsive when you add words
-      this.updateSliderMin();
-      this.updateSliderMax();
       this.updateSlider(this.el.slider.value);
 
       this.renderWordBank();
@@ -357,28 +354,16 @@ class App {
     this.showTrashButton();
   }
 
-  updateSliderMax(value = Math.floor((24 / 100) * this.words.length)) {
-    this.el.slider.max = Math.max(value, 3);
-  }
-  updateSliderMin(value = 3) {
-    this.el.slider.min = Math.max(value, 3);
-  }
+  updateSlider(percentage) {
+    const max = Math.max(Math.floor((24 / 100) * this.words.length), 3);
+    const value = Math.round((percentage / 100) * (max - 3) + 3);
 
-  updateSlider(value) {
-    this.updateSliderMax();
-    this.updateSliderMin();
+    this.el.sliderMask.style.width = `${Number(percentage) + 0.03}%`;
+    this.el.slider.value = percentage;
 
-    // Plus one so it looks a bit better. Will need to be changed when the
-    // slider is Re:Styled.
-    this.el.sliderMask.style.width = `${
-      ((value - this.el.slider.min + 1) /
-        (this.el.slider.max - this.el.slider.min + 1)) *
-      100
-    }%`;
-
-    this.el.slider.value = value;
-    this.el.sliderMask.dataset.percentage = `1:${this.el.slider.value}`;
-    this.el.sliderMsg.textContent = `${this.el.slider.value} words between`;
+    this.el.slider.dataset.mappedValue = value;
+    this.el.sliderMask.dataset.percentage = `${value}`;
+    this.el.sliderMsg.textContent = `${value} words between`;
   }
 
   refreshAutoWords() {
@@ -431,7 +416,7 @@ class App {
     // Case where its not been updated yet
     if (!this.sliderUsed) {
       this.sliderUsed = true;
-      this.updateSlider(3);
+      this.updateSlider(10);
 
       this.refreshAutoWords();
     }
