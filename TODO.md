@@ -3,7 +3,6 @@
 ## Creator
 
 - redesign automatic controls
-  
 - clean up html
 - clean up css
 
