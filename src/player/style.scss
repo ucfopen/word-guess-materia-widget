@@ -57,6 +57,10 @@ section {
   border: 5px solid #92b8ff;
   background-color: #70a0f9;
   box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
+
+  .word-pill {
+    border: 2px solid #2b5bb5;
+  }
 }
 
 .passage {
@@ -70,6 +74,7 @@ section {
 
   font-size: 1.5rem;
   font-weight: 600;
+  line-height: 2.25;
   color: black;
 
   background-color: white;
@@ -82,6 +87,10 @@ section {
     color: #2f0076;
     text-align: center;
   }
+
+  .word-pill {
+    border: 2px solid #2e0073;
+  }
 }
 
 .word-pill {
@@ -89,22 +98,29 @@ section {
   z-index: 1;
 
   display: inline-block;
-  padding: 4px 6px;
+  padding: 6px 15px 5px 15px;
 
   font-size: 1.5rem;
   font-weight: 600;
+  line-height: 1;
 
   border-radius: 15px;
   background-color: #ffce1b;
   box-shadow: 2px 4px 2px #2c59ae76;
 
   cursor: pointer;
+
+  &:hover {
+    scale: 1.05;
+    border: 2px solid #004ad4;
+  }
 }
 
 .word-pill-home,
 .word-pill-container {
   display: inline-block;
   min-height: 2.25rem;
+  line-height: 1;
   border-radius: 15px;
 }
 
