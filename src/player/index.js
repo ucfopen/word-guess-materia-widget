@@ -36,16 +36,44 @@ class App {
     controlsKeyboardButton: document.getElementById("keyboard-btn"),
     controlsKeyboard: document.getElementById("keyboard-controls"),
     controlsPointer: document.getElementById("pointer-controls"),
+    warningDialog: document.getElementById("warning-dialog"),
+    warningCloseButton: document.getElementById("warning-dialog-close-button"),
+    warningCancelButton: document.getElementById("warning-cancel-button"),
+    warningSubmitButton: document.getElementById("warning-submit-button"),
     get allSlots() {
       return [...this.passageSlots, ...this.wordBankSlots];
     },
     get passageSlots() {
-      return document.querySelectorAll(".word-pill-container");
+      return [...document.querySelectorAll(".word-pill-container")];
     },
     get wordBankSlots() {
-      return document.querySelectorAll(".word-pill-home");
+      return [...document.querySelectorAll(".word-pill-home")];
     },
   };
+
+  get toSubmit() {
+    return this.el.passageSlots.map((el) => [
+      el.id,
+      el.childNodes[0]?.innerText,
+    ]);
+  }
+
+  openWarning() {
+    if (!this.el.warningDialog.open) this.el.warningDialog.showModal();
+  }
+  closeWarning() {
+    if (this.el.warningDialog.open) this.el.warningDialog.close();
+  }
+
+  submitAndEnd(allowed = false) {
+    if (this.toSubmit.some(([, ans]) => !ans) && !allowed) {
+      this.openWarning();
+      return;
+    }
+    for (const [qId, uAns] of this.toSubmit)
+      Materia.Score.submitQuestionForScoring(qId, uAns);
+    Materia.Engine.end(true);
+  }
 
   getClosestSlot(x, y) {
     let closest = null;
@@ -68,7 +96,7 @@ class App {
       }
     }
 
-    return closestDistance <= Utils.SNAP_DISTANCE ? closest : null;
+    return closestDistance <= SNAP_DISTANCE ? closest : null;
   }
   clearHighlights() {
     for (const el of this.el.allSlots) el.classList.remove("highlight");
@@ -143,6 +171,19 @@ class App {
       this.el.greeting.close();
     });
 
+    for (const btn of [
+      this.el.warningCloseButton,
+      this.el.warningCancelButton,
+    ]) {
+      btn.addEventListener("click", () => {
+        this.closeWarning();
+      });
+    }
+
+    this.el.warningSubmitButton.addEventListener("click", () => {
+      this.submitAndEnd(true);
+    });
+
     document
       .getElementsByClassName("page-selector")[0]
       .addEventListener("click", (e) => {
@@ -188,12 +229,7 @@ class App {
     this.el.passage.innerHTML = innerHTML;
 
     this.el.submit.addEventListener("click", () => {
-      for (const el of this.el.passageSlots) {
-        const qId = el.id;
-        const uAns = el.childNodes[0]?.innerText;
-        Materia.Score.submitQuestionForScoring(qId, uAns);
-      }
-      Materia.Engine.end(true);
+      this.submitAndEnd();
     });
 
     document.addEventListener("dragstart", (e) => {

@@ -24,11 +24,11 @@ section {
 
 .word-bank-container {
   display: flex;
-  flex: 2;
+  flex: 3;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  height: 80vh;
+  height: 90vh;
 
   h2 {
     font-family: "Paytone One", serif;
@@ -55,7 +55,7 @@ section {
 
   background-color: #70a0f9;
   border: 5px solid #92b8ff;
-  border-radius: 5rem;
+  border-radius: 20px;
   box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
 
   .word-pill {
@@ -355,4 +355,20 @@ section {
 
 .right-arrow {
   background-image: url("/assets/RightArrow.svg");
+}
+
+.warning-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+
+  p {
+    font-size: 20px;
+    color: #3b038e;
+    font-weight: bold;
+  }
+
+  max-width: 25rem;
 }

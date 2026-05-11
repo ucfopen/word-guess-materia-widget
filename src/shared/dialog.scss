@@ -1,4 +1,6 @@
 dialog {
+  z-index: 9999;
+
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
@@ -117,11 +119,22 @@ dialog {
 }
 
 .close-btn {
+  // IDK WHY THIS NEEDS TO BE HERE
+  outline: none;
+
+  width: 12px;
+  height: 12px;
+  background: transparent url("/assets/CloseButton.svg") no-repeat center;
+
   position: absolute;
   top: 14px;
   right: 16px;
 
   scale: 2;
+
+  &:hover {
+    scale: 2.05;
+  }
 }
 
 .error-heading {

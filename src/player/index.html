@@ -187,6 +187,35 @@
           </div>
         </div>
       </dialog>
+
+      <dialog id="warning-dialog">
+        <div class="dialog-shell">
+          <div class="dialog-box" id="warning-container">
+            <div>
+              <button
+                title="close warning dialog"
+                id="warning-dialog-close-button"
+                class="close-btn"
+              ></button>
+              <h2 class="error-heading">Warning!</h2>
+            </div>
+            <div class="warning-content">
+              <p>
+                You didn't fill out all the answers. Are you sure you want to
+                submit?
+              </p>
+              <div>
+                <button id="warning-cancel-button" class="action-btn">
+                  Cancel
+                </button>
+                <button id="warning-submit-button" class="action-btn variant-3">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </main>
   </body>
 </html>
