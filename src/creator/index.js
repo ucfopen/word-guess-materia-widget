@@ -13,27 +13,25 @@ const PROGRESS_BAR_BAD_THRESHOLD = 100;
 const MAX_HIDDEN = 30;
 const MAX_WORD_COUNT = 250;
 
-class Utils {
-  static conjunctions = new Set([
-    "and",
-    "or",
-    "the",
-    "then",
-    "because",
-    "is",
-    "but",
-    "it",
-    "of",
-    "with",
-    "in",
-    "for",
-    "to",
-    "has",
-    "a",
-    "an",
-    "into",
-  ]);
-}
+const CONJUNCTIONS = new Set([
+  "and",
+  "or",
+  "the",
+  "then",
+  "because",
+  "is",
+  "but",
+  "it",
+  "of",
+  "with",
+  "in",
+  "for",
+  "to",
+  "has",
+  "a",
+  "an",
+  "into",
+]);
 
 // See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
@@ -394,7 +392,7 @@ class App {
     for (const [i, w] of this.words.entries()) {
       if (
         (i + offset) % shuffle === 0 &&
-        !Utils.conjunctions.has(w.text.toLowerCase())
+        !CONJUNCTIONS.has(w.text.toLowerCase())
       )
         this.highlighted.add(w.id);
     }
