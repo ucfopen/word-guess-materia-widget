@@ -134,6 +134,16 @@ class App {
     return span;
   }
 
+  sortWordBank() {
+    const children = Array.from(this.el.wordBank.childNodes).sort((a, b) => {
+      if (a.innerHTML === "") return 1;
+      if (b.innerHTML === "") return -1;
+      return 0;
+    });
+
+    for (const el of children) this.el.wordBank.appendChild(el);
+  }
+
   constructor({ items, options, title, version }) {
     if (!ALLOWED_QSET_VERSIONS.includes(version)) {
       Materia.Engine.alert(
@@ -276,18 +286,16 @@ class App {
         }
 
         closest.appendChild(this.draggedItem);
-        return;
-      }
-
-      if (this.originSlot?.classList.contains("word-pill-home")) {
+      } else if (this.originSlot?.classList.contains("word-pill-home")) {
         this.originSlot.appendChild(this.draggedItem);
-        return;
+      } else {
+        const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
+          (slot) => slot.children.length === 0,
+        );
+        if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
       }
 
-      const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
-        (slot) => slot.children.length === 0,
-      );
-      if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
+      this.sortWordBank();
     });
   }
 }
