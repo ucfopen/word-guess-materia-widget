@@ -3,7 +3,7 @@ const ALLOWED_QSET_VERSIONS = [2];
 const QSET_VERSION = 2;
 
 const SLIDER_MIN = 1;
-const SLIDER_DEFAULT = 4;
+const SLIDER_DEFAULT = 50;
 const SLIDER_MAX_PERCENT = 0.24;
 
 // These are in percents
@@ -321,16 +321,16 @@ class App {
 
   renderWordBank() {
     this.el.wordBank.innerHTML = "";
+    
+    this.wordBankInfo(
+      `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
+      WARNING_LEVEL.INFO,
+    );
 
     if (this.highlighted.size === 0) {
       this.hideTrashButton();
       return;
     }
-
-    this.wordBankInfo(
-      `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
-      WARNING_LEVEL.INFO,
-    );
 
     for (const id of this.highlighted) {
       const word = this.words.find((w) => w.id === id);
