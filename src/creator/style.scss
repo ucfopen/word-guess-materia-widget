@@ -236,7 +236,7 @@ section.inner {
     width: 100%;
     height: 100%;
 
-    line-height: 2.5;
+    line-height: 2;
 
     border: none;
     resize: none;
@@ -251,6 +251,7 @@ section.inner {
   #pickarea {
     flex: 1;
     min-height: 0;
+    gap: 3.2px;
 
     height: 100%;
     width: 100%;
@@ -268,8 +269,7 @@ section.inner {
       cursor: pointer;
       display: inline-block;
       padding: 0;
-      margin: 1px 2px;
-      margin-bottom: 10px;
+      margin: 4px 0 0 0
     }
 
     button {
