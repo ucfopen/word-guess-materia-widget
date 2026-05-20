@@ -296,6 +296,11 @@ section.inner {
     font-size: 0.85rem;
 
     color: #666;
+
+    &.full {
+      color: red;
+      font-weight: bold;
+    }
   }
 }
 

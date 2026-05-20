@@ -156,7 +156,16 @@ class App {
 
     this.bound = true;
 
-    this.el.textarea.addEventListener("input", () => {
+    this.el.textarea.addEventListener("beforeinput", (e) => {
+      const newString = this.el.textarea.value
+      const addedCount = (newString + e.data).trim().split(/\s+/).length
+      console.log(e.data)
+      if (addedCount > MAX_WORD_COUNT && e.data) {
+        e.preventDefault();
+      }
+    })
+
+    this.el.textarea.addEventListener("input", (e) => {
       this.generateWords();
       this.updateWordCount();
 
@@ -488,9 +497,19 @@ class App {
     this.el.slideToggle.classList.remove("slid");
   }
 
+  getWordCount() {
+    return this.el.textarea.value.trim().split(/\s+/).length;
+  }
+
   updateWordCount() {
-    const count = this.el.textarea.value.trim().split(/\s+/).length;
+    const count = this.getWordCount()
     this.el.wordCount.textContent = `${count} / ${MAX_WORD_COUNT} words`;
+
+    if (count >= MAX_WORD_COUNT) {
+      this.el.wordCount.classList.add("full")
+    } else {
+      this.el.wordCount.classList.remove("full")
+    }
   }
 
   renderManualProgress() {
