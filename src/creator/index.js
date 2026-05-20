@@ -323,7 +323,7 @@ class App {
     this.el.wordBank.innerHTML = "";
     
     this.wordBankInfo(
-      `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"}`,
+      `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"} hidden`,
       WARNING_LEVEL.INFO,
     );
 
