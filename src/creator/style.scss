@@ -12,6 +12,7 @@ input::placeholder {
 }
 
 body {
+  min-height: 750px;
   cursor: default;
 
   font-family: "Instrument Sans", sans-serif;
@@ -123,7 +124,7 @@ input {
   gap: 60px;
 
   height: calc(100% - 10vh);
-  margin: 5vh 5vw 5vh 250px;
+  margin: 5vh 10vw 5vh min(20vw,250px);
 
   color: #fff;
   background-color: #7538d3;
@@ -155,11 +156,11 @@ input {
 
 .logo {
   position: absolute;
-  left: 60px;
+  left: min(60px, 3vw);
 }
 
 #options-container {
-  height: 230px;
+  height: 180px;
   background-color: #ffffff;
   border-radius: 15px;
   padding: 20px 0px 15px 0px;
@@ -171,13 +172,13 @@ nav {
   gap: 5%;
   height: 100%;
   max-width: 100%;
-  margin: 0 48px;
+  margin: 0 7%;
   min-height: 0;
 }
 
-.progress-bar-container {
-  margin-bottom: 28px;
-}
+// #manual-message {
+//   display: none;
+// }
 
 .mode-info-container {
   flex: 1;
@@ -279,6 +280,11 @@ section.inner {
 
     button {
       background-color: transparent;
+    }
+
+    button:hover {
+      background-color: #ffce1b40;
+      border-radius: 5px;
     }
 
     button.highlighted {
@@ -539,6 +545,10 @@ section.inner {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .status {
@@ -548,11 +558,12 @@ section.inner {
   font-size: 14px;
 
   &.low {
+    visibility: hidden;
     color: #888888;
   }
 
   &.medium {
-    color: #6ac63f;
+    color: #ffce1b;
   }
 
   &.high {

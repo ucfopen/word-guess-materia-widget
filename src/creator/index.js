@@ -7,7 +7,7 @@ const SLIDER_DEFAULT = 50;
 const SLIDER_MAX_PERCENT = 0.24;
 
 // These are in percents
-const PROGRESS_BAR_GOOD_THRESHOLD = 20;
+const PROGRESS_BAR_GOOD_THRESHOLD = 75;
 const PROGRESS_BAR_BAD_THRESHOLD = 100;
 
 const MAX_HIDDEN = 30;
@@ -70,6 +70,7 @@ class App {
 
     wordCount: document.getElementById("word-count"),
 
+    manualProgressCont: document.getElementById("manual-cont"),
     manualProgressBar: document.getElementById("manual-bar"),
     manualProgressInfo: document.getElementById("manual-message"),
 
@@ -159,7 +160,7 @@ class App {
     this.el.textarea.addEventListener("beforeinput", (e) => {
       const newString = this.el.textarea.value
       const addedCount = (newString + e.data).trim().split(/\s+/).length
-      console.log(e.data)
+      
       if (addedCount > MAX_WORD_COUNT && e.data) {
         e.preventDefault();
       }
@@ -400,23 +401,30 @@ class App {
   }
 
   refreshAutoWords() {
-    const target = Math.min(this.autoHiddenCount(), this.words.length);
+    // const target = Math.min(this.autoHiddenCount(), this.words.length);
+    const autoCount = this.autoHiddenCount() + 1
+    const target = Math.min(Math.floor(this.words.length/(autoCount)), this.words.length);
 
     const oldHighlighted = [...this.highlighted];
     this.highlighted.clear();
 
-    const candidates = this.words.filter(
-      (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
-    );
+    // const candidates = this.words.filter(
+    //   (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
+    // );
+
+    const candidates = this.words;
 
     if (candidates.length <= target)
       this.highlighted = new Set(candidates.map((w) => w.id));
     else {
-      const shuffle = Math.max(1, Math.floor(candidates.length / target));
+      // const shuffle = Math.max(1, Math.floor(candidates.length / target));
+      const shuffle = autoCount;
       const offset = Math.floor(Math.random() * shuffle);
 
       for (const [i, w] of candidates.entries()) {
+        console.log(i, offset, shuffle)
         if ((i + offset) % shuffle === 0) {
+          console.log("we did it")
           this.highlighted.add(w.id);
 
           if (this.highlighted.size === target) break;
@@ -515,6 +523,8 @@ class App {
   renderManualProgress() {
     const words = this.highlighted.size;
     const percent = Math.round((100 * words) / MAX_HIDDEN);
+    const width = Math.round(percent / MAX_HIDDEN) * MAX_HIDDEN;
+    console.log(percent)
 
     if (percent >= PROGRESS_BAR_BAD_THRESHOLD) {
       this.el.manualProgressBar.style.width = `100%`;
@@ -522,16 +532,15 @@ class App {
       this.el.manualProgressInfo.className = "status high";
       this.el.manualProgressInfo.innerText = "Max hidden words reached";
     } else if (percent >= PROGRESS_BAR_GOOD_THRESHOLD) {
-      const width = Math.round(percent / MAX_HIDDEN) * MAX_HIDDEN;
-      this.el.manualProgressBar.style.width = `${width}%`;
+      this.el.manualProgressBar.style.width = `${percent}%`;
       this.el.manualProgressBar.className = "progress-bar medium";
       this.el.manualProgressInfo.className = "status medium";
-      this.el.manualProgressInfo.innerText = "Good choice for this passage";
+      this.el.manualProgressInfo.innerText = "This may be too many words for this passage";
     } else {
-      this.el.manualProgressBar.style.width = `10%`;
+      this.el.manualProgressBar.style.width = `${percent}%`;
       this.el.manualProgressBar.className = "progress-bar low";
       this.el.manualProgressInfo.className = "status low";
-      this.el.manualProgressInfo.innerText = "Recommended 8 - 13 hidden words";
+      this.el.manualProgressInfo.innerText = "Placeholder text";
     }
   }
 
