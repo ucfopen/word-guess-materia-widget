@@ -117,9 +117,9 @@ input {
   }
 }
 
-.outer {
+#outer {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   flex-direction: row;
   gap: 60px;
 
@@ -138,11 +138,27 @@ input {
 
   overflow-y: auto;
   overflow-x: hidden;
+
+  transition: grid-template-columns ease 300ms, gap ease 300ms;
+
+  &.new {
+    grid-template-columns: 1fr 0fr;
+    gap: 0;
+
+    #bank-region {
+      display: none;
+      width: 0;
+    }
+  }
+}
+
+#bank-region, #edit-region {
+  transition: all ease 300ms;
 }
 
 // 1 column
 @media (max-width: 1100px) {
-  .outer {
+  #outer {
     display: flex;
     flex-direction: column;
     gap: 1rem;

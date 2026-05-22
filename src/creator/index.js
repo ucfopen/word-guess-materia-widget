@@ -3,8 +3,9 @@ const ALLOWED_QSET_VERSIONS = [2];
 const QSET_VERSION = 2;
 
 const SLIDER_MIN = 1;
-const SLIDER_DEFAULT = 50;
-const SLIDER_MAX_PERCENT = 0.24;
+const SLIDER_DEFAULT = 1;
+const SLIDER_MAX_PERCENT = 0.75;
+const MAX_PERC_SPACE_BETWEEN = 0.25;
 
 // These are in percents
 const PROGRESS_BAR_GOOD_THRESHOLD = 75;
@@ -49,6 +50,8 @@ class App {
   wordIdCounter = 0;
 
   el = {
+    outer: document.getElementById("outer"),
+    
     textarea: document.getElementById("textarea"),
     pickarea: document.getElementById("pickarea"),
     wordBank: document.getElementById("word-bank"),
@@ -376,12 +379,14 @@ class App {
   }
 
   updateSlider(percentage) {
-    const value = this.autoHiddenCount(percentage);
+    const value = percentage;
+    percentage = value / this.maxWordsBetween() * 100
 
-    const normalized = (Number(percentage) - SLIDER_MIN) / (100 - SLIDER_MIN);
+    const normalized = (value - this.minWordsBetween() + 1) / (this.maxWordsBetween() - this.minWordsBetween() + 1)
+    console.log(normalized)
 
     this.el.sliderMask.style.width = `${normalized * 100}%`;
-    this.el.slider.value = percentage;
+    this.el.slider.value = value;
 
     this.el.slider.dataset.mappedValue = value;
     this.el.sliderMask.dataset.percentage = `${value}`;
@@ -389,20 +394,34 @@ class App {
     this.el.sliderMsg.textContent = `${value} words hidden`;
   }
 
-  autoHiddenCount(percentage = this.el.slider.value) {
-    const max = Math.min(
+  minWordsBetween() {
+    return Math.floor(this.words.length/this.maxHiddenWords()) - 1
+  }
+
+  maxWordsBetween() {
+    return Math.floor(this.words.length * MAX_PERC_SPACE_BETWEEN);
+  }
+
+  maxHiddenWords() {
+    return Math.min(
       Math.floor(this.words.length * SLIDER_MAX_PERCENT),
       MAX_HIDDEN,
     );
+  }
 
-    const normalized = (Number(percentage) - SLIDER_MIN) / (100 - SLIDER_MIN);
+  autoHiddenCount(percentage = this.el.slider.value) {
+    return Number(percentage)
+    // const max = this.maxHiddenWords()
 
-    return Math.max(1, Math.round(normalized * (max - 1) + 1));
+    // const normalized = (Number(percentage) - SLIDER_MIN) / (100 - SLIDER_MIN);
+
+    // return Math.max(1, Math.round(normalized * (max - 1) + 1));
   }
 
   refreshAutoWords() {
     // const target = Math.min(this.autoHiddenCount(), this.words.length);
     const autoCount = this.autoHiddenCount() + 1
+    console.log(autoCount)
     const target = Math.min(Math.floor(this.words.length/(autoCount)), this.words.length);
 
     const oldHighlighted = [...this.highlighted];
@@ -422,9 +441,7 @@ class App {
       const offset = Math.floor(Math.random() * shuffle);
 
       for (const [i, w] of candidates.entries()) {
-        console.log(i, offset, shuffle)
         if ((i + offset) % shuffle === 0) {
-          console.log("we did it")
           this.highlighted.add(w.id);
 
           if (this.highlighted.size === target) break;
@@ -478,7 +495,7 @@ class App {
     // Case where its not been updated yet
     if (!this.sliderUsed) {
       this.sliderUsed = true;
-      this.updateSlider(SLIDER_DEFAULT);
+      this.updateSlider(Math.max(SLIDER_DEFAULT, this.minWordsBetween()));
 
       this.refreshAutoWords();
     }
@@ -518,6 +535,11 @@ class App {
     } else {
       this.el.wordCount.classList.remove("full")
     }
+
+    this.el.slider.setAttribute("min", this.minWordsBetween())
+    this.el.slider.setAttribute("max", this.maxWordsBetween())
+
+    this.el.outer.classList.remove("new")
   }
 
   renderManualProgress() {
