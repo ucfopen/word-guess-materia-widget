@@ -383,7 +383,6 @@ class App {
     percentage = value / this.maxWordsBetween() * 100
 
     const normalized = (value - this.minWordsBetween() + 1) / (this.maxWordsBetween() - this.minWordsBetween() + 1)
-    console.log(normalized)
 
     this.el.sliderMask.style.width = `${normalized * 100}%`;
     this.el.slider.value = value;
@@ -421,7 +420,6 @@ class App {
   refreshAutoWords() {
     // const target = Math.min(this.autoHiddenCount(), this.words.length);
     const autoCount = this.autoHiddenCount() + 1
-    console.log(autoCount)
     const target = Math.min(Math.floor(this.words.length/(autoCount)), this.words.length);
 
     const oldHighlighted = [...this.highlighted];
