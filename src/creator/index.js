@@ -394,7 +394,7 @@ class App {
   }
 
   minWordsBetween() {
-    return Math.floor(this.words.length/this.maxHiddenWords()) - 1
+    return Math.max(Math.floor(this.words.length/this.maxHiddenWords()) - 1, SLIDER_MIN)
   }
 
   maxWordsBetween() {
