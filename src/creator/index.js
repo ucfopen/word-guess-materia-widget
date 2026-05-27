@@ -512,6 +512,7 @@ class App {
     this.el.textarea.style.display = "none";
     this.el.pickarea.style.display = "flex";
     this.el.slideToggle.classList.add("slid");
+    this.el.outer.classList.remove("new")
   }
 
   switchToWriteMode() {
@@ -536,8 +537,6 @@ class App {
 
     this.el.slider.setAttribute("min", this.minWordsBetween())
     this.el.slider.setAttribute("max", this.maxWordsBetween())
-
-    this.el.outer.classList.remove("new")
   }
 
   renderManualProgress() {

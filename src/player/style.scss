@@ -3,17 +3,20 @@
 main {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100%;
   margin: auto 0;
+  gap: 8px;
 }
 
 section {
-  margin: 1rem;
+  // margin: 1rem;
 }
 
 .logo-container {
   display: flex;
-  flex: 1;
+  flex-shrink: 0;
+  margin: 0 16px;
   justify-content: center;
   height: 90%;
 
@@ -24,11 +27,12 @@ section {
 
 .word-bank-container {
   display: flex;
-  flex: 3;
+  flex-shrink: 1;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   height: 90vh;
+  max-width: 450px;
 
   h2 {
     font-family: "Paytone One", serif;
@@ -43,10 +47,11 @@ section {
   flex: 1;
   flex-wrap: wrap;
   align-content: flex-start;
+  justify-content: center;
   gap: 2rem;
 
   width: 100%;
-  max-width: 90%;
+  // max-width: 90%;
   max-height: 80vh;
 
   padding: 3rem 2rem;
@@ -63,10 +68,25 @@ section {
   }
 }
 
+#greeting-dialog {
+  padding: 16px 24px;
+
+}
+
+.main-content {
+  display: flex;
+  align-items: start;
+  // width: 100%;
+  gap: 24px;
+  max-height: 100vh;
+  max-width: 100vw;
+  padding-right: 24px;
+}
+
 .passage {
-  flex: 3;
+  // flex: 3;
   height: 90vh;
-  padding: 3rem 5rem;
+  padding: 1rem 3rem;
 
   overflow: scroll;
 
@@ -79,6 +99,8 @@ section {
   background-color: white;
   border-radius: 14px;
   box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
+
+  max-width: 700px;
 
   h2 {
     font-family: "Paytone One", serif;
@@ -108,6 +130,8 @@ section {
   background-color: #ffce1b;
   border-radius: 15px;
   box-shadow: 2px 4px 2px #2c59ae76;
+
+  white-space: nowrap;
 
   &:hover {
     scale: 1.05;
@@ -261,6 +285,8 @@ section {
     width: fit-content;
     padding: 4px 16px 0;
 
+    cursor: pointer;
+
     overflow: hidden;
 
     font-family: "Paytone One", serif;
@@ -289,7 +315,6 @@ section {
 
 #keyboard-controls {
   height: fit-content;
-  height: 462px;
 }
 
 #pointer-controls {
@@ -371,4 +396,108 @@ section {
   }
 
   max-width: 25rem;
+}
+
+@media (width <= 900px) {
+  .main-content {
+    flex-direction: column;
+    max-width: 100vw;
+    padding-right: 0;
+  }
+
+  .word-bank-container {
+    flex-direction: row;
+    height: auto;
+    height: fit-content;
+    h2 {
+      display: none;
+    }
+    max-width: 100%;
+    padding: 8px 8px 0 8px;
+  }
+
+  .word-bank {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: none;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    
+    height: fit-content;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    max-width: 100%;
+    flex-grow: 1;
+    padding: 4px 8px;
+    gap: 0.5rem;
+  }
+
+  .word-pill {
+    font-size: 1rem;
+  }
+
+  .word-pill-home:empty {
+    height: 1.6rem;
+  }
+
+  .dialog-box {
+    padding: 1rem 1.5rem;
+  }
+
+  .word-pill-home,
+  .word-pill-container {
+    min-height: 1.6rem;
+    line-height: 1;
+    border-radius: 15px;
+
+    &.highlight {
+      outline: 3px solid #7538d3;
+    }
+  }
+  
+  .word-pill-container:empty {
+    width: 6rem;
+  }
+
+  .logo-container {
+    display: none;
+  }
+
+  .passage {
+    max-width: none;
+    border-radius: 14px 14px 0 0;
+    margin: 0 8px 0px 8px;
+    position: relative;
+
+    padding: 1rem 2rem;
+    padding-top: 0;
+
+    h2 {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      padding: 30px 0 12px 0;
+      position: sticky;
+      top: 0px;
+      z-index: 100;
+      background: white;
+    }
+  }
+
+  #passage {
+    font-size: 16px;
+  }
+
+  #submit-button {
+    font-size: 0px;
+    padding: 5px 20px;
+    height: 100%;
+    box-sizing: border-box;
+    &:after {
+      content: ">";
+      font-size: 14px;
+    }
+  }
 }

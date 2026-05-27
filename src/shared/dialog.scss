@@ -1,5 +1,7 @@
 dialog {
   z-index: 9999;
+  width: fit-content;
+  max-width: min(92vw, 900px);
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
@@ -149,4 +151,27 @@ dialog {
   text-align: center;
   color: #2e0073;
   font-weight: bold;
+}
+
+@media (width <= 900px) {
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dialog-left {
+    min-height: 160px;
+    height: fit-content;
+
+    img {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  .dialog-right {
+    h2 {
+      white-space: normal;
+    }
+  }
 }
