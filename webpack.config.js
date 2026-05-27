@@ -18,6 +18,11 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
       path.join(srcPath, "creator", "index.js"),
       path.join(srcPath, "creator", "style.scss"),
     ],
+    scoreScreen: [
+      path.join(srcPath, "scorescreen", "index.html"),
+      path.join(srcPath, "scorescreen", "index.js"),
+      path.join(srcPath, "scorescreen", "style.scss"),
+    ]
   },
   copyList: [
     ...widgetWebpack.getDefaultCopyList(),
