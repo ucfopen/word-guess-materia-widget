@@ -183,13 +183,13 @@ section {
     outline-offset: -4px;
 
     .word-pill-container {
-      &:hover {
-        cursor: pointer;
-        border: 2px solid #2e0073;
-      }
-
       &:empty {
         pointer-events: all;
+
+        &:hover {
+          cursor: pointer;
+          border: 2px solid #2e0073;
+        }
       }
     }
   }
@@ -514,7 +514,6 @@ section {
 
 .word-pill {
   &.focus {
-    outline: 4px solid #93d82d;
-    outline-offset: -4px;
+    border: 2px solid #93d82d;
   }
 }
