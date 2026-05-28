@@ -65,15 +65,15 @@ Namespace('WordGuess').ScoreCore = (function() {
             _passageEl.appendChild(span)
         })
 
-        document.getElementById("correct-amt").innerHTML = `${correct} / ${_questions.length} correct`
+        document.getElementById("correct-amt").innerHTML = `${correct} of ${_questions.length} correct`
 
         window.addEventListener("resize", ()=>Materia.ScoreCore.setHeight(_getRenderedHeight()))
-        document.getElementById("mouse-click").addEventListener("click", (e)=>{
+        document.getElementById("correct-answers").addEventListener("click", (e)=>{
             _slider.classList.add("slid")
             _passageEl.classList.add("show-correct")
             _sliderText.innerHTML =  "Correct Answers"
         })
-        document.getElementById("pencil-edit").addEventListener("click", (e)=>{
+        document.getElementById("user-answers").addEventListener("click", (e)=>{
             _slider.classList.remove("slid")
             _passageEl.classList.remove("show-correct")
             _sliderText.innerHTML =  "Your Answers"

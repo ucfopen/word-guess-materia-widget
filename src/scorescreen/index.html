@@ -17,6 +17,8 @@
         href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap"
         rel="stylesheet"
         />
+
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="scoreScreen.css">
 
 		<!-- REQUIRED MATERIA JAVASCRIPT -->
@@ -27,26 +29,28 @@
 	</head>
     <body>
         <div class="header">
-            <div class="header-body">
-                <h2 id="correct-amt"></h2>
-                <div style="display: flex;">
-                    <span id="slider-text">Your Answers</span>
+            <div class="row">
+                
+                <div class="header-body">
+                    
                     <div class="toggle-slider" style="width: 100px">
                         <span id="slide-knob" class="slide-knob"></span>
         
                         <button
-                        class="toggle-btn pencil-btn"
-                        id="pencil-edit"
+                        class="toggle-btn user-btn"
+                        id="user-answers"
                         title="edit"
                         ></button>
         
                         <button
-                        class="toggle-btn mouse-btn"
-                        id="mouse-click"
+                        class="toggle-btn correct-btn"
+                        id="correct-answers"
                         title="pick"
                         ></button>
                     </div>
+                    <span id="slider-text">Your Answers</span>
                 </div>
+                <h2 id="correct-amt"></h2>
             </div>
         </div>
         <div id="passage">
