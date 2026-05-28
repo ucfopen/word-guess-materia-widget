@@ -83,37 +83,6 @@ section {
   padding-right: 24px;
 }
 
-.passage {
-  // flex: 3;
-  height: 90vh;
-  padding: 1rem 3rem;
-
-  overflow: scroll;
-
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 2.25;
-  text-align: justify;
-
-  background-color: white;
-  border-radius: 14px;
-  box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
-
-  max-width: 700px;
-
-  h2 {
-    font-family: "Paytone One", serif;
-    font-size: 2rem;
-    color: #2f0076;
-    text-align: center;
-  }
-
-  .word-pill {
-    border: 2px solid #2e0073;
-  }
-}
-
 .word-pill {
   position: relative;
   z-index: 1;
@@ -155,12 +124,18 @@ section {
   }
 }
 
+#passage .word-pill-container {
+  margin-right: 8px;
+}
+
 .word-pill-home:empty {
   width: 6rem;
   height: 2.5rem;
 
   background-color: #6398f9;
   box-shadow: -2px 4px 14.2px 0 #436197cc inset;
+
+  pointer-events: none;
 }
 
 .word-pill-container:empty {
@@ -173,6 +148,55 @@ section {
   background-color: #f5f5f5;
   border: 1px solid #565656;
   box-shadow: inset 0 4px 4px #00000040;
+
+  pointer-events: none;
+}
+
+.passage {
+  // flex: 3;
+  height: 90vh;
+  padding: 1rem 3rem;
+
+  overflow: scroll;
+
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 2.25;
+  text-align: justify;
+
+  background-color: white;
+  border-radius: 14px;
+  box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
+
+  max-width: 700px;
+
+  h2 {
+    font-family: "Paytone One", serif;
+    font-size: 2rem;
+    color: #2f0076;
+    text-align: center;
+  }
+
+  .word-pill {
+    border: 2px solid #2e0073;
+  }
+
+  &.highlight {
+    outline: 4px solid rgb(191, 238, 120);
+    outline-offset: -4px;
+
+    .word-pill-container {
+      &:hover {
+        cursor: pointer;
+        border: 2px solid #2e0073;
+      }
+
+      &:empty {
+        pointer-events: all;
+      }
+    }
+  }
 }
 
 .dialog-info {
@@ -478,9 +502,9 @@ section {
     h2 {
       font-size: 1.5rem;
       line-height: 1.5rem;
-      padding: 30px 0 12px 0;
+      padding: 26px 0 12px 0;
       position: sticky;
-      top: 0px;
+      top: 4px;
       z-index: 100;
       background: white;
     }
@@ -488,6 +512,10 @@ section {
 
   #passage {
     font-size: 16px;
+
+    .word-pill-container {
+      margin-right: 4px;
+    }
   }
 
   #submit-button {

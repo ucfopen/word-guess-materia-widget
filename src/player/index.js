@@ -25,6 +25,7 @@ class App {
   el = {
     wordBank: document.getElementById("word-bank"),
     passage: document.getElementById("passage"),
+    passageCont: document.querySelector(".passage"),
     title: document.getElementById("title"),
     submit: document.getElementById("submit-button"),
     greeting: document.getElementById("greeting-dialog"),
@@ -124,6 +125,13 @@ class App {
   makeWordPillHome() {
     const span = document.createElement("span");
     span.classList.add("word-pill-home");
+    span.addEventListener("click", (e) => {
+      console.log(e.target)
+      if(this.draggedItem)
+        this.placeInto(e.target)
+      else
+        this.setPlaceOrigin(e.target)
+    })
     return span;
   }
 
@@ -131,6 +139,13 @@ class App {
     const span = document.createElement("span");
     span.classList.add("word-pill-container");
     span.id = id;
+    span.addEventListener("click", (e) => {
+      console.log(e.target)
+      if(this.draggedItem)
+        this.placeInto(e.target)
+      else
+        this.setPlaceOrigin(e.target)
+    });
     return span;
   }
 
@@ -163,6 +178,44 @@ class App {
     );
 
     this.bind();
+  }
+
+  setPlaceOrigin(el) {
+    this.draggedItem = el
+    this.originSlot = el.parentElement
+
+    console.log(this.draggedItem, this.originSlot)
+
+    this.el.passageCont.classList.add("highlight")
+  }
+
+  placeInto(el) {
+    let closest = el;
+    if(el.getAttribute("draggable"))
+      closest = closest.parentElement
+      
+    if (closest) {
+      if (closest.children.length) {
+        const existing = closest.childNodes[0];
+        if (existing && existing !== this.draggedItem)
+          this.originSlot.appendChild(existing);
+      }
+
+      closest.appendChild(this.draggedItem);
+    } else if (this.originSlot?.classList.contains("word-pill-home")) 
+      this.originSlot.appendChild(this.draggedItem);
+      else {
+      const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
+        (slot) => slot.children.length === 0,
+      );
+      if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
+    }
+
+    this.el.passageCont.classList.remove("highlight")
+
+    this.draggedItem = null;
+    this.originSlot = null;
+    this.clearHighlights();
   }
 
   bind() {
@@ -228,15 +281,16 @@ class App {
     for (const s of homes) this.el.wordBank.appendChild(s);
 
     const paragraphWords = this.paragraph.split(" ");
-    let innerHTML = "";
+    
     for (let i = 0; i < paragraphWords.length; i++) {
       if (this.words[i])
-        innerHTML += this.makeWordPillContainer(this.words[i].id).outerHTML;
-      else innerHTML += paragraphWords[i];
-
-      innerHTML += " ";
+        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id))
+      else {
+        const span = document.createElement("span")
+        span.innerHTML = paragraphWords[i] + " ";
+        this.el.passage.appendChild(span)
+      }
     }
-    this.el.passage.innerHTML = innerHTML;
 
     this.el.submit.addEventListener("click", () => {
       this.submitAndEnd();

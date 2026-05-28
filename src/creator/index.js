@@ -57,6 +57,9 @@ class App {
     wordBank: document.getElementById("word-bank"),
     wordBankInfo: document.getElementById("word-bank-info"),
 
+    settingsBtn: document.getElementById("settings-btn"),
+    settingsScreen: document.getElementById("settings-screen"),
+
     slider: document.getElementById("slider"),
     sliderMask: document.getElementById("slider-mask"),
     sliderMsg: document.getElementById("automatic-message"),
@@ -198,6 +201,17 @@ class App {
 
     this.el.refreshBtn.addEventListener("click", () => this.refreshAutoWords());
     this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
+
+    this.el.settingsBtn.addEventListener("click", ()=>{
+      if (this.el.settingsScreen.className.includes("hidden")) {
+        this.el.settingsBtn.classList.add("rotate")
+        this.el.settingsScreen.classList.remove("hidden")
+      }
+      else {
+        this.el.settingsBtn.classList.remove("rotate")
+        this.el.settingsScreen.classList.add("hidden")
+      }
+    })
 
     this.el.pickarea.addEventListener("click", (e) => {
       if (this.activeMode === "automatic") this.switchToManual();
