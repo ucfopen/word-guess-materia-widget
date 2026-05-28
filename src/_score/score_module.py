@@ -4,3 +4,13 @@ class WordGuess(ScoreModule):
 
     def __init__(self, play=None):
         super().__init__(play)
+
+    def check_answer(self, log):
+        q = self.get_question_by_item_id(log.item_id)
+        
+        sa = self.get_ss_answer(log, q)
+        se = self.get_ss_expected_answers(log, q)
+
+        if sa == se:
+            return 100
+        return 0

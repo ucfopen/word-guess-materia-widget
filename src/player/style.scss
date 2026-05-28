@@ -48,13 +48,13 @@ section {
   flex-wrap: wrap;
   align-content: flex-start;
   // justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 
   width: 100%;
   // max-width: 90%;
   max-height: 80vh;
 
-  padding: 3rem 2rem;
+  padding: 1.5rem 2rem;
 
   overflow-y: scroll;
 
@@ -90,7 +90,7 @@ section {
   display: inline-block;
   padding: 6px 15px 5px;
 
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1;
 
@@ -115,7 +115,7 @@ section {
 .word-pill-home,
 .word-pill-container {
   display: inline-block;
-  min-height: 2.25rem;
+  min-height: 1.6rem;
   line-height: 1;
   border-radius: 15px;
 
@@ -130,7 +130,7 @@ section {
 
 .word-pill-home:empty {
   width: 6rem;
-  height: 2.5rem;
+  height: 1.85rem;
 
   background-color: #6398f9;
   box-shadow: -2px 4px 14.2px 0 #436197cc inset;
@@ -142,7 +142,7 @@ section {
   position: relative;
   top: 10px;
 
-  width: 8rem;
+  width: 6rem;
   padding: 5px;
 
   background-color: #f5f5f5;
@@ -160,7 +160,7 @@ section {
   overflow: scroll;
 
   color: black;
-  font-size: 1.5rem;
+  font-size: 16px;
   font-weight: 600;
   line-height: 2.25;
   text-align: justify;
@@ -464,7 +464,7 @@ section {
   }
 
   .word-pill-home:empty {
-    height: 1.6rem;
+    height: 1.85rem;
   }
 
   .dialog-box {
@@ -474,12 +474,6 @@ section {
   .word-pill-home,
   .word-pill-container {
     min-height: 1.6rem;
-    line-height: 1;
-    border-radius: 15px;
-
-    &.highlight {
-      outline: 3px solid #7538d3;
-    }
   }
   
   .word-pill-container:empty {
@@ -503,10 +497,6 @@ section {
       font-size: 1.5rem;
       line-height: 1.5rem;
       padding: 26px 0 12px 0;
-      position: sticky;
-      top: 4px;
-      z-index: 100;
-      background: white;
     }
   }
 
@@ -532,6 +522,7 @@ section {
 
 .word-pill {
   &.focus {
-    border: 4px solid #93d82d;
+    outline: 4px solid #93d82d;
+    outline-offset: -4px;
   }
 }
