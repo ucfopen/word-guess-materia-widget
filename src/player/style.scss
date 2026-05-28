@@ -529,3 +529,9 @@ section {
     }
   }
 }
+
+.word-pill {
+  &.focus {
+    border: 4px solid #93d82d;
+  }
+}

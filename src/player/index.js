@@ -101,6 +101,8 @@ class App {
   }
   clearHighlights() {
     for (const el of this.el.allSlots) el.classList.remove("highlight");
+
+    document.querySelectorAll(".focus").forEach((e)=>e.classList.remove("focus"))
   }
   highlight(el) {
     this.clearHighlights();
@@ -187,18 +189,26 @@ class App {
     console.log(this.draggedItem, this.originSlot)
 
     this.el.passageCont.classList.add("highlight")
+    this.draggedItem.classList.add("focus")
   }
 
   placeInto(el) {
     let closest = el;
     if(el.getAttribute("draggable"))
       closest = closest.parentElement
-      
+
     if (closest) {
       if (closest.children.length) {
         const existing = closest.childNodes[0];
         if (existing && existing !== this.draggedItem)
           this.originSlot.appendChild(existing);
+        else {
+          const empty = document.querySelector(".word-pill-home:empty")
+          if (empty) {
+            this.placeInto(empty)
+            return
+          }
+        }
       }
 
       closest.appendChild(this.draggedItem);
@@ -281,7 +291,7 @@ class App {
     for (const s of homes) this.el.wordBank.appendChild(s);
 
     const paragraphWords = this.paragraph.split(" ");
-    
+
     for (let i = 0; i < paragraphWords.length; i++) {
       if (this.words[i])
         this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id))
