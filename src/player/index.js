@@ -293,9 +293,12 @@ class App {
     const paragraphWords = this.paragraph.split(" ");
 
     for (let i = 0; i < paragraphWords.length; i++) {
-      if (this.words[i])
+      if (this.words[i]) {
         this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id))
-      else {
+        const space = document.createElement("span")
+        space.innerHTML = " "
+        this.el.passage.appendChild(space)
+      } else {
         const span = document.createElement("span")
         span.innerHTML = paragraphWords[i] + " ";
         this.el.passage.appendChild(span)

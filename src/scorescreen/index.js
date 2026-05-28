@@ -49,7 +49,7 @@ Namespace('WordGuess').ScoreCore = (function() {
             
             if(answers[i]) {
                 span.classList.add("pill")
-                span.innerHTML = answers[i].response != "" ? answers[i].response+" " : ""
+                span.innerHTML = answers[i].response
                 span.dataset.text = answers[i].text
                 
                 if(answers[i].score == 100) {
@@ -58,11 +58,15 @@ Namespace('WordGuess').ScoreCore = (function() {
                 } else {
                     span.classList.add("wrong")
                 }
+                _passageEl.appendChild(span)
+
+                const space = document.createElement("span")
+                space.innerHTML = " "
+                _passageEl.appendChild(space)
             } else {
                 span.innerHTML = v+" "
+                _passageEl.appendChild(span)
             }
-
-            _passageEl.appendChild(span)
         })
 
         document.getElementById("correct-amt").innerHTML = `${correct} of ${_questions.length} correct`
