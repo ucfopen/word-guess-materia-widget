@@ -517,3 +517,13 @@ section {
     border: 2px solid #93d82d;
   }
 }
+
+.passage {
+  &.highlight {
+    .word-pill-container {
+      &.focus {
+        border: 2px solid #2e0073;
+      }
+    }
+  }
+}

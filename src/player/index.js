@@ -22,6 +22,11 @@ class App {
   draggedItem = null;
   originSlot = null;
 
+  destinationIndex = 0;
+  destinationSlot = null;
+
+  currentlyFocused = null;
+
   el = {
     wordBank: document.getElementById("word-bank"),
     passage: document.getElementById("passage"),
@@ -115,25 +120,38 @@ class App {
     return p;
   }
 
+  pillSelectListener(e) {
+    if(this.draggedItem)
+      this.placeInto(e.target)
+    else
+      this.setPlaceOrigin(e.target)
+  }
+
   makeWordPill(index, text) {
     const span = document.createElement("span");
     span.classList.add("word-pill");
+    span.setAttribute("tabIndex", 0)
     span.draggable = "true";
     span.innerText = text;
     span.id = `word-${index}`;
+    span.addEventListener("click", (e) => this.pillSelectListener(e))
+    span.addEventListener("keydown", (e) => {
+      if(e.key == "Enter") {
+        this.pillSelectListener(e)
+        this.destinationSlot = this.el.passageSlots[this.destinationIndex]
+        if(this.destinationSlot)
+          this.destinationSlot.classList.add("focus")
+      }
+    })
+    span.addEventListener("focus", (e)=>{
+      this.currentlyFocused = e.target
+    })
     return span;
   }
 
   makeWordPillHome() {
     const span = document.createElement("span");
     span.classList.add("word-pill-home");
-    span.addEventListener("click", (e) => {
-      console.log(e.target)
-      if(this.draggedItem)
-        this.placeInto(e.target)
-      else
-        this.setPlaceOrigin(e.target)
-    })
     return span;
   }
 
@@ -141,13 +159,7 @@ class App {
     const span = document.createElement("span");
     span.classList.add("word-pill-container");
     span.id = id;
-    span.addEventListener("click", (e) => {
-      console.log(e.target)
-      if(this.draggedItem)
-        this.placeInto(e.target)
-      else
-        this.setPlaceOrigin(e.target)
-    });
+    span.addEventListener("click", (e) => this.pillSelectListener(e))
     return span;
   }
 
@@ -186,8 +198,6 @@ class App {
     this.draggedItem = el
     this.originSlot = el.parentElement
 
-    console.log(this.draggedItem, this.originSlot)
-
     this.el.passageCont.classList.add("highlight")
     this.draggedItem.classList.add("focus")
   }
@@ -196,6 +206,11 @@ class App {
     let closest = el;
     if(el.getAttribute("draggable"))
       closest = closest.parentElement
+
+    if(this.destinationSlot) {
+      closest = this.destinationSlot
+      this.destinationSlot = null
+    }
 
     if (closest) {
       if (closest.children.length) {
@@ -234,6 +249,30 @@ class App {
     this.bound = true;
 
     this.el.greeting.showModal();
+
+    document.addEventListener("keydown", (e) => {
+      if(this.draggedItem) {
+        if(e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          if(e.key === "ArrowLeft")
+            this.destinationIndex = this.destinationIndex - 1 < 0 ? this.el.passageSlots.length - 1 : this.destinationIndex - 1
+          else if(e.key === "ArrowRight")
+            this.destinationIndex = this.destinationIndex + 1 >= this.el.passageSlots.length ? 0 : this.destinationIndex + 1
+
+          if(this.destinationSlot)
+            this.destinationSlot.classList.remove("focus")
+
+          this.destinationSlot = this.el.passageSlots[this.destinationIndex]
+          this.destinationSlot.classList.add("focus")
+        }
+      }
+
+      if(this.currentlyFocused) {
+        if(e.key.toLowerCase() === "r") {
+          this.setPlaceOrigin(this.currentlyFocused)
+          this.placeInto(this.currentlyFocused)
+        }
+      }
+    })
 
     this.el.howToPlayButton.addEventListener("click", () => {
       this.el.welcomeMessage.style.display = "none";
