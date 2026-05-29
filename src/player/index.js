@@ -46,6 +46,7 @@ class App {
     warningCloseButton: document.getElementById("warning-dialog-close-button"),
     warningCancelButton: document.getElementById("warning-cancel-button"),
     warningSubmitButton: document.getElementById("warning-submit-button"),
+    assistiveAlertElement: document.getElementById("assistive-alert"),
     get allSlots() {
       return [...this.passageSlots, ...this.wordBankSlots];
     },
@@ -63,6 +64,10 @@ class App {
       el.childNodes[0]?.innerText,
     ]);
   }
+
+  assistiveAlert(msg) {
+    this.el.assistiveAlertElement.innerHTML = msg;
+  } 
 
   openWarning() {
     if (!this.el.warningDialog.open) this.el.warningDialog.showModal();
@@ -134,6 +139,7 @@ class App {
     span.draggable = "true";
     span.innerText = text;
     span.id = `word-${index}`;
+    span.ariaLabel = `Word in word bank: ${text}`
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     span.addEventListener("keydown", (e) => {
       if(e.key == "Enter") {
@@ -155,9 +161,10 @@ class App {
     return span;
   }
 
-  makeWordPillContainer(id) {
+  makeWordPillContainer(id, count) {
     const span = document.createElement("span");
     span.classList.add("word-pill-container");
+    span.dataset.count = count;
     span.id = id;
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     return span;
@@ -236,6 +243,11 @@ class App {
       if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
     }
 
+    if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
+      this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
+    else
+      this.draggedItem.ariaLabel = `Word in passage: ${this.draggedItem.innerHTML}`
+
     this.el.passageCont.classList.remove("highlight")
 
     this.draggedItem = null;
@@ -253,16 +265,21 @@ class App {
     document.addEventListener("keydown", (e) => {
       if(this.draggedItem) {
         if(e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          const slotLength = this.el.passageSlots.length
+
           if(e.key === "ArrowLeft")
-            this.destinationIndex = this.destinationIndex - 1 < 0 ? this.el.passageSlots.length - 1 : this.destinationIndex - 1
+            this.destinationIndex = this.destinationIndex - 1 < 0 ? slotLength - 1 : this.destinationIndex - 1
           else if(e.key === "ArrowRight")
-            this.destinationIndex = this.destinationIndex + 1 >= this.el.passageSlots.length ? 0 : this.destinationIndex + 1
+            this.destinationIndex = this.destinationIndex + 1 >= slotLength ? 0 : this.destinationIndex + 1
 
           if(this.destinationSlot)
             this.destinationSlot.classList.remove("focus")
 
           this.destinationSlot = this.el.passageSlots[this.destinationIndex]
           this.destinationSlot.classList.add("focus")
+          let child = this.destinationSlot.childNodes ? this.destinationSlot.childNodes[0] : null
+          
+          this.assistiveAlert(`Over passage slot ${this.destinationSlot.dataset.count} of ${slotLength}: ${child ? child.innerHTML : `empty slot`}.`)
         }
       }
 
@@ -331,9 +348,10 @@ class App {
 
     const paragraphWords = this.paragraph.split(" ");
 
+    let containerCount = 1
     for (let i = 0; i < paragraphWords.length; i++) {
       if (this.words[i]) {
-        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id))
+        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++))
         const space = document.createElement("span")
         space.innerHTML = " "
         this.el.passage.appendChild(space)
@@ -400,6 +418,11 @@ class App {
         );
         if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
       }
+
+      if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
+        this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
+      else
+        this.draggedItem.ariaLabel = `Word in passage: ${this.draggedItem.innerHTML}`
 
       this.sortWordBank();
     });
