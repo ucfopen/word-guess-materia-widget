@@ -137,7 +137,9 @@ class App {
       else this.switchToAuto();
 
       this.scored = qset.options.scored;
+
       this.responseType = qset.options.responseType;
+      this.updateResponseType()
 
       this.el.settingsScoredCheck.checked = this.scored;
 
@@ -271,10 +273,12 @@ class App {
 
     this.el.settingsBankCheck.addEventListener("change", (e) => {
       this.responseType = e.target.value === "bank" ? "bank" : "free";
+      this.updateResponseType()
     })
 
     this.el.settingsFreeCheck.addEventListener("change", (e) => {
       this.responseType = e.target.value === "free" ? "free" : "bank";
+      this.updateResponseType()
     })
   }
 
@@ -589,7 +593,6 @@ class App {
     const words = this.highlighted.size;
     const percent = Math.round((100 * words) / MAX_HIDDEN);
     const width = Math.round(percent / MAX_HIDDEN) * MAX_HIDDEN;
-    console.log(percent)
 
     if (percent >= PROGRESS_BAR_BAD_THRESHOLD) {
       this.el.manualProgressBar.style.width = `100%`;
@@ -636,6 +639,13 @@ class App {
         scored: this.scored
       },
     };
+  }
+
+  updateResponseType() {
+    if (this.responseType === "free")
+      this.el.outer.classList.add("free")
+    else
+      this.el.outer.classList.remove("free")
   }
 }
 
