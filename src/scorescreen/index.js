@@ -32,7 +32,7 @@ Namespace('WordGuess').ScoreCore = (function() {
         console.log(scoreTable)
 
         const paragraph = _qset.options.paragraph
-        const pWords = paragraph.split(/\s+|([,.!?:"])/).filter((v)=>v!==undefined && v !== "");
+        const pWords = paragraph.split(/\s+|([,.!?:"—])/).filter((v)=>v!==undefined && v !== "");
         const answers = Object.fromEntries(
             scoreTable.map((v,i) => [
               _questions[i].options.index,

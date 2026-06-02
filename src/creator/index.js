@@ -12,7 +12,7 @@ const PROGRESS_BAR_GOOD_THRESHOLD = 75;
 const PROGRESS_BAR_BAD_THRESHOLD = 100;
 
 const MAX_HIDDEN = 30;
-const MAX_WORD_COUNT = 250;
+const MAX_WORD_COUNT = 400;
 
 const CONJUNCTIONS = new Set([
   "and",
@@ -32,11 +32,8 @@ const CONJUNCTIONS = new Set([
   "a",
   "an",
   "into",
+  ",", ".", ":", `"`, "?", "!", "—"
 ]);
-
-const PUNCTUATION = new Set([
-  ",", ".", ":", `"`, "?", "!"
-])
 
 // See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
@@ -191,7 +188,7 @@ class App {
 
     this.el.textarea.addEventListener("beforeinput", (e) => {
       const newString = this.el.textarea.value
-      const addedCount = (newString + e.data).trim().split(/\s+|([,.!?:"])/).length
+      const addedCount = (newString + e.data).trim().split(/\s+|([,.!?:"—])/).length
       
       if (addedCount > MAX_WORD_COUNT && e.data) {
         e.preventDefault();
@@ -318,7 +315,7 @@ class App {
       return;
     }
 
-    const words = text.split(/\s+|([,.!?:"])/);
+    const words = text.split(/\s+|([,.!?:"—])/);
     const newWords = [];
 
     let oldIndex = 0;
@@ -476,16 +473,17 @@ class App {
   refreshAutoWords() {
     // const target = Math.min(this.autoHiddenCount(), this.words.length);
     const autoCount = this.autoHiddenCount() + 1
-    const target = Math.min(Math.floor(this.words.length/(autoCount)), this.words.length);
+
+    const candidates = this.words.filter(
+      (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
+    );
+
+    const target = Math.min(Math.floor(candidates.length/(autoCount)), candidates.length);
 
     const oldHighlighted = [...this.highlighted];
     this.highlighted.clear();
 
-    // const candidates = this.words.filter(
-    //   (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
-    // );
-
-    const candidates = this.words;
+    // const candidates = this.words;
 
     if (candidates.length <= target)
       this.highlighted = new Set(candidates.map((w) => w.id));
@@ -578,7 +576,7 @@ class App {
   }
 
   getWordCount() {
-    return this.el.textarea.value.trim().split(/\s+|([,.!?:"])/).length;
+    return this.el.textarea.value.trim().split(/\s+|([,.!?:"—])/).length;
   }
 
   updateWordCount() {

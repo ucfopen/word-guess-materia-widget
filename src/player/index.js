@@ -441,7 +441,7 @@ class App {
     Utils.scramble(homes);
     for (const s of homes) this.el.wordBank.appendChild(s);
 
-    const paragraphWords = this.paragraph.split(/\s+|([,.!?:"])/).filter((v)=>v!==undefined && v !== "");
+    const paragraphWords = this.paragraph.split(/\s+|([,.!?:"—])/).filter((v)=>v!==undefined && v !== "");
 
     let containerCount = 1
     for (let i = 0; i < paragraphWords.length; i++) {
