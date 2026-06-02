@@ -32,7 +32,7 @@ Namespace('WordGuess').ScoreCore = (function() {
         console.log(scoreTable)
 
         const paragraph = _qset.options.paragraph
-        const pWords = paragraph.split(" ")
+        const pWords = paragraph.split(/\s+|([,.!?:"])/).filter((v)=>v!==undefined && v !== "");
         const answers = Object.fromEntries(
             scoreTable.map((v,i) => [
               _questions[i].options.index,
@@ -52,7 +52,7 @@ Namespace('WordGuess').ScoreCore = (function() {
                 span.innerHTML = answers[i].response
                 span.dataset.text = answers[i].text
                 
-                if(answers[i].score == 100) {
+                if(answers[i].response.toLowerCase() == answers[i].text.toLowerCase()) {
                     correct++
                     span.classList.add("correct")
                 } else {

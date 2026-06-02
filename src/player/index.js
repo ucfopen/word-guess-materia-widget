@@ -216,7 +216,7 @@ class App {
   }
 
   constructor({ items, options, title, version }) {
-    if (!ALLOWED_QSET_VERSIONS.includes(version)) {
+    if (!ALLOWED_QSET_VERSIONS.includes(parseInt(version))) {
       Materia.Engine.alert(
         "Unsupported QSet Version",
         `QSet version ${version} isn't supported.`,
@@ -434,7 +434,6 @@ class App {
     for (const s of homes) this.el.wordBank.appendChild(s);
 
     const paragraphWords = this.paragraph.split(/\s+|([,.!?:"])/).filter((v)=>v!==undefined && v !== "");
-    console.log(paragraphWords)
 
     let containerCount = 1
     for (let i = 0; i < paragraphWords.length; i++) {
