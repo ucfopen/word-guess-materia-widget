@@ -25,9 +25,9 @@
   <body>
     <div id='assistive-alert' aria-live='assertive'></div>
     <main>
-      <div class="logo-container">
+      <!-- <div class="logo-container">
         <img src="/assets/Icon.png" alt="Game logo" class="logo" />
-      </div>
+      </div> -->
 
       <div class="main-content">
         <section class="word-bank-container">
@@ -47,12 +47,13 @@
       <dialog id="greeting-dialog">
         <!-- <div class="dialog-shell">
           <div class="dialog-box"> -->
-            <div class="dialog-content">
-              <div class="dialog-left">
+            <div class="dialog-content single">
+              <!-- <div class="dialog-left desc">
                 <img src="/assets/IconBig.png" alt="" />
-              </div>
+                <p>Fill in the missing words to the passage back to life.</p>
+              </div> -->
               <div class="dialog-right">
-                <div id="welcome-message" style="display: block">
+                <!-- <div id="welcome-message" style="display: block">
                   <h2>Welcome to Word Guess!</h2>
                   <div class="dialog-info">
                     <p>
@@ -65,39 +66,42 @@
                       How To Play
                     </button>
                   </div>
-                </div>
-                <div id="instructions" style="display: none" class="container">
+                </div> -->
+                <div id="instructions" style="display: flex" class="container">
                   <h2>How To Play</h2>
-                  <div>
-                    <div class="page-selector">
-                      <button id="pointer-btn" class="selected">
-                        Pointer Controls
-                      </button>
-                      <button id="keyboard-btn">Keyboard Controls</button>
+                  <div class="dialog-info">
+                    <div id="welcome-message" style="display:none" class="">
+                      <p>
+                        Fill in the missing words and bring the passages back to
+                        life.
+                      </p>
                     </div>
-                    <div id="pointer-controls" class="dialog-info">
+                    <div id="pointer-controls" style="display: flex" class="">
                       <div class="item">
-                        <img alt="" />
+                        <img alt="Animation depicting Drag and Drop functionality" src="/assets/wgTempDnD.png"/>
                         <div>
                           <h3>Drag and Drop</h3>
                           <p>
                             Drag and Drop the word into where you think it
-                            belongs. Return a word to the bank by clicking it or
+                            belongs.
+                          </p>
+                          <p>
+                            Return a word to the bank by clicking it or
                             dragging it back into its previous spot.
                           </p>
                         </div>
                       </div>
                       <hr />
                       <div class="item">
-                        <img alt="" />
+                        <img alt="Animation depicting Tap/Click functionality" src="/assets/wgTempTC.png"/>
                         <div>
                           <h3>Tap / Click</h3>
                           <p>
-                            Tap or Click the word once to select it or to return
-                            it to the bank
-                            <br />
-                            When a word is selected tap or click it again to
-                            place it in the spot where you think it belongs
+                            Tap / Click the word once to select it, or to return
+                            it to the bank.
+                            </p><p>
+                            When a word is selected, tap / click it again to
+                            place it in the desired spot.
                           </p>
                         </div>
                       </div>
@@ -105,7 +109,7 @@
                     <div
                       id="keyboard-controls"
                       style="display: none"
-                      class="dialog-info"
+                      class=""
                     >
                       <table>
                         <thead>
@@ -120,7 +124,7 @@
                               <p class="key">Tab</p>
                             </th>
                             <td>
-                              <p>Navigate between words on screen</p>
+                              <p>Navigate between words on screen.</p>
                             </td>
                           </tr>
                           <tr>
@@ -157,7 +161,7 @@
                               <p class="key">H</p>
                             </th>
                             <td>
-                              <p>Open or close instructions</p>
+                              <p>Toggle the instructions.</p>
                             </td>
                           </tr>
                           <tr>
@@ -180,6 +184,13 @@
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                    <div class="control-row">
+                      <button id="modal-prev">
+                        Previous
+                      </button>
+                      <div id="page-counter">1 / 2</div>
+                      <button id="modal-next">Next</button>
                     </div>
                   </div>
                   <button id="play-game-btn" class="action-btn">

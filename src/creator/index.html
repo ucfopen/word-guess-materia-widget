@@ -30,14 +30,31 @@
         <div class="settings-internal">
           <h2>Settings</h2>
           <div class="settings-inputs">
-            <h3>Enable Scoring?
+            <h3><label for="scoring-check">Enable Scoring?</label>
               <span class="info-icon">
-                <div class="info-box bottom">
+                <div class="info-box top">
                   Choose either a score or participation grade.
                 </div>
               </span>
+              <input id="scoring-check" type="checkbox" value="true" checked>
             </h3>
-            <h3>Response Type</h3>
+            <h3>Response Type
+              <span class="info-icon">
+                <div class="info-box bottom">
+                  Select how students fill in the blanks.
+                </div>
+              </span>
+            </h3>
+            <div class="type-select">
+              <div class="row">
+                <input id="type-bank" type="radio" value="bank" name="response-type" checked>
+                <label for="type-bank">Word Bank</label>
+              </div>
+              <div class="row">
+                <input id="type-free" type="radio" value="free" name="response-type">
+                <label for="type-free">Free Response</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>

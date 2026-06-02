@@ -47,6 +47,10 @@ dialog {
   grid-template-columns: 1fr 2fr;
   gap: 24px;
   align-items: center;
+
+  &.single {
+    display: block;
+  }
 }
 
 .dialog-left {

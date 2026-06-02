@@ -27,6 +27,8 @@ class App {
 
   currentlyFocused = null;
 
+  welcomePageIndex = 0;
+
   el = {
     wordBank: document.getElementById("word-bank"),
     passage: document.getElementById("passage"),
@@ -47,6 +49,13 @@ class App {
     warningCancelButton: document.getElementById("warning-cancel-button"),
     warningSubmitButton: document.getElementById("warning-submit-button"),
     assistiveAlertElement: document.getElementById("assistive-alert"),
+    modalPrev: document.getElementById("modal-prev"),
+    modalNext: document.getElementById("modal-next"),
+    pageCounter: document.getElementById("page-counter"),
+    welcomePages: [
+      document.getElementById("pointer-controls"),
+      document.getElementById("keyboard-controls")
+    ],
     get allSlots() {
       return [...this.passageSlots, ...this.wordBankSlots];
     },
@@ -142,7 +151,7 @@ class App {
     span.ariaLabel = `Word in word bank: ${text}`
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     span.addEventListener("keydown", (e) => {
-      if(e.key == "Enter") {
+      if(e.key === "Enter") {
         this.pillSelectListener(e)
         this.destinationSlot = this.el.passageSlots[this.destinationIndex]
         if(this.destinationSlot)
@@ -245,14 +254,20 @@ class App {
 
     if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
       this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
+    else 
+      this.draggedItem.ariaLabel = `Word in passage slot ${this.draggedItem.parentElement.dataset.count}: ${this.draggedItem.innerHTML}`
+
+    if(closest.dataset.count)
+        this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into slot number ${closest.dataset.count}.`)
     else
-      this.draggedItem.ariaLabel = `Word in passage: ${this.draggedItem.innerHTML}`
+      this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into the bank.`)
 
     this.el.passageCont.classList.remove("highlight")
 
     this.draggedItem = null;
     this.originSlot = null;
     this.clearHighlights();
+    this.sortWordBank();
   }
 
   bind() {
@@ -277,24 +292,45 @@ class App {
 
           this.destinationSlot = this.el.passageSlots[this.destinationIndex]
           this.destinationSlot.classList.add("focus")
-          let child = this.destinationSlot.childNodes ? this.destinationSlot.childNodes[0] : null
+          const child = this.destinationSlot.childNodes ? this.destinationSlot.childNodes[0] : null
           
           this.assistiveAlert(`Over passage slot ${this.destinationSlot.dataset.count} of ${slotLength}: ${child ? child.innerHTML : `empty slot`}.`)
         }
       }
 
+      if(e.key.toLowerCase() === 'h')
+        this.el.greeting.showModal();
+
       if(this.currentlyFocused) {
         if(e.key.toLowerCase() === "r") {
+          const text = this.currentlyFocused.innerHTML
           this.setPlaceOrigin(this.currentlyFocused)
           this.placeInto(this.currentlyFocused)
+
+          this.assistiveAlert(`Returned word ${text} to the word bank.`)
+        }
+      }
+
+      if(e.ctrlKey) {
+        if(e.key.toLowerCase() === "r") {
+          this.el.passageSlots.forEach((v) => {
+            if(v.childNodes && v.childNodes[0]) {
+              this.setPlaceOrigin(v.childNodes[0])
+              this.placeInto(v.childNodes[0])
+            }
+          })
+
+          this.assistiveAlert("Returned all words to the word bank.")
         }
       }
     })
 
-    this.el.howToPlayButton.addEventListener("click", () => {
-      this.el.welcomeMessage.style.display = "none";
-      this.el.instructions.style.display = "flex";
-    });
+    // this.el.howToPlayButton.addEventListener("click", () => {
+    //   this.el.welcomeMessage.style.display = "none";
+    //   this.el.instructions.style.display = "flex";
+    // });
+
+
 
     this.el.playGameButton.addEventListener("click", () => {
       this.el.greeting.close();
@@ -313,27 +349,29 @@ class App {
       this.submitAndEnd(true);
     });
 
-    document
-      .getElementsByClassName("page-selector")[0]
-      .addEventListener("click", (e) => {
-        console.log(e.target);
-      });
+    this.el.modalNext.addEventListener("click", () => {
+      const length = this.el.welcomePages.length
+      this.welcomePageIndex = this.welcomePageIndex + 1 >= length ? 0 : this.welcomePageIndex + 1
 
-    this.el.controlsKeyboardButton.addEventListener("click", () => {
-      this.el.controlsKeyboardButton.classList.add("selected");
-      this.el.controlsPointerButton.classList.remove("selected");
+      this.el.welcomePages.forEach((v) => {
+        v.style.display = "none"
+      })
 
-      this.el.controlsKeyboard.style.display = "flex";
-      this.el.controlsPointer.style.display = "none";
-    });
+      this.el.welcomePages[this.welcomePageIndex].style.display = "flex"
+      this.el.pageCounter.innerHTML = `${this.welcomePageIndex+1} / ${length}`
+    })
 
-    this.el.controlsPointerButton.addEventListener("click", () => {
-      this.el.controlsPointerButton.classList.add("selected");
-      this.el.controlsKeyboardButton.classList.remove("selected");
+    this.el.modalPrev.addEventListener("click", () => {
+      const length = this.el.welcomePages.length
+      this.welcomePageIndex = this.welcomePageIndex - 1 < 0 ? length - 1 : this.welcomePageIndex - 1
+     
+      this.el.welcomePages.forEach((v) => {
+        v.style.display = "none"
+      })
 
-      this.el.controlsPointer.style.display = "flex";
-      this.el.controlsKeyboard.style.display = "none";
-    });
+      this.el.welcomePages[this.welcomePageIndex].style.display = "flex"
+      this.el.pageCounter.innerHTML = `${this.welcomePageIndex+1} / ${length}`
+    })
 
     this.el.title.innerText = this.title;
 
@@ -423,6 +461,11 @@ class App {
         this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
       else
         this.draggedItem.ariaLabel = `Word in passage: ${this.draggedItem.innerHTML}`
+
+      if(closest.dataset.count)
+        this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into slot number ${closest.dataset.count}.`)
+      else
+        this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into the bank.`)
 
       this.sortWordBank();
     });

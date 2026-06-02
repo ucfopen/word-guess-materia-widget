@@ -89,6 +89,10 @@ class App {
 
     titleInput: document.getElementById("title"),
 
+    settingsScoredCheck: document.getElementById("scoring-check"),
+    settingsBankCheck: document.getElementById("type-bank"),
+    settingsFreeCheck: document.getElementById("type-free"),
+
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
@@ -99,6 +103,9 @@ class App {
   activeMode = null;
   sliderUsed = false;
   bound = false;
+
+  responseType = "bank";
+  scored = true;
 
   /**
    * @param {{
@@ -128,6 +135,19 @@ class App {
 
       if (qset.options.mode === "manual") this.switchToManual();
       else this.switchToAuto();
+
+      this.scored = qset.options.scored;
+      this.responseType = qset.options.responseType;
+
+      this.el.settingsScoredCheck.checked = this.scored;
+
+      if (this.responseType === "bank") {
+        this.el.settingsBankCheck.checked = true;
+        this.el.settingsFreeCheck.checked = false;
+      } else {
+        this.el.settingsBankCheck.checked = false;
+        this.el.settingsFreeCheck.checked = true;
+      }
 
       this.switchToPickMode();
     } else {
@@ -244,6 +264,18 @@ class App {
     this.el.errorDialogCloseButton.addEventListener("click", () =>
       this.closeWarningDialog(),
     );
+
+    this.el.settingsScoredCheck.addEventListener("change", (e) => {
+      this.scored = e.target.checked;
+    })
+
+    this.el.settingsBankCheck.addEventListener("change", (e) => {
+      this.responseType = e.target.value === "bank" ? "bank" : "free";
+    })
+
+    this.el.settingsFreeCheck.addEventListener("change", (e) => {
+      this.responseType = e.target.value === "free" ? "free" : "bank";
+    })
   }
 
   getParagraph() {
@@ -600,6 +632,8 @@ class App {
         paragraph: this.getParagraph(),
         mode: this.activeMode ?? "manual",
         slider: this.el.slider.value,
+        responseType: this.responseType,
+        scored: this.scored
       },
     };
   }
