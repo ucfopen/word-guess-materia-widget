@@ -11,6 +11,6 @@ class WordGuess(ScoreModule):
         sa = self.get_ss_answer(log, q)
         se = self.get_ss_expected_answers(log, q)
 
-        if sa == se:
+        if sa.lower() == se.lower():
             return 100
         return 0

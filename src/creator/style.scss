@@ -494,7 +494,8 @@ section.inner {
 
   padding: 20px;
 
-  // outline: 5px solid #70a0f9;
+  transition: background-color 300ms ease;
+
   background-color: #70a0f9;
 }
 

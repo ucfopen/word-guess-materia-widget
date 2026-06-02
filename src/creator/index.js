@@ -34,6 +34,10 @@ const CONJUNCTIONS = new Set([
   "into",
 ]);
 
+const PUNCTUATION = new Set([
+  ",", ".", ":", `"`, "?", "!"
+])
+
 // See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
   INFO: Symbol("INFO"),
@@ -187,7 +191,7 @@ class App {
 
     this.el.textarea.addEventListener("beforeinput", (e) => {
       const newString = this.el.textarea.value
-      const addedCount = (newString + e.data).trim().split(/\s+/).length
+      const addedCount = (newString + e.data).trim().split(/\s+|([,.!?:"])/).length
       
       if (addedCount > MAX_WORD_COUNT && e.data) {
         e.preventDefault();
@@ -314,12 +318,14 @@ class App {
       return;
     }
 
-    const words = text.split(/\s+/);
+    const words = text.split(/\s+|([,.!?:"])/);
     const newWords = [];
 
     let oldIndex = 0;
 
     for (const word of words) {
+      if(!word) continue;
+
       if (oldIndex < this.words.length && this.words[oldIndex].text === word) {
         newWords.push(this.words[oldIndex]);
         oldIndex++;
@@ -572,7 +578,7 @@ class App {
   }
 
   getWordCount() {
-    return this.el.textarea.value.trim().split(/\s+/).length;
+    return this.el.textarea.value.trim().split(/\s+|([,.!?:"])/).length;
   }
 
   updateWordCount() {

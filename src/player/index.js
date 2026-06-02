@@ -29,12 +29,16 @@ class App {
 
   welcomePageIndex = 0;
 
+  // "bank" || "free"
+  responseType = "bank";
+
   el = {
     wordBank: document.getElementById("word-bank"),
     passage: document.getElementById("passage"),
     passageCont: document.querySelector(".passage"),
     title: document.getElementById("title"),
     submit: document.getElementById("submit-button"),
+    resetButton: document.getElementById("reset-button"),
     greeting: document.getElementById("greeting-dialog"),
     playGameButton: document.getElementById("play-game-btn"),
     howToPlayButton: document.getElementById("how-to-play-btn"),
@@ -52,6 +56,7 @@ class App {
     modalPrev: document.getElementById("modal-prev"),
     modalNext: document.getElementById("modal-next"),
     pageCounter: document.getElementById("page-counter"),
+    mainContent: document.querySelector(".main-content"),
     welcomePages: [
       document.getElementById("pointer-controls"),
       document.getElementById("keyboard-controls")
@@ -68,10 +73,17 @@ class App {
   };
 
   get toSubmit() {
-    return this.el.passageSlots.map((el) => [
-      el.id,
-      el.childNodes[0]?.innerText,
-    ]);
+    if (this.responseType === "bank") {
+      return this.el.passageSlots.map((el) => [
+        el.id,
+        el.childNodes[0]?.innerText,
+      ]);
+    } else {
+      return this.el.passageSlots.map((el) => [
+        el.id,
+        el.value
+      ]);
+    }
   }
 
   assistiveAlert(msg) {
@@ -171,11 +183,25 @@ class App {
   }
 
   makeWordPillContainer(id, count) {
-    const span = document.createElement("span");
+    let span;
+    if (this.responseType === "bank") {
+      span = document.createElement("span");
+      span.addEventListener("click", (e) => this.pillSelectListener(e))
+    }
+    else {
+      span = document.createElement("input")
+      span.addEventListener("focus", (e) => {
+        this.currentlyFocused = e.target
+      })
+      span.addEventListener("blur", (e)=>{
+        this.currentlyFocused = null
+      })
+    }
+
     span.classList.add("word-pill-container");
     span.dataset.count = count;
     span.id = id;
-    span.addEventListener("click", (e) => this.pillSelectListener(e))
+    
     return span;
   }
 
@@ -207,7 +233,18 @@ class App {
       ]),
     );
 
+    if (options.responseType)
+      this.responseType = options.responseType
+    this.updateResponseType()
+
     this.bind();
+  }
+
+  updateResponseType() {
+    if (this.responseType === "free")
+      this.el.mainContent.classList.add("free")
+    else
+      this.el.mainContent.classList.remove("free")
   }
 
   setPlaceOrigin(el) {
@@ -298,10 +335,10 @@ class App {
         }
       }
 
-      if(e.key.toLowerCase() === 'h')
+      if(e.key.toLowerCase() === 'h' && (!this.currentlyFocused || this.responseType === "bank"))
         this.el.greeting.showModal();
 
-      if(this.currentlyFocused) {
+      if(this.currentlyFocused && this.responseType === "bank") {
         if(e.key.toLowerCase() === "r") {
           const text = this.currentlyFocused.innerHTML
           this.setPlaceOrigin(this.currentlyFocused)
@@ -313,28 +350,40 @@ class App {
 
       if(e.ctrlKey) {
         if(e.key.toLowerCase() === "r") {
-          this.el.passageSlots.forEach((v) => {
-            if(v.childNodes && v.childNodes[0]) {
-              this.setPlaceOrigin(v.childNodes[0])
-              this.placeInto(v.childNodes[0])
-            }
-          })
 
-          this.assistiveAlert("Returned all words to the word bank.")
+          if(this.responseType === "bank") {
+            this.el.passageSlots.forEach((v) => {
+              if(v.childNodes && v.childNodes[0]) {
+                this.setPlaceOrigin(v.childNodes[0])
+                this.placeInto(v.childNodes[0])
+              }
+            })
+  
+            this.assistiveAlert("Returned all words to the word bank.")
+          } else {
+            this.el.passageSlots.forEach((v) => {
+              v.value = ""
+            })
+
+            this.assistiveAlert("Reset all words.")
+          }
         }
       }
     })
 
-    // this.el.howToPlayButton.addEventListener("click", () => {
-    //   this.el.welcomeMessage.style.display = "none";
-    //   this.el.instructions.style.display = "flex";
-    // });
-
-
-
     this.el.playGameButton.addEventListener("click", () => {
       this.el.greeting.close();
     });
+
+    this.el.resetButton.addEventListener("click", () => {
+      if(this.responseType === "free") {
+        this.el.passageSlots.forEach((v) => {
+          v.value = ""
+        })
+
+        this.assistiveAlert("Reset all words.")
+      }
+    })
 
     for (const btn of [
       this.el.warningCloseButton,
@@ -384,10 +433,13 @@ class App {
     Utils.scramble(homes);
     for (const s of homes) this.el.wordBank.appendChild(s);
 
-    const paragraphWords = this.paragraph.split(" ");
+    const paragraphWords = this.paragraph.split(/\s+|([,.!?:"])/).filter((v)=>v!==undefined && v !== "");
+    console.log(paragraphWords)
 
     let containerCount = 1
     for (let i = 0; i < paragraphWords.length; i++) {
+      if(!paragraphWords[i]) continue;
+
       if (this.words[i]) {
         this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++))
         const space = document.createElement("span")
