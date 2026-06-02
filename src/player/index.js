@@ -57,6 +57,8 @@ class App {
     modalNext: document.getElementById("modal-next"),
     pageCounter: document.getElementById("page-counter"),
     mainContent: document.querySelector(".main-content"),
+    freeInstructions: document.getElementById("free-message"),
+    controlRow: document.querySelector(".control-row"),
     welcomePages: [
       document.getElementById("pointer-controls"),
       document.getElementById("keyboard-controls")
@@ -312,6 +314,12 @@ class App {
 
     this.bound = true;
 
+    if(this.responseType === "free") {
+      this.el.freeInstructions.style.display = "flex";
+      this.el.welcomePages[0].style.display = "none";
+      this.el.controlRow.style.display = "none"
+    }
+    
     this.el.greeting.showModal();
 
     document.addEventListener("keydown", (e) => {
