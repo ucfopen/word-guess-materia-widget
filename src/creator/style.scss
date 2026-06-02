@@ -80,7 +80,7 @@ input {
   margin: 5px;
   cursor: pointer;
 
-  background: url("/assets/InfoBubble.svg") no-repeat center;
+  background: url("assets/InfoBubble.svg") no-repeat center;
   background-size: contain;
 
   .info-box {
@@ -437,19 +437,19 @@ section.inner {
 .x-btn {
   width: 12px;
   height: 12px;
-  background: transparent url("/assets/WordPillXButton.svg") no-repeat center;
+  background: transparent url("assets/WordPillXButton.svg") no-repeat center;
 }
 
 .pencil-btn {
   width: 35px;
   height: 35px;
-  background: transparent url("/assets/Pencil.svg") no-repeat center;
+  background: transparent url("assets/Pencil.svg") no-repeat center;
 }
 
 .mouse-btn {
   width: 35px;
   height: 35px;
-  background: transparent url("/assets/MouseClick.svg") no-repeat center;
+  background: transparent url("assets/MouseClick.svg") no-repeat center;
 }
 
 .refresh-btn {
@@ -457,7 +457,7 @@ section.inner {
   width: 35px;
   height: 35px;
   scale: 1.15;
-  background: transparent url("/assets/Refresh.svg") no-repeat center;
+  background: transparent url("assets/Refresh.svg") no-repeat center;
 
   &:hover {
     transform: scale(1.12);
@@ -766,7 +766,7 @@ section.inner {
     content: "";
     width: 40px;
     height: 40px;
-    background: url("/assets/cog.svg") no-repeat center;
+    background: url("assets/cog.svg") no-repeat center;
     background-size: 100%;
 
     

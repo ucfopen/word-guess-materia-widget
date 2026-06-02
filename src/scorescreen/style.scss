@@ -36,7 +36,7 @@ body {
             height: 8px;
             margin-right: 5px;
             content: "";
-            background: url("/assets/correct_black.svg") no-repeat 0 0;
+            background: url("assets/correct_black.svg") no-repeat 0 0;
             background-size: 100%;
         }
     }
@@ -51,7 +51,7 @@ body {
             height: 12px;
             margin-right: 5px;
             content: "";
-            background: url("/assets/incorrect.svg") no-repeat 0 0;
+            background: url("assets/incorrect.svg") no-repeat 0 0;
             background-size: 100%;
         }
     }
@@ -161,14 +161,14 @@ body {
 .user-btn {
     width: 35px;
     height: 35px;
-    background: transparent url("/assets/user_answers.svg") no-repeat center;
+    background: transparent url("assets/user_answers.svg") no-repeat center;
 }
   
 .correct-btn {
     width: 35px;
     height: 35px;
     color: white;
-    background: transparent url("/assets/correct_answers.svg") no-repeat center;
+    background: transparent url("assets/correct_answers.svg") no-repeat center;
 }
 
 @media (width <= 400px) {
