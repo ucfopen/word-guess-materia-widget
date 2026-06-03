@@ -233,10 +233,10 @@ class App {
     })
 
     this.el.pickarea.addEventListener("click", (e) => {
-      if (this.activeMode === "automatic") this.switchToManual();
-
       const span = e.target;
       if (!span.classList.contains("word-span-pill")) return;
+
+      if (this.activeMode === "automatic") this.switchToManual();
 
       const id = Number(span.dataset.id);
 
