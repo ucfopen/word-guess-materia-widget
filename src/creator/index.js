@@ -60,6 +60,7 @@ class App {
 
     settingsBtn: document.getElementById("settings-btn"),
     settingsScreen: document.getElementById("settings-screen"),
+    closeSettingsBtn: document.getElementById("close-settings"),
 
     slider: document.getElementById("slider"),
     sliderMask: document.getElementById("slider-mask"),
@@ -226,14 +227,7 @@ class App {
     this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
 
     this.el.settingsBtn.addEventListener("click", ()=>{
-      if (this.el.settingsScreen.className.includes("hidden")) {
-        this.el.settingsBtn.classList.add("rotate")
-        this.el.settingsScreen.classList.remove("hidden")
-      }
-      else {
-        this.el.settingsBtn.classList.remove("rotate")
-        this.el.settingsScreen.classList.add("hidden")
-      }
+      this.toggleSettings()
     })
 
     this.el.pickarea.addEventListener("click", (e) => {
@@ -281,6 +275,37 @@ class App {
       this.responseType = e.target.value === "free" ? "free" : "bank";
       this.updateResponseType()
     })
+
+    this.el.settingsScoredCheck.addEventListener("focus", (e) => {
+      this.openSettings()
+    })
+
+    this.el.settingsBankCheck.addEventListener("focus", (e) => {
+      this.openSettings()
+    })
+
+    this.el.settingsFreeCheck.addEventListener("focus", (e) => {
+      this.openSettings()
+    })
+
+    this.el.closeSettingsBtn.addEventListener("click", ()=>this.closeSettings())
+  }
+
+  toggleSettings() {
+    if (this.el.settingsScreen.className.includes("hidden"))
+      this.openSettings()
+    else
+      this.closeSettings()
+  }
+
+  openSettings() {
+    this.el.settingsBtn.classList.add("rotate")
+    this.el.settingsScreen.classList.remove("hidden")
+  }
+
+  closeSettings() {
+    this.el.settingsBtn.classList.remove("rotate")
+    this.el.settingsScreen.classList.add("hidden")
   }
 
   getParagraph() {

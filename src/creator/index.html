@@ -25,13 +25,13 @@
   <body>
     <div id="side-column">
       <!-- <img src="assets/Icon.png" alt="" class="logo" /> -->
-      <button id="settings-btn"></button>
+      <button id="settings-btn" aria-label="Toggle Settings Menu"></button>
       <div id="settings-screen" class="hidden">
         <div class="settings-internal">
           <h2>Settings</h2>
           <div class="settings-inputs">
             <h3><label for="scoring-check">Enable Scoring?</label>
-              <span class="info-icon">
+              <span class="info-icon" tabindex="0">
                 <div class="info-box top">
                   Choose either a score or participation grade.
                 </div>
@@ -39,7 +39,7 @@
               <input id="scoring-check" type="checkbox" value="true" checked>
             </h3>
             <h3>Response Type
-              <span class="info-icon">
+              <span class="info-icon" tabindex="0">
                 <div class="info-box bottom">
                   Select how students fill in the blanks.
                 </div>
@@ -56,6 +56,7 @@
               </div>
             </div>
           </div>
+          <button aria-label="Close Settings" id="close-settings"></button>
         </div>
       </div>
     </div>
@@ -64,7 +65,7 @@
       <section id="edit-region" class="inner">
         <section class="title-box">
           <div class="section-header">
-            <span class="info-icon">
+            <span class="info-icon" tabindex="0">
               <div class="info-box bottom">
                 <p>
                   This will appear above your paragraph. Leave unchanged to hide
@@ -85,7 +86,7 @@
         <section class="passage-box">
           <div class="segment">
             <div class="section-header">
-              <span class="info-icon">
+              <span class="info-icon" tabindex="0">
                 <div class="info-box top">
                   <p>
                     Passage will display with the removed words for students to
@@ -127,7 +128,7 @@
       <section id="bank-region" class="inner">
         <section class="options">
           <div class="section-header">
-            <span class="info-icon">
+            <span class="info-icon" tabindex="0">
               <div class="info-box bottom">
                 <p>
                   Select how Word Guess should hide the words. Pick the specific
@@ -186,7 +187,7 @@
 
         <section id="hidden-words" class="passage-box">
           <div class="section-header">
-            <span class="info-icon">
+            <span class="info-icon" tabindex="0">
               <div class="info-box top">
                 <p>The word bank students will use to fill in the blanks.</p>
               </div>
