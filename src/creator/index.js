@@ -95,6 +95,8 @@ class App {
     settingsBankCheck: document.getElementById("type-bank"),
     settingsFreeCheck: document.getElementById("type-free"),
 
+    passageCont: document.querySelector(".passage.container"),
+
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
@@ -289,6 +291,13 @@ class App {
     })
 
     this.el.closeSettingsBtn.addEventListener("click", ()=>this.closeSettings())
+
+    this.el.passageCont.addEventListener("click", (e)=>{
+      const span = e.target;
+      if (span.classList.contains("word-span-pill")) return;
+
+      this.switchToWriteMode()
+    })
   }
 
   toggleSettings() {
@@ -588,10 +597,12 @@ class App {
   }
 
   switchToPickMode() {
-    this.el.textarea.style.display = "none";
-    this.el.pickarea.style.display = "flex";
-    this.el.slideToggle.classList.add("slid");
-    this.el.outer.classList.remove("new")
+    if(this.words.length > 0) {
+      this.el.textarea.style.display = "none";
+      this.el.pickarea.style.display = "flex";
+      this.el.slideToggle.classList.add("slid");
+      this.el.outer.classList.remove("new")
+    }
   }
 
   switchToWriteMode() {
