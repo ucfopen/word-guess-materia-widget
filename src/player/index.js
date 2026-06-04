@@ -3,6 +3,8 @@ const ALLOWED_QSET_VERSIONS = [2];
 
 const SNAP_DISTANCE = 120;
 
+const SPLIT_REGEX = /\s+|([,.!?:"—])/
+
 class Utils {
   static scramble(list) {
     for (let i = list.length - 1; i > 0; i--) {
@@ -59,6 +61,7 @@ class App {
     mainContent: document.querySelector(".main-content"),
     freeInstructions: document.getElementById("free-message"),
     controlRow: document.querySelector(".control-row"),
+    returnBtn: document.getElementById("return-to-bank"),
     welcomePages: [
       document.getElementById("pointer-controls"),
       document.getElementById("keyboard-controls")
@@ -86,6 +89,27 @@ class App {
         el.value
       ]);
     }
+  }
+
+  get filteredParagraph() {
+    const paragraphWords = this.paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
+
+    let res = ""
+
+    for (let i = 0; i < paragraphWords.length; i++) {
+      if(!paragraphWords[i]) continue;
+
+      if (this.words[i]) {
+        const container = document.getElementById(this.words[i].id)
+        if(container && container.childNodes[0])
+          res += `slot:${container.childNodes[0].innerHTML} `
+        else
+          res += "slot:EMPTY-SLOT "
+      } else res += `${paragraphWords[i]} `;
+      
+    }
+
+    return res
   }
 
   assistiveAlert(msg) {
@@ -167,9 +191,15 @@ class App {
     span.addEventListener("keydown", (e) => {
       if(e.key === "Enter") {
         this.pillSelectListener(e)
-        this.destinationSlot = this.el.passageSlots[this.destinationIndex]
-        if(this.destinationSlot)
-          this.destinationSlot.classList.add("focus")
+        if(this.el.passageSlots[0]) {
+          if(this.el.passageSlots[0].childNodes[0])
+            this.el.passageSlots[0].childNodes[0].focus()
+          else
+            this.el.passageSlots[0].focus()
+        }
+        // this.destinationSlot = this.el.passageSlots[this.destinationIndex]
+        // if(this.destinationSlot)
+        //   this.destinationSlot.classList.add("focus")
       }
     })
     span.addEventListener("focus", (e)=>{
@@ -189,6 +219,7 @@ class App {
     if (this.responseType === "bank") {
       span = document.createElement("span");
       span.addEventListener("click", (e) => this.pillSelectListener(e))
+      span.addEventListener("keydown", (e) => {if(e.key === "Enter" && this.draggedItem) this.pillSelectListener(e)})
     }
     else {
       span = document.createElement("input")
@@ -255,6 +286,19 @@ class App {
 
     this.el.passageCont.classList.add("highlight")
     this.draggedItem.classList.add("focus")
+
+    this.el.passageSlots.forEach((v) => {if(!v.childNodes[0]) v.setAttribute("tabIndex", 0)})
+  }
+
+  cancelPlace() {
+    if(this.draggedItem)
+      this.draggedItem.classList.remove("focus")
+    this.el.passageCont.classList.remove("highlight")
+
+    this.draggedItem = null
+    this.originSlot = null
+
+    this.el.passageSlots.forEach((v) => v.setAttribute("tabIndex", -1))
   }
 
   placeInto(el) {
@@ -262,10 +306,10 @@ class App {
     if(el.getAttribute("draggable"))
       closest = closest.parentElement
 
-    if(this.destinationSlot) {
-      closest = this.destinationSlot
-      this.destinationSlot = null
-    }
+    // if(this.destinationSlot) {
+    //   closest = this.destinationSlot
+    //   this.destinationSlot = null
+    // }
 
     if (closest) {
       if (closest.children.length) {
@@ -307,6 +351,14 @@ class App {
     this.originSlot = null;
     this.clearHighlights();
     this.sortWordBank();
+    this.el.passage.ariaLabel = `${this.title}. Passage content: ${this.filteredParagraph}`
+    this.el.passageSlots.forEach((v) => v.setAttribute("tabIndex", -1))
+    this.returnToTop()
+  }
+
+  returnToTop() {
+    const slots = this.el.wordBankSlots
+    if(slots[0] && slots[0].childNodes[0]) slots[0].childNodes[0].focus()
   }
 
   bind() {
@@ -323,28 +375,12 @@ class App {
     this.el.greeting.showModal();
 
     document.addEventListener("keydown", (e) => {
-      if(this.draggedItem) {
-        if(e.key === "ArrowLeft" || e.key === "ArrowRight") {
-          const slotLength = this.el.passageSlots.length
-
-          if(e.key === "ArrowLeft")
-            this.destinationIndex = this.destinationIndex - 1 < 0 ? slotLength - 1 : this.destinationIndex - 1
-          else if(e.key === "ArrowRight")
-            this.destinationIndex = this.destinationIndex + 1 >= slotLength ? 0 : this.destinationIndex + 1
-
-          if(this.destinationSlot)
-            this.destinationSlot.classList.remove("focus")
-
-          this.destinationSlot = this.el.passageSlots[this.destinationIndex]
-          this.destinationSlot.classList.add("focus")
-          const child = this.destinationSlot.childNodes ? this.destinationSlot.childNodes[0] : null
-          
-          this.assistiveAlert(`Over passage slot ${this.destinationSlot.dataset.count} of ${slotLength}: ${child ? child.innerHTML : `empty slot`}.`)
-        }
+      if(e.key.toLowerCase() === 'h' && (!this.currentlyFocused || this.responseType === "bank")) {
+        if(this.el.greeting.getAttribute("open") === "")
+          this.el.greeting.close();
+        else
+          this.el.greeting.showModal(); 
       }
-
-      if(e.key.toLowerCase() === 'h' && (!this.currentlyFocused || this.responseType === "bank"))
-        this.el.greeting.showModal();
 
       if(this.currentlyFocused && this.responseType === "bank") {
         if(e.key.toLowerCase() === "r") {
@@ -377,11 +413,20 @@ class App {
           }
         }
       }
+
+      if(e.key === "Escape") {
+        this.cancelPlace()
+        this.returnToTop()
+      }
     })
 
     this.el.playGameButton.addEventListener("click", () => {
       this.el.greeting.close();
+
+      this.returnToTop()
     });
+
+    this.el.returnBtn.addEventListener("click", ()=>this.returnToTop())
 
     this.el.resetButton.addEventListener("click", () => {
       if(this.responseType === "free") {
@@ -441,7 +486,10 @@ class App {
     Utils.scramble(homes);
     for (const s of homes) this.el.wordBank.appendChild(s);
 
-    const paragraphWords = this.paragraph.split(/\s+|([,.!?:"—])/).filter((v)=>v!==undefined && v !== "");
+    const paragraphWords = this.paragraph.split(SPLIT_REGEX).filter((v)=>v !== "").map((v)=>{
+      if(v === undefined) return " "
+      else return v
+    });
 
     let containerCount = 1
     for (let i = 0; i < paragraphWords.length; i++) {
@@ -449,15 +497,14 @@ class App {
 
       if (this.words[i]) {
         this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++))
-        const space = document.createElement("span")
-        space.innerHTML = " "
-        this.el.passage.appendChild(space)
       } else {
         const span = document.createElement("span")
-        span.innerHTML = paragraphWords[i] + " ";
+        span.innerHTML = paragraphWords[i];
         this.el.passage.appendChild(span)
       }
     }
+
+    this.el.passage.ariaLabel = `${this.title}. Passage content: ${this.filteredParagraph}`
 
     this.el.submit.addEventListener("click", () => {
       this.submitAndEnd();
@@ -526,7 +573,9 @@ class App {
       else
         this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into the bank.`)
 
+      this.el.passage.ariaLabel = `${this.title}. Passage content: ${this.filteredParagraph}`
       this.sortWordBank();
+      this.el.passageSlots.forEach((v) => v.setAttribute("tabIndex", -1))
     });
   }
 }

@@ -110,23 +110,40 @@ dialog {
   }
 
   li {
-    margin-bottom: 10px;
-    font-weight: 600;
+    margin-bottom: 8px;
+    font-weight: 500;
     line-height: 1.5;
     font-size: 15px;
+
+    &::marker {
+      font-weight: 600;
+    }
+
+    img {
+      display: inline-flex;
+      width: 15px;
+      height: 15px;
+      margin: auto 2px;
+    }
   }
 
   p {
     margin: 0;
-    font-weight: 600;
+    margin-bottom: 4px;
+    font-weight: 500;
     font-size: 14px;
     line-height: 1.4;
+
+    b {
+      font-family: "Paytone One", sans-serif;
+    }
   }
 }
 
 .close-btn {
   // IDK WHY THIS NEEDS TO BE HERE
   outline: none;
+  cursor: pointer;
 
   width: 12px;
   height: 12px;

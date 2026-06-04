@@ -308,7 +308,6 @@ section.inner {
   #pickarea {
     flex: 1;
     min-height: 0;
-    gap: 3.2px;
 
     height: 100%;
     width: 100%;
@@ -320,13 +319,20 @@ section.inner {
     justify-content: flex-start;
     align-content: flex-start;
 
+    white-space: break-spaces;
+
     overflow: auto;
 
     .word-span-pill {
       cursor: pointer;
       display: inline-block;
       padding: 0;
-      margin: 4px 0 0 0
+      margin: 7.2px 0 0 0;
+
+      &.punctuation {
+        margin-left: 0px;
+        pointer-events: none;
+      }
     }
 
     button {
@@ -431,8 +437,10 @@ section.inner {
   cursor: pointer;
 
   &:focus-visible {
-    outline: 3px solid greenyellow;
-    outline-offset: 4px;
+    outline: 2px solid #93d82d;
+    outline-offset: -3px;
+    border-radius: 10px;
+    // background-color: rgba(172, 255, 47, 0.333);
   }
 }
 
@@ -456,15 +464,20 @@ section.inner {
 
 .refresh-btn {
   display: block;
-  width: 35px;
-  height: 35px;
-  scale: 1.15;
-  background: transparent url("assets/Refresh.svg") no-repeat center;
+  margin-top: 4px;
+  margin-left: 8px;
+  width: 24px;
+  height: 24px;
+  background-color: #0052E4;
+  mask: url("assets/Refresh.svg") no-repeat center / 22px;
 
-  &:hover {
+  &:hover, &:focus-visible {
     transform: scale(1.12);
-
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.22));
+  }
+
+  &:focus-visible {
+    background-color: #93d82d;
   }
 }
 
@@ -475,10 +488,13 @@ section.inner {
   background-color: #0052E4;
   mask: url("assets/Trash.svg") no-repeat center / 28px;
 
-  &:hover {
+  &:hover, &:focus-visible {
     transform: scale(1.12);
-
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.22));
+  }
+
+  &:focus-visible {
+    background-color: #93d82d;
   }
 }
 
@@ -590,6 +606,19 @@ section.inner {
     border: unset;
     background-color: unset;
     color: grey;
+  }
+
+  transition: outline 200ms ease, scale 200ms ease;
+  &:hover, &:focus-within {
+    scale: 0.9;
+  }
+
+  &:focus-within {
+    outline: 2px solid #93d82d;
+
+    button {
+      outline: none;
+    }
   }
 }
 
@@ -829,15 +858,35 @@ section.inner {
       }
     }
 
-    .trash-btn {
+    .trash-btn, .refresh-btn {
       background-color: black;
+
+      &:focus-visible {
+        background-color: #93d82d;
+      }
     }
   }
 }
 
-#close-settings {
+#close-settings, #return-to-title, #jump-end, #jump-start  {
   width: 0;
   height: 0;
   opacity: 0;
-  position: absolute;
+  position: fixed;
+  pointer-events: none;
+
+  &:focus-visible {
+    pointer-events: all;
+    color: white;
+    background-color: #451B87;
+    padding: 4px 8px;
+    border-radius: 2px;
+    position: static;
+    width: fit-content;
+    height: fit-content;
+    font-size: 14px;
+    opacity: 1;
+    display: inline;
+    line-height: 1;
+  }
 }

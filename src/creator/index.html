@@ -32,8 +32,9 @@
           <div class="settings-inputs">
             <h3><label for="scoring-check">Enable Scoring?</label>
               <span class="info-icon" tabindex="0">
-                <div class="info-box top">
-                  Choose either a score or participation grade.
+                <div class="info-box bottom">
+                  Enable to score the activity accurately.<br/>
+                  Disable to treat the activity as participation.
                 </div>
               </span>
               <input id="scoring-check" type="checkbox" value="true" checked>
@@ -55,8 +56,8 @@
                 <label for="type-free">Free Response</label>
               </div>
             </div>
+            <button aria-label="Close Settings" id="close-settings">Close Settings</button>
           </div>
-          <button aria-label="Close Settings" id="close-settings"></button>
         </div>
       </div>
     </div>
@@ -119,8 +120,12 @@
               class=""
               placeholder="Enter a paragraph here."
             ></textarea>
+            <button id="jump-end">Jump to last word</button>
             <div id="pickarea"></div>
-            <p><span id="word-count"></span></p>
+            <p>
+              <button id="jump-start">Jump to first word</button>
+              <span id="word-count"></span>
+            </p>
           </div>
         </section>
       </section>
@@ -189,7 +194,7 @@
           <div class="section-header">
             <span class="info-icon" tabindex="0">
               <div class="info-box top">
-                <p>The word bank students will use to fill in the blanks.</p>
+                <p>The words students will use to fill in the blanks.</p>
               </div>
             </span>
             <h2>Word Bank</h2>
@@ -205,6 +210,10 @@
                   id="refresh-btn"
                   title="refresh"
                 ></button>
+                <button
+                  id="return-to-title"
+                  aria-label="Return to the Title field"
+                >Return to the Title field</button>
               </div>
             </div>
           </div>
@@ -232,13 +241,18 @@
                   <li>Give your activity a title</li>
                   <li>Add/Paste your passage the students will read</li>
                   <li>
-                    Pick which words to hide or let Word Guess choose them for
-                    you
+                    Choose which words students must guess
+                  </li>
+                  <li>
+                    Customize how students interact with your activity <br/>via the <img src="assets/cog.svg"/>Settings
                   </li>
                 </ol>
-                <h3>Students will</h3>
+                <h3>Students will...</h3>
                 <p>
-                  Read the passage and use the word bank to fill in the blanks.
+                  <b>Word Bank</b><br/> Read the passage and use the word bank to fill in the blanks.
+                </p>
+                <p>
+                  <b>Free Response</b><br/> Read the passage and fill in the blanks with their own responses.
                 </p>
               </div>
               <button id="close-button" class="action-btn">

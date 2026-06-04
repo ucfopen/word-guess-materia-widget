@@ -12,7 +12,7 @@ const PROGRESS_BAR_GOOD_THRESHOLD = 75;
 const PROGRESS_BAR_BAD_THRESHOLD = 100;
 
 const MAX_HIDDEN = 30;
-const MAX_WORD_COUNT = 400;
+const MAX_WORD_COUNT = 250;
 
 const CONJUNCTIONS = new Set([
   "and",
@@ -31,9 +31,14 @@ const CONJUNCTIONS = new Set([
   "has",
   "a",
   "an",
-  "into",
-  ",", ".", ":", `"`, "?", "!", "—"
+  "into"
 ]);
+
+const PUNCTUATION = new Set(([
+  ",", ".", ":", `"`, "?", "!", "—", ";", " "
+]))
+
+const SPLIT_REGEX = /\s+|([,.!?:"—])/
 
 // See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
@@ -97,6 +102,10 @@ class App {
 
     passageCont: document.querySelector(".passage.container"),
 
+    returnToTitleBtn: document.getElementById("return-to-title"),
+    jumpEnd: document.getElementById("jump-end"),
+    jumpStart: document.getElementById("jump-start"),
+
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
@@ -124,7 +133,7 @@ class App {
     if (options) {
       const { title, qset, version } = options;
 
-      if (!ALLOWED_QSET_VERSIONS.includes(version))
+      if (!ALLOWED_QSET_VERSIONS.includes(parseInt(version)))
         this.openWarningDialog(`QSet version ${version} is not supported yet.`);
 
       this.setTitle(title);
@@ -189,11 +198,11 @@ class App {
 
     this.bound = true;
 
-    this.el.textarea.addEventListener("beforeinput", (e) => {
-      const newString = this.el.textarea.value
-      const addedCount = (newString + e.data).trim().split(/\s+|([,.!?:"—])/).length
+    this.el.titleInput.addEventListener("beforeinput", (e) => {
+      const newString = this.el.titleInput.value
+      const addedCount = (newString + e.data).length
       
-      if (addedCount > MAX_WORD_COUNT && e.data) {
+      if (addedCount > 100 && e.data) {
         e.preventDefault();
       }
     })
@@ -228,13 +237,15 @@ class App {
     this.el.refreshBtn.addEventListener("click", () => this.refreshAutoWords());
     this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
 
-    this.el.settingsBtn.addEventListener("click", ()=>{
+    this.el.settingsBtn.addEventListener("click", (e)=>{
+      e.stopPropagation()
       this.toggleSettings()
     })
 
     this.el.pickarea.addEventListener("click", (e) => {
       const span = e.target;
       if (!span.classList.contains("word-span-pill")) return;
+      if (span.classList.contains("punctuation")) return;
 
       if (this.activeMode === "automatic") this.switchToManual();
 
@@ -298,6 +309,30 @@ class App {
 
       this.switchToWriteMode()
     })
+
+    this.el.settingsScreen.addEventListener("click", (e) => {
+      e.stopPropagation()
+    })
+
+    document.addEventListener("click", () => {
+      this.closeSettings()
+    })
+
+    this.el.returnToTitleBtn.addEventListener("click", ()=> {
+      this.el.titleInput.focus()
+    })
+
+    this.el.jumpEnd.addEventListener("click", (e) => {
+      e.stopPropagation()
+      if(this.el.pickarea.childNodes && this.el.pickarea.childNodes[0])
+        this.el.pickarea.childNodes[this.el.pickarea.childNodes.length - 1].focus()
+    })
+
+    this.el.jumpStart.addEventListener("click", (e) => {
+      e.stopPropagation()
+      if(this.el.pickarea.childNodes && this.el.pickarea.childNodes[0])
+        this.el.pickarea.childNodes[0].focus()
+    })
   }
 
   toggleSettings() {
@@ -349,20 +384,25 @@ class App {
       return;
     }
 
-    const words = text.split(/\s+|([,.!?:"—])/);
+    const words = text.split(SPLIT_REGEX);
     const newWords = [];
 
     let oldIndex = 0;
 
-    for (const word of words) {
-      if(!word) continue;
+    for (let word of words) {
+      if(word === undefined) word = " "
+      else if(!word) continue;
+
+      let id = `s${this.wordIdCounter}`;
+      if(word !== " ")
+        id = this.wordIdCounter++;
 
       if (oldIndex < this.words.length && this.words[oldIndex].text === word) {
         newWords.push(this.words[oldIndex]);
         oldIndex++;
       } else {
         newWords.push({
-          id: this.wordIdCounter++,
+          id: id,
           text: word,
         });
       }
@@ -383,6 +423,8 @@ class App {
       pill.className = "word-span-pill";
       pill.textContent = word.text;
       pill.dataset.id = word.id;
+
+      if(PUNCTUATION.has(word.text)) pill.classList.add("punctuation")
 
       if (this.highlighted.has(word.id)) pill.classList.add("highlighted");
 
@@ -467,9 +509,8 @@ class App {
 
   updateSlider(percentage) {
     const value = percentage;
-    percentage = value / this.maxWordsBetween() * 100
 
-    const normalized = (value - this.minWordsBetween() + 1) / (this.maxWordsBetween() - this.minWordsBetween() + 1)
+    const normalized = 0.065 + (0.935*(value - this.minWordsBetween() ) / (this.maxWordsBetween() - this.minWordsBetween() ))
 
     this.el.sliderMask.style.width = `${normalized * 100}%`;
     this.el.slider.value = value;
@@ -481,11 +522,13 @@ class App {
   }
 
   minWordsBetween() {
-    return Math.max(Math.floor(this.words.length/this.maxHiddenWords()) - 1, SLIDER_MIN)
+    const ret = Math.max(Math.floor(this.getWordCount()/this.maxHiddenWords()) - 1, SLIDER_MIN)
+    if(!isFinite(ret)) return 0
+    return ret
   }
 
   maxWordsBetween() {
-    return Math.floor(this.words.length * MAX_PERC_SPACE_BETWEEN);
+    return Math.floor(this.getWordCount() * MAX_PERC_SPACE_BETWEEN);
   }
 
   maxHiddenWords() {
@@ -509,7 +552,7 @@ class App {
     const autoCount = this.autoHiddenCount() + 1
 
     const candidates = this.words.filter(
-      (w) => !CONJUNCTIONS.has(w.text.toLowerCase()),
+      (w) => !CONJUNCTIONS.has(w.text.toLowerCase()) && !PUNCTUATION.has(w.text.toLowerCase()),
     );
 
     const target = Math.min(Math.floor(candidates.length/(autoCount)), candidates.length);
@@ -600,6 +643,8 @@ class App {
     if(this.words.length > 0) {
       this.el.textarea.style.display = "none";
       this.el.pickarea.style.display = "flex";
+      this.el.jumpEnd.style.display = "inline";
+      this.el.jumpStart.style.display = "inline";
       this.el.slideToggle.classList.add("slid");
       this.el.outer.classList.remove("new")
     }
@@ -608,11 +653,14 @@ class App {
   switchToWriteMode() {
     this.el.textarea.style.display = "block";
     this.el.pickarea.style.display = "none";
+    this.el.jumpEnd.style.display = "none";
+    this.el.jumpStart.style.display = "none";
     this.el.slideToggle.classList.remove("slid");
   }
 
   getWordCount() {
-    return this.el.textarea.value.trim().split(/\s+|([,.!?:"—])/).length;
+    return this.el.textarea.value.trim().split(SPLIT_REGEX)
+    .filter((v)=>!PUNCTUATION.has(v) && v !== undefined && v !== "").length;
   }
 
   updateWordCount() {
@@ -711,6 +759,13 @@ window.addEventListener("load", () => {
         if (app.words.length > MAX_WORD_COUNT) {
           app.openWarningDialog(
             `Max passage length is ${MAX_WORD_COUNT} words. Please update the passage.`,
+          );
+          return;
+        }
+
+        if (app.el.titleInput.value.length > 100) {
+          app.openWarningDialog(
+            `Widget title cannot be longer than 100 characters. Please shorten the title.`,
           );
           return;
         }

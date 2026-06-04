@@ -112,7 +112,7 @@ section {
 
   white-space: nowrap;
 
-  &:hover {
+  &:hover, &:focus-visible {
     scale: 1.05;
     border: 2px solid #004ad4;
   }
@@ -207,9 +207,13 @@ input.word-pill-container {
     border: 2px solid #2e0073;
   }
 
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  
   &.highlight {
-    outline: 4px solid rgb(191, 238, 120);
-    outline-offset: -4px;
+    // outline: 4px solid rgb(191, 238, 120);
+    // outline-offset: -4px;
+    transform: translateY(-8px);
+    box-shadow: 0px 0px 4px 8px rgba(140, 68, 249, 0.8);
 
     .word-pill-container {
       &:empty {
@@ -457,12 +461,28 @@ input.word-pill-container {
   max-width: 25rem;
 }
 
+#passage {
+  white-space: break-spaces;
+  
+  &:focus-visible {
+    outline: #93d82d 4px solid;
+    outline-offset: 6px;
+    border-radius: 10px;
+  }
+}
+
 @media (width <= 900px) {
   .main-content {
     flex-direction: column;
     max-width: 100vw;
     padding: 0;
     gap: 16px;
+  }
+
+  #pointer-controls {
+    .item {
+      flex-direction: column;
+    }
   }
 
   .word-bank-container {
@@ -561,7 +581,7 @@ input.word-pill-container {
 
 .word-pill {
   &.focus {
-    border: 2px solid #93d82d;
+    border: 3px solid #2e0073;
   }
 }
 
@@ -569,17 +589,31 @@ input.word-pill-container {
   &.highlight {
     .word-pill-container {
       &.focus {
-        border: 2px solid #2e0073;
+        border: 3px solid #2e0073;
       }
     }
   }
 }
 
-#assistive-alert {
+#assistive-alert, #return-to-bank {
 	height: 0;
 	width: 0;
-	position: absolute;
+	position: fixed;
 	opacity: 0;
+}
+
+#return-to-bank:focus-visible {
+  color: white;
+  background-color: #451B87;
+  padding: 4px 8px;
+  border-radius: 2px;
+  position: static;
+  width: fit-content;
+  height: fit-content;
+  font-size: 14px;
+  opacity: 1;
+  display: inline;
+  line-height: 1;
 }
 
 #instructions {

@@ -7,6 +7,8 @@ Namespace('WordGuess').ScoreCore = (function() {
     let _slider = null
     let _sliderText = null
 
+    const SPLIT_REGEX = /\s+|([,.!?:"—])/
+
 	const _getRenderedHeight = () => {
 		return Math.ceil(parseFloat(window.getComputedStyle(document.querySelector('html')).height)) - 21;
 	}
@@ -27,20 +29,15 @@ Namespace('WordGuess').ScoreCore = (function() {
         _slider = document.getElementById("slide-knob")
         _sliderText = document.getElementById("slider-text")
 
-        console.log(_qset)
-        console.log(_questions)
-        console.log(scoreTable)
-
         const paragraph = _qset.options.paragraph
-        const pWords = paragraph.split(/\s+|([,.!?:"—])/).filter((v)=>v!==undefined && v !== "");
+        const pWords = paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
         const answers = Object.fromEntries(
             scoreTable.map((v,i) => [
               _questions[i].options.index,
               { text: v.data[2], response: v.data[1], score: v.score },
             ]),
         )
-        console.log(answers)
-
+        
         let correct = 0
 
         pWords.forEach((v, i)=>{

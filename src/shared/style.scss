@@ -28,9 +28,14 @@ body {
   transition: transform 0.2s ease;
   justify-content: center;
 
-  &:hover {
+  &:hover, &:focus-visible {
     transform: translateY(-2px);
   }
+
+  // &:focus-visible {
+  //     outline: #2e0073 4px solid;
+  //     outline-offset: 4px;
+  // }
 
   &.variant-2 {
     background: #ece0ff;
@@ -43,8 +48,4 @@ body {
     border: 3px solid #585858;
     box-shadow: unset;
   }
-}
-
-.action-btn:focus {
-  outline: none;
 }
