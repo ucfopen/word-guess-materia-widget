@@ -34,6 +34,17 @@ class App {
   // "bank" || "free"
   responseType = "bank";
 
+  mut = new MutationObserver((mutations, ob) => {
+    mutations.forEach((m) => {
+      if(m.type === 'childList') {
+        if(m.addedNodes.length > 0)
+          m.target.ariaLabel = ""
+        else
+          m.target.ariaLabel = m.dataset.label
+      }
+    })
+  })
+
   el = {
     wordBank: document.getElementById("word-bank"),
     passage: document.getElementById("passage"),
@@ -187,6 +198,7 @@ class App {
     span.innerText = text;
     span.id = `word-${index}`;
     span.ariaLabel = `Word in word bank: ${text}`
+    span.ariaHidden = false
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     span.addEventListener("keydown", (e) => {
       if(e.key === "Enter") {
@@ -214,7 +226,7 @@ class App {
     return span;
   }
 
-  makeWordPillContainer(id, count) {
+  makeWordPillContainer(id, count, length) {
     let span;
     if (this.responseType === "bank") {
       span = document.createElement("span");
@@ -233,9 +245,33 @@ class App {
 
     span.classList.add("word-pill-container");
     span.dataset.count = count;
+    span.dataset.length = length;
     span.id = id;
+
+    this.mut.observe(span, {childList: true})
     
     return span;
+  }
+
+  addContainerLabel(s) {
+    const index = s.dataset.length
+    const spans = this.el.passage.childNodes
+    let context = ""
+    spans.forEach((v, i) => {
+      if(Math.abs(i - index) <= 10) {
+        if(v.classList.contains("word-pill-container")) {
+          if(v.childNodes[0])
+            context += v.childNodes[0].innerHTML
+          else
+            context += "EMPTY-SLOT"
+        }
+        else
+          context += v.innerHTML
+      }
+    })
+
+    s.dataset.label = `Empty slot in position ${s.dataset.count}. Context: ${context}`
+    s.ariaLabel = `Empty slot in position ${s.dataset.count}. Context: ${context}`
   }
 
   sortWordBank() {
@@ -314,8 +350,31 @@ class App {
     if (closest) {
       if (closest.children.length) {
         const existing = closest.childNodes[0];
-        if (existing && existing !== this.draggedItem)
+        if (existing && existing !== this.draggedItem) {
           this.originSlot.appendChild(existing);
+          if(this.originSlot.classList.contains("word-pill-home"))
+            existing.ariaLabel = `Word in word bank: ${existing.innerHTML}`
+          else {
+            const index = this.originSlot.dataset.length
+            const spans = this.el.passage.childNodes
+            let context = ""
+            spans.forEach((v, i) => {
+              if(Math.abs(i - index) <= 10) {
+                if(v.classList.contains("word-pill-container")) {
+                  if(v.dataset.length === index)
+                    context += existing.innerHTML
+                  else if(v.childNodes[0])
+                    context += v.childNodes[0].innerHTML
+                  else
+                    context += "EMPTY-SLOT"
+                }
+                else
+                  context += v.innerHTML
+              }
+            })
+            existing.ariaLabel = `Word in passage slot ${existing.parentElement.dataset.count}: ${existing.innerHTML}. Context: ${context}`
+          }
+        }
         else {
           const empty = document.querySelector(".word-pill-home:empty")
           if (empty) {
@@ -337,8 +396,24 @@ class App {
 
     if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
       this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
-    else 
-      this.draggedItem.ariaLabel = `Word in passage slot ${this.draggedItem.parentElement.dataset.count}: ${this.draggedItem.innerHTML}`
+    else {
+      const index = this.draggedItem.parentElement.dataset.length
+      const spans = this.el.passage.childNodes
+      let context = ""
+      spans.forEach((v, i) => {
+        if(Math.abs(i - index) <= 10) {
+          if(v.classList.contains("word-pill-container")) {
+            if(v.childNodes[0])
+              context += v.childNodes[0].innerHTML
+            else
+              context += "EMPTY-SLOT"
+          }
+          else
+            context += v.innerHTML
+        }
+      })
+      this.draggedItem.ariaLabel = `Word in passage slot ${this.draggedItem.parentElement.dataset.count}: ${this.draggedItem.innerHTML}. Context: ${context}`
+    }
 
     if(closest.dataset.count)
         this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into slot number ${closest.dataset.count}.`)
@@ -496,13 +571,17 @@ class App {
       if(!paragraphWords[i]) continue;
 
       if (this.words[i]) {
-        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++))
+        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++,this.el.passage.childNodes.length))
       } else {
         const span = document.createElement("span")
         span.innerHTML = paragraphWords[i];
         this.el.passage.appendChild(span)
       }
     }
+
+    this.el.passageSlots.forEach((s) => {
+      this.addContainerLabel(s)
+    })
 
     this.el.passage.ariaLabel = `${this.title}. Passage content: ${this.filteredParagraph}`
 
@@ -546,36 +625,7 @@ class App {
       this.clearHighlights();
 
       const closest = this.getClosestSlot(e.clientX, e.clientY);
-      if (closest) {
-        if (closest.children.length) {
-          const existing = closest.childNodes[0];
-          if (existing && existing !== this.draggedItem)
-            this.originSlot.appendChild(existing);
-        }
-
-        closest.appendChild(this.draggedItem);
-      } else if (this.originSlot?.classList.contains("word-pill-home")) 
-        this.originSlot.appendChild(this.draggedItem);
-       else {
-        const emptyBankSlot = Array.from(this.el.wordBankSlots()).find(
-          (slot) => slot.children.length === 0,
-        );
-        if (emptyBankSlot) emptyBankSlot.appendChild(this.draggedItem);
-      }
-
-      if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
-        this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
-      else
-        this.draggedItem.ariaLabel = `Word in passage: ${this.draggedItem.innerHTML}`
-
-      if(closest.dataset.count)
-        this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into slot number ${closest.dataset.count}.`)
-      else
-        this.assistiveAlert(`Placed ${this.draggedItem.innerHTML} into the bank.`)
-
-      this.el.passage.ariaLabel = `${this.title}. Passage content: ${this.filteredParagraph}`
-      this.sortWordBank();
-      this.el.passageSlots.forEach((v) => v.setAttribute("tabIndex", -1))
+      this.placeInto(closest)
     });
   }
 }
