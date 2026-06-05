@@ -12,7 +12,7 @@ const PROGRESS_BAR_GOOD_THRESHOLD = 75;
 const PROGRESS_BAR_BAD_THRESHOLD = 100;
 
 const MAX_HIDDEN = 30;
-const MAX_WORD_COUNT = 250;
+const MAX_WORD_COUNT = 300;
 
 const CONJUNCTIONS = new Set([
   "and",
@@ -206,6 +206,10 @@ class App {
         e.preventDefault();
       }
     })
+
+    this.el.outer.addEventListener("transitionend", ()=>this.updateSlider(this.el.slider.value))
+
+    window.addEventListener("resize", ()=>this.updateSlider(this.el.slider.value))
 
     this.el.textarea.addEventListener("input", (e) => {
       this.generateWords();
@@ -509,10 +513,10 @@ class App {
 
   updateSlider(percentage) {
     const value = percentage;
+    const sliderWidth = this.el.slider.clientWidth
+    const normalized = (sliderWidth-24) * (value - this.minWordsBetween() ) / (this.maxWordsBetween() - this.minWordsBetween() )
 
-    const normalized = 0.065 + (0.935*(value - this.minWordsBetween() ) / (this.maxWordsBetween() - this.minWordsBetween() ))
-
-    this.el.sliderMask.style.width = `${normalized * 100}%`;
+    this.el.sliderMask.style.width = `${(normalized)+24}px`;
     this.el.slider.value = value;
 
     this.el.slider.dataset.mappedValue = value;
