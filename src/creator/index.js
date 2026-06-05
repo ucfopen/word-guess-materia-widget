@@ -715,13 +715,14 @@ class App {
   buildSaveData() {
     let cnt = 0;
     return {
-      items: this.getHighlighted().map(({ text, index }) => ({
+      items: this.getHighlighted().map(({ text, index, id }) => (
+      {
         id: null,
         type: "wordguess",
         materiaType: "question",
         questions: [{ text: `Word #${++cnt}` }],
         answers: [{ text }],
-        options: { index },
+        options: { index:id },
       })),
       options: {
         paragraph: this.getParagraph(),

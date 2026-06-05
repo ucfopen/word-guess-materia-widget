@@ -567,15 +567,19 @@ class App {
     });
 
     let containerCount = 1
+    let j = 0;
     for (let i = 0; i < paragraphWords.length; i++) {
       if(!paragraphWords[i]) continue;
 
-      if (this.words[i]) {
-        this.el.passage.appendChild(this.makeWordPillContainer(this.words[i].id, containerCount++,this.el.passage.childNodes.length))
+      if (this.words[j] && paragraphWords[i] !== " ") {
+        this.el.passage.appendChild(this.makeWordPillContainer(this.words[j].id, containerCount++,this.el.passage.childNodes.length))
+        j++
       } else {
         const span = document.createElement("span")
         span.innerHTML = paragraphWords[i];
         this.el.passage.appendChild(span)
+
+        if(span.innerHTML !== " ") j++
       }
     }
 
