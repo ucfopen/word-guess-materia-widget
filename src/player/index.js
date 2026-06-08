@@ -1,9 +1,21 @@
 // TODO: Add QSET V1 support
-const ALLOWED_QSET_VERSIONS = [2];
+const ALLOWED_QSET_VERSIONS = [1, 2];
 
 const SNAP_DISTANCE = 120;
 
-const SPLIT_REGEX = /\s+|([,.!?:"—])/
+
+// Word Guess v1 split words using a different punctuation set than v2
+// so we need different variations to support v1 sets
+
+const SPLIT_REGEX = /\s+|([,.!?:"—;])/
+const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
+
+const PUNCTUATION = new Set(([
+  ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+]))
+const OLD_PUNCTUATION = new Set(([
+  ",", ".", ":", `"`, "?", "!", ";", " ",
+]))
 
 class Utils {
   static scramble(list) {
@@ -103,7 +115,11 @@ class App {
   }
 
   get filteredParagraph() {
-    const paragraphWords = this.paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
+    let regex = SPLIT_REGEX
+    if(parseInt(this.version) == 1)
+      regex = OLD_SPLIT_REGEX
+
+    const paragraphWords = this.paragraph.split(regex).filter((v)=>v!==undefined && v !== "");
 
     let res = ""
 
@@ -293,8 +309,9 @@ class App {
       return;
     }
 
+    this.version = version;
     this.title = title;
-    this.paragraph = options.paragraph;
+    this.paragraph = options.paragraph.replaceAll("\n", " ");
     this.words = Object.fromEntries(
       items.map((i) => [
         i.options.index,
@@ -561,7 +578,11 @@ class App {
     Utils.scramble(homes);
     for (const s of homes) this.el.wordBank.appendChild(s);
 
-    const paragraphWords = this.paragraph.split(SPLIT_REGEX).filter((v)=>v !== "").map((v)=>{
+    let regex = SPLIT_REGEX
+    if(parseInt(this.version) == 1)
+      regex = OLD_SPLIT_REGEX
+
+    const paragraphWords = this.paragraph.split(regex).filter((v)=>v !== "").map((v)=>{
       if(v === undefined) return " "
       else return v
     });
@@ -578,6 +599,10 @@ class App {
         const span = document.createElement("span")
         span.innerHTML = paragraphWords[i];
         this.el.passage.appendChild(span)
+
+        if(parseInt(this.version) === 1 && OLD_PUNCTUATION.has(paragraphWords[i])) {
+          continue;
+        }
 
         if(span.innerHTML !== " ") j++
       }
@@ -638,6 +663,21 @@ window.addEventListener("load", () => {
   let _app;
   Materia.Engine.start({
     start: (instance, qset, qsetVersion) => {
+      if(parseInt(qsetVersion) === 1) {
+        qset.items = qset.questions_answers
+        qset.items.forEach((_v, i) => {
+          qset.items[i].options = { "index": qset.manualSkippingIndices[i] }
+        })
+
+        qset.options = {
+          "paragraph": qset.paragraph,
+          "mode": "manual",
+          "slider": "0",
+          "responseType": "free",
+          "scored": false
+        }
+      }
+
       _app = new App({ ...qset, title: instance.name, version: qsetVersion });
     },
     manualResize: false,

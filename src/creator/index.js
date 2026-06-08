@@ -1,5 +1,5 @@
 // TODO: Add QSET V1 support
-const ALLOWED_QSET_VERSIONS = [2];
+const ALLOWED_QSET_VERSIONS = [1, 2];
 const QSET_VERSION = 2;
 
 const SLIDER_MIN = 1;
@@ -34,11 +34,15 @@ const CONJUNCTIONS = new Set([
   "into"
 ]);
 
-const PUNCTUATION = new Set(([
-  ",", ".", ":", `"`, "?", "!", "—", ";", " "
-]))
+const SPLIT_REGEX = /\s+|([,.!?:"—;])/
+const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
 
-const SPLIT_REGEX = /\s+|([,.!?:"—])/
+const PUNCTUATION = new Set(([
+  ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+]))
+const OLD_PUNCTUATION = new Set(([
+  ",", ".", ":", `"`, "?", "!", ";", " ",
+]))
 
 // See: enums in JavaScript
 const WARNING_LEVEL = Object.freeze({
@@ -54,6 +58,11 @@ class App {
   words = [];
   highlighted = new Set();
   wordIdCounter = 0;
+
+  // true if next word generation should
+  // convert a qset from v1 to v2.
+  repair = false;
+  oldOffset = 0;
 
   el = {
     outer: document.getElementById("outer"),
@@ -136,11 +145,37 @@ class App {
       if (!ALLOWED_QSET_VERSIONS.includes(parseInt(version)))
         this.openWarningDialog(`QSet version ${version} is not supported yet.`);
 
+      if(parseInt(version) === 1) {
+        this.repair = true
+
+        qset.items = qset.questions_answers
+        qset.items.forEach((_v, i) => {
+          qset.items[i].options = { "index": qset.manualSkippingIndices[i] }
+        })
+
+        qset.options = {
+          "paragraph": qset.paragraph,
+          "mode": "manual",
+          "slider": "0",
+          "responseType": "free",
+          "scored": false
+        }
+
+        this.openWarningDialog(`You are opening an activity that was made in an older version of Word Guess. Review your words and settings to ensure they are correct before saving.`)
+      }
+
+      this.items = qset.items
+
       this.setTitle(title);
       this.setParagraph(qset.options.paragraph);
 
       this.highlighted = new Set(qset.items.map((x) => x.options.index));
-      this.generateWords();
+
+      if(this.repair)
+        this.repairWords()
+      else
+        this.generateWords();
+
       this.updateWordCount();
 
       this.sliderUsed = true;
@@ -378,6 +413,53 @@ class App {
         index,
       }))
       .filter((word) => this.highlighted.has(word.id));
+  }
+
+  repairWords() {
+    const text = this.el.textarea.value.trim();
+    if (!text) {
+      this.words = [];
+      this.highlighted.clear();
+      return;
+    }
+
+    let trackHighlight = 0
+
+    const words = text.split(SPLIT_REGEX);
+    const newWords = [];
+    const highlightArray = [...this.highlighted]
+
+    let index = 0;
+
+    for (let word of words) {
+      if(word === undefined) word = " "
+      else if(!word) continue;
+
+      let id = `s${this.wordIdCounter}`;
+      if(word !== " ")
+        id = this.wordIdCounter++;
+
+      newWords.push({
+        id: id,
+        text: word
+      })
+
+      if(this.items[trackHighlight] && this.items[trackHighlight].answers[0].text === word) {
+        highlightArray[trackHighlight++] = index
+      }
+
+      if(word !== " ")
+        index++
+    }
+
+    this.words = newWords;
+
+    const valid = new Set(this.words.map((w) => w.id));
+    for (const id of this.highlighted)
+      if (!valid.has(id)) this.highlighted.delete(id);
+
+    this.highlighted = new Set([...highlightArray])
+    this.repair = false
   }
 
   generateWords() {
@@ -714,8 +796,9 @@ class App {
 
   buildSaveData() {
     let cnt = 0;
+    const highlighted = this.getHighlighted()
     return {
-      items: this.getHighlighted().map(({ text, index, id }) => (
+      items: highlighted.map(({ text, index, id }) => (
       {
         id: null,
         type: "wordguess",
