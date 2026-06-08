@@ -18,8 +18,15 @@ score:
   score_module: WordGuess
   score_screen: scoreScreen.html
 meta_data:
+  accessibility_keyboard: Full
+  accessibility_reader: Full
+  accessibility_description: >
+    Fully accessible with standard keyboard controls. Includes additional optional keyboard shortcuts for several
+    features.
   features:
     - Customizable
+    - Scorable
+    - Mobile Friendly
   supported_data:
     - Fill-in-the-blank
   about: >
