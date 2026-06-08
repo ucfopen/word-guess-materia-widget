@@ -23,9 +23,7 @@ meta_data:
   supported_data:
     - Fill-in-the-blank
   about: >
-    Word Guess is a madlib-style game in which students are allowed to fill the
-    missing words within a paragraph and discover how their answers differed
-    from the original text.
+    Word Guess is a word-matching game, where students must fill the missing spaces in a passage with words from a provided word bank.
   excerpt: >
     Students fill blanks within a paragraph with words they think belong.
   update_method: github
