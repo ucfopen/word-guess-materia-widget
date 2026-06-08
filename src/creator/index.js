@@ -844,7 +844,7 @@ window.addEventListener("load", () => {
           return;
         }
 
-        if (app.words.length > MAX_WORD_COUNT) {
+        if (app.getWordCount() > MAX_WORD_COUNT) {
           app.openWarningDialog(
             `Max passage length is ${MAX_WORD_COUNT} words. Please update the passage.`,
           );
