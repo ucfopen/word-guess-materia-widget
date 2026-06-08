@@ -7,7 +7,17 @@ Namespace('WordGuess').ScoreCore = (function() {
     let _slider = null
     let _sliderText = null
 
-    const SPLIT_REGEX = /\s+|([,.!?:"—])/
+    let _version = 2
+
+    const SPLIT_REGEX = /\s+|([,.!?:"—;])/
+    const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
+
+    const PUNCTUATION = new Set(([
+    ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+    ]))
+    const OLD_PUNCTUATION = new Set(([
+    ",", ".", ":", `"`, "?", "!", ";", " ",
+    ]))
 
 	const _getRenderedHeight = () => {
 		return Math.ceil(parseFloat(window.getComputedStyle(document.querySelector('html')).height)) - 21;
@@ -18,6 +28,7 @@ Namespace('WordGuess').ScoreCore = (function() {
 	}
 
 	const start = (instance, qset, scoreTable, isPreview, qsetVersion) => {
+        _version = qsetVersion
 		update(qset, scoreTable)
 	}
 
@@ -30,7 +41,21 @@ Namespace('WordGuess').ScoreCore = (function() {
         _sliderText = document.getElementById("slider-text")
 
         const paragraph = _qset.options.paragraph
-        const pWords = paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
+        // const pWords = paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
+
+        let regex = SPLIT_REGEX
+        if(parseInt(_version) == 1)
+            regex = OLD_SPLIT_REGEX
+
+        let punctuation = PUNCTUATION
+        if(parseInt(_version) == 1)
+            regex = OLD_PUNCTUATION
+
+        const pWords = paragraph.split(regex).filter((v)=>v !== "").map((v)=>{
+        if(v === undefined) return " "
+            else return v
+        });
+        
         const answers = Object.fromEntries(
             scoreTable.map((v,i) => [
               _questions[i].options.index,
@@ -39,17 +64,19 @@ Namespace('WordGuess').ScoreCore = (function() {
         )
         
         let correct = 0
-
+        let track = 0
+        console.log(answers)
         pWords.forEach((v, i)=>{
+            console.log(v, track)
             const span = document.createElement("span")
             span.id = i
             
-            if(answers[i]) {
+            if(answers[track] && v !== " ") {
                 span.classList.add("pill")
-                span.innerHTML = answers[i].response
-                span.dataset.text = answers[i].text
+                span.innerHTML = answers[track].response
+                span.dataset.text = answers[track].text
                 
-                if(answers[i].response.toLowerCase() == answers[i].text.toLowerCase()) {
+                if(answers[track].response.toLowerCase() === answers[track].text.toLowerCase()) {
                     correct++
                     span.classList.add("correct")
                 } else {
@@ -57,12 +84,17 @@ Namespace('WordGuess').ScoreCore = (function() {
                 }
                 _passageEl.appendChild(span)
 
-                const space = document.createElement("span")
-                space.innerHTML = " "
-                _passageEl.appendChild(space)
+                track++
+
+                // const space = document.createElement("span")
+                // space.innerHTML = " "
+                // _passageEl.appendChild(space)
             } else {
-                span.innerHTML = v+" "
+                span.innerHTML = v
                 _passageEl.appendChild(span)
+
+                // if(!punctuation.has(v)) track++
+                if(v !== " ") track++
             }
         })
 
