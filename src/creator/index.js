@@ -410,7 +410,7 @@ class App {
       .map((word, index) => ({
         id: word.id,
         text: word.text,
-        index,
+        index: word.position,
       }))
       .filter((word) => this.highlighted.has(word.id));
   }
@@ -424,6 +424,7 @@ class App {
     }
 
     let trackHighlight = 0
+    let trackPosition = 0
 
     const words = text.split(SPLIT_REGEX);
     const newWords = [];
@@ -438,11 +439,14 @@ class App {
       let id = `s${this.wordIdCounter}`;
       if(word !== " ")
         id = this.wordIdCounter++;
-
+      
       newWords.push({
         id: id,
+        position: trackPosition,
         text: word
       })
+
+      if(word !== " ") trackPosition++;
 
       if(this.items[trackHighlight] && this.items[trackHighlight].answers[0].text === word) {
         highlightArray[trackHighlight++] = index
@@ -474,6 +478,7 @@ class App {
     const newWords = [];
 
     let oldIndex = 0;
+    let trackPosition = 0;
 
     for (let word of words) {
       if(word === undefined) word = " "
@@ -482,16 +487,19 @@ class App {
       let id = `s${this.wordIdCounter}`;
       if(word !== " ")
         id = this.wordIdCounter++;
-
+      
       if (oldIndex < this.words.length && this.words[oldIndex].text === word) {
         newWords.push(this.words[oldIndex]);
         oldIndex++;
       } else {
         newWords.push({
           id: id,
+          position: trackPosition,
           text: word,
         });
       }
+
+      if(word !== " ") trackPosition++;
     }
 
     this.words = newWords;
@@ -798,14 +806,14 @@ class App {
     let cnt = 0;
     const highlighted = this.getHighlighted()
     return {
-      items: highlighted.map(({ text, index, id }) => (
+      items: highlighted.map(({ text, index }) => (
       {
         id: null,
         type: "wordguess",
         materiaType: "question",
         questions: [{ text: `Word #${++cnt}` }],
         answers: [{ text }],
-        options: { index:id },
+        options: { index:index },
       })),
       options: {
         paragraph: this.getParagraph(),

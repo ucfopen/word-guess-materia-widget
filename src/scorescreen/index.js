@@ -65,9 +65,7 @@ Namespace('WordGuess').ScoreCore = (function() {
         
         let correct = 0
         let track = 0
-        console.log(answers)
         pWords.forEach((v, i)=>{
-            console.log(v, track)
             const span = document.createElement("span")
             span.id = i
             
