@@ -34,14 +34,14 @@ const CONJUNCTIONS = new Set([
   "into"
 ]);
 
-const SPLIT_REGEX = /\s+|([,.!?:"—;])/
-const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
+const SPLIT_REGEX = /\s+|([,.!?:"—;()])/
+const OLD_SPLIT_REGEX = /\s+|([,.!?:";()])/
 
 const PUNCTUATION = new Set(([
-  ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+  ",", ".", ":", `"`, "?", "!", "—", ";", " ", "(", ")"
 ]))
 const OLD_PUNCTUATION = new Set(([
-  ",", ".", ":", `"`, "?", "!", ";", " ",
+  ",", ".", ":", `"`, "?", "!", ";", " ", "(", ")"
 ]))
 
 // See: enums in JavaScript

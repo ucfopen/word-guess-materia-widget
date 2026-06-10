@@ -9,14 +9,14 @@ Namespace('WordGuess').ScoreCore = (function() {
 
     let _version = 2
 
-    const SPLIT_REGEX = /\s+|([,.!?:"—;])/
-    const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
+    const SPLIT_REGEX = /\s+|([,.!?:"—;()])/
+    const OLD_SPLIT_REGEX = /\s+|([,.!?:";()])/
 
     const PUNCTUATION = new Set(([
-    ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+    ",", ".", ":", `"`, "?", "!", "—", ";", " ", "(", ")"
     ]))
     const OLD_PUNCTUATION = new Set(([
-    ",", ".", ":", `"`, "?", "!", ";", " ",
+    ",", ".", ":", `"`, "?", "!", ";", " ", "(", ")"
     ]))
 
 	const _getRenderedHeight = () => {
@@ -49,7 +49,7 @@ Namespace('WordGuess').ScoreCore = (function() {
 
         let punctuation = PUNCTUATION
         if(parseInt(_version) == 1)
-            regex = OLD_PUNCTUATION
+            punctuation = OLD_PUNCTUATION
 
         const pWords = paragraph.split(regex).filter((v)=>v !== "").map((v)=>{
         if(v === undefined) return " "

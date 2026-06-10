@@ -7,14 +7,14 @@ const SNAP_DISTANCE = 120;
 // Word Guess v1 split words using a different punctuation set than v2
 // so we need different variations to support v1 sets
 
-const SPLIT_REGEX = /\s+|([,.!?:"—;])/
-const OLD_SPLIT_REGEX = /\s+|([,.!?:";])/
+const SPLIT_REGEX = /\s+|([,.!?:"—;()])/
+const OLD_SPLIT_REGEX = /\s+|([,.!?:";()])/
 
 const PUNCTUATION = new Set(([
-  ",", ".", ":", `"`, "?", "!", "—", ";", " ",
+  ",", ".", ":", `"`, "?", "!", "—", ";", " ", "(", ")"
 ]))
 const OLD_PUNCTUATION = new Set(([
-  ",", ".", ":", `"`, "?", "!", ";", " ",
+  ",", ".", ":", `"`, "?", "!", ";", " ", "(", ")"
 ]))
 
 class Utils {
