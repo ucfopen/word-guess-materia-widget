@@ -257,6 +257,11 @@ class App {
       span.addEventListener("blur", (e)=>{
         this.currentlyFocused = null
       })
+      span.addEventListener("change", (e)=>{
+        this.el.passageSlots.forEach((s) => {
+          this.addContainerLabel(s)
+        })
+      })
     }
 
     span.classList.add("word-pill-container");
@@ -273,11 +278,14 @@ class App {
     const index = s.dataset.length
     const spans = this.el.passage.childNodes
     let context = ""
+    
     spans.forEach((v, i) => {
       if(Math.abs(i - index) <= 10) {
         if(v.classList.contains("word-pill-container")) {
           if(v.childNodes[0])
             context += v.childNodes[0].innerHTML
+          else if(this.responseType === "free" && v.value !== "")
+            context += v.value
           else
             context += "EMPTY-SLOT"
         }
@@ -286,8 +294,14 @@ class App {
       }
     })
 
-    s.dataset.label = `Empty slot in position ${s.dataset.count}. Context: ${context}`
-    s.ariaLabel = `Empty slot in position ${s.dataset.count}. Context: ${context}`
+    let content = `Empty slot`
+    if(this.responseType === "free" && s.value !== "")
+        content = `word:${s.value}`
+
+    const label = `${content} in position ${s.dataset.count}. Context: ${context}`
+
+    s.dataset.label = label
+    s.ariaLabel = label
   }
 
   sortWordBank() {
