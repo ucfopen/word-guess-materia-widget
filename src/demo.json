@@ -370,7 +370,8 @@
             "mode": "automatic",
             "slider": "6",
             "responseType": "bank",
-            "scored": true
+            "scored": true,
+            "distractions": ["Victor"]
         }
     }
   }

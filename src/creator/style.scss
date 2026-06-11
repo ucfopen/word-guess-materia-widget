@@ -667,6 +667,11 @@ section.inner {
       outline: none;
     }
   }
+
+  &#add-distraction, &.distraction {
+    position: relative;
+    background-color: #E2E2E2;
+  }
 }
 
 .info-container {
@@ -889,6 +894,15 @@ section.inner {
       background-color: #E2E2E2;
       text-decoration: underline;
       color: #000000a0;
+
+      &#add-distraction, &.distraction {
+        display: none;
+      }
+    }
+
+    #distraction-popup {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .word-bank-info-container {
@@ -935,5 +949,70 @@ section.inner {
     opacity: 1;
     display: inline;
     line-height: 1;
+  }
+}
+
+#distraction-popup {
+  position: absolute;
+  background-color: #fff;
+  top: 40px;
+  border-radius: 10px;
+  padding: 5px 10px;
+
+  transition: display 100ms ease;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: fit-content;
+  }
+
+  #submit-distraction {
+    background-color: #9a6dde;
+    border-radius: 4px;
+    padding: 4px;
+    color: #fff;
+    font-family: "Paytone One", sans-serif;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    cursor: pointer;
+    margin: auto 0;
+    position: relative;
+    
+    &::after {
+      position: absolute;
+      font-size: 14px;
+      content: "+";
+      top: 0px;
+      left: 7.5px;
+    }
+  }
+
+  input {
+    height: 20px;
+    flex-shrink: 0;
+    padding: 8px 0 16px 0;
+    border: none;
+    border-bottom: 1px solid #3b038e;
+    margin-top: 8px;
+    width: 180px;
+  }
+
+  &:after {
+    left: 16px;
+    top: -8px;
+    position: absolute;
+    // transform: translateX();
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+    content: ""
+  }
+
+  h3 {
+    font-family: "Paytone One", sans-serif;
+    color: #3b038e;
   }
 }

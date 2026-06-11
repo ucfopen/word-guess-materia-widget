@@ -326,6 +326,7 @@ class App {
     this.version = version;
     this.title = title;
     this.paragraph = options.paragraph.replaceAll("\n", " ");
+    this.distractions = options.distractions;
     this.words = Object.fromEntries(
       items.map((i) => [
         i.options.index,
@@ -589,6 +590,13 @@ class App {
       h.appendChild(this.makeWordPill(index, text));
       homes.push(h);
     }
+
+    this.distractions.forEach((v, i)=>{
+      const h = this.makeWordPillHome();
+      h.appendChild(this.makeWordPill(`d-${i}`, v));
+      homes.push(h);
+    })
+
     Utils.scramble(homes);
     for (const s of homes) this.el.wordBank.appendChild(s);
 
@@ -688,7 +696,8 @@ window.addEventListener("load", () => {
           "mode": "manual",
           "slider": "0",
           "responseType": "free",
-          "scored": false
+          "scored": false,
+          "distractions": []
         }
       }
 

@@ -116,6 +116,11 @@ class App {
     jumpEnd: document.getElementById("jump-end"),
     jumpStart: document.getElementById("jump-start"),
 
+    addDistraction: document.getElementById("add-distraction"),
+    distractionText: document.getElementById("distraction-text"),
+    submitDistraction: document.getElementById("submit-distraction"),
+    distractionPopup: document.getElementById("distraction-popup"),
+
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
     errorDialogCloseButton: document.getElementById(
@@ -129,6 +134,8 @@ class App {
 
   responseType = "bank";
   scored = true;
+
+  distractions = []
 
   /**
    * @param {{
@@ -159,7 +166,8 @@ class App {
           "mode": "manual",
           "slider": "0",
           "responseType": "free",
-          "scored": false
+          "scored": false,
+          "distractions": []
         }
 
         this.openWarningDialog(`You are opening an activity that was made in an older version of Word Guess. Review your words and settings to ensure they are correct before saving.`)
@@ -380,6 +388,34 @@ class App {
       if(this.el.pickarea.childNodes && this.el.pickarea.childNodes[0])
         this.el.pickarea.childNodes[0].focus()
     })
+
+    this.el.addDistraction.addEventListener("click", () => this.toggleDistractionPopup())
+
+    this.el.distractionText.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") {
+        this.createDistraction(this.el.distractionText.value)
+        this.el.distractionText.value = ""
+        this.el.distractionText.focus()
+      }
+    })
+
+    this.el.submitDistraction.addEventListener("click", ()=>{
+      this.createDistraction(this.el.distractionText.value)
+      this.el.distractionText.value = ""
+      this.el.distractionText.focus()
+    })
+  }
+
+  toggleDistractionPopup() {
+    if(this.el.distractionPopup.style.display === "none") {
+      this.el.addDistraction.innerHTML = 'click to close'
+      this.el.distractionPopup.style.display = "block"
+      this.el.distractionText.focus()
+    } else {
+      this.el.addDistraction.innerHTML = 'add distraction +'
+      this.el.distractionPopup.style.display = "none"
+      this.el.addDistraction.focus()
+    }
   }
 
   toggleSettings() {
@@ -411,6 +447,32 @@ class App {
   }
   getTitle() {
     return this.el.titleInput.value;
+  }
+
+  createDistraction(input) {
+    const text = input.trim()
+
+    const distraction = document.createElement("button")
+    distraction.className = "word-bank-pill distraction"
+
+    distraction.dataset.id = this.distractions.length
+    this.distractions.push(text)
+
+    const inner = document.createElement("span")
+    inner.innerHTML = text
+    distraction.appendChild(inner)
+
+    const xBtn = document.createElement("span")
+    xBtn.className = "x-btn"
+    distraction.appendChild(xBtn)
+
+    distraction.addEventListener("click", ()=>this.deleteDistraction(distraction))
+    this.el.addDistraction.insertAdjacentElement("afterend", distraction)
+  }
+
+  deleteDistraction(pill) {
+    this.distractions.splice(pill.dataset.id, 1)
+    pill.remove()
   }
 
   getHighlighted() {
@@ -564,7 +626,7 @@ class App {
   }
 
   renderWordBank() {
-    this.el.wordBank.innerHTML = "";
+    this.el.wordBank.querySelectorAll("div.word-bank-pill").forEach((v)=>v.remove())
     
     this.wordBankInfo(
       `${this.highlighted.size} word${this.highlighted.size === 1 ? "" : "s"} hidden`,
@@ -828,7 +890,8 @@ class App {
         mode: this.activeMode ?? "manual",
         slider: this.el.slider.value,
         responseType: this.responseType,
-        scored: this.scored
+        scored: this.scored,
+        distractions: this.distractions
       },
     };
   }
