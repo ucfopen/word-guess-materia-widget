@@ -82,7 +82,7 @@ body {
     line-height: 2;
 
     &.show-correct {
-        .pill {
+        .pill:not(:empty) {
             background-color: #ffce1b;
             font-size: 0;
             &::before {
