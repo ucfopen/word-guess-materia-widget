@@ -141,6 +141,10 @@ input {
   }
 }
 
+#intro-pick-btn {
+  display: none;
+}
+
 #outer {
   width: 100%;
   display: grid;
@@ -173,6 +177,49 @@ input {
     #bank-region {
       display: none;
       width: 0;
+    }
+
+    .toggle-slider {
+      display: none;
+    }
+
+    #intro-pick-btn {
+      display: flex;
+      width: fit-content;
+      font-family: "Paytone One", sans-serif;
+      height: fit-content;
+      background-color: #3b038e;
+      border-radius: 10px;
+      color: white;
+      padding: 7.5px 10px;
+      cursor: pointer;
+      gap: 8px;
+      margin: 0 0 0 auto;
+      margin-top: 16px;
+
+      transition: transform ease 100ms, opacity ease 100ms;
+
+      &:focus-within {
+        outline: 2px solid #93d82d;
+        outline-offset: -3px;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+
+        &:hover {
+          transform: none;
+        }
+      }
+
+      p {
+        height: fit-content;
+        margin: auto 0;
+      }
     }
   }
 }

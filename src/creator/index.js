@@ -99,6 +99,7 @@ class App {
     mouseClick: document.getElementById("mouse-click"),
     pencilEdit: document.getElementById("pencil-edit"),
     slideToggle: document.getElementById("slide-knob"),
+    introBtn: document.getElementById("intro-pick-btn"),
 
     helpDialog: document.getElementById("help-dialog"),
     helpDialogCloseButton: document.getElementById("close-button"),
@@ -252,6 +253,12 @@ class App {
 
       // This makes the slider respoooonsive when you add words
       this.updateSlider(this.el.slider.value);
+      
+      if(this.words.length > 0) {
+        this.el.introBtn.disabled = false
+      } else {
+        this.el.introBtn.disabled = true
+      }
 
       this.renderWordBank();
     });
@@ -303,6 +310,7 @@ class App {
     });
 
     this.el.mouseClick.addEventListener("click", () => this.switchToPickMode());
+    this.el.introBtn.addEventListener("click", () => this.switchToPickMode());
     this.el.pencilEdit.addEventListener("click", () =>
       this.switchToWriteMode(),
     );
