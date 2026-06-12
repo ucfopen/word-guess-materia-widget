@@ -409,9 +409,11 @@ class App {
   toggleDistractionPopup() {
     if(this.el.distractionPopup.style.display === "none") {
       this.el.addDistraction.innerHTML = 'click to close'
+      this.el.addDistraction.ariaLabel = 'Close Distractions Menu'
       this.el.distractionPopup.style.display = "block"
       this.el.distractionText.focus()
     } else {
+      this.el.addDistraction.ariaLabel = "Add Distraction Word"
       this.el.addDistraction.innerHTML = 'add distraction +'
       this.el.distractionPopup.style.display = "none"
       this.el.addDistraction.focus()

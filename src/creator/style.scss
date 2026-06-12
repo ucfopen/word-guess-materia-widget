@@ -957,7 +957,9 @@ section.inner {
   background-color: #fff;
   top: 40px;
   border-radius: 10px;
-  padding: 5px 10px;
+  
+
+  box-shadow: #00000040 2px 2px 2px;
 
   transition: display 100ms ease;
 
@@ -966,6 +968,7 @@ section.inner {
     flex-direction: row;
     gap: 12px;
     width: fit-content;
+    padding: 5px 10px;
   }
 
   #submit-distraction {
@@ -995,8 +998,8 @@ section.inner {
     flex-shrink: 0;
     padding: 8px 0 16px 0;
     border: none;
-    border-bottom: 1px solid #3b038e;
-    margin-top: 8px;
+    color: #2f0076;
+    border-bottom: 1px solid #2f0076;
     width: 180px;
   }
 
@@ -1007,12 +1010,18 @@ section.inner {
     // transform: translateX();
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 8px solid #fff;
+    border-bottom: 8px solid #9a6dde;
     content: ""
   }
 
   h3 {
     font-family: "Paytone One", sans-serif;
-    color: #3b038e;
+    color: #fff;
+    background-color: #9a6dde;
+    margin-bottom: 6px;
+    width: 100%;
+    padding: 5px 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
   }
 }
