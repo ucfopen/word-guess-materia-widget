@@ -405,6 +405,8 @@ class App {
       this.el.distractionText.value = ""
       this.el.distractionText.focus()
     })
+
+    this.el.wordBankBlur.addEventListener("click", ()=>this.toggleDistractionPopup())
   }
 
   toggleDistractionPopup() {

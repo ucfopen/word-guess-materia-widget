@@ -1002,6 +1002,12 @@ section.inner {
     color: #2f0076;
     border-bottom: 1px solid #2f0076;
     width: 180px;
+    
+    &:focus-visible {
+      outline: none;
+      border-bottom: 2px solid #93d82d;
+      background-color: #93d82d20;
+    }
   }
 
   &:after {
@@ -1044,6 +1050,7 @@ section.inner {
 
   &.show {
     opacity: 1;
+    pointer-events: all;
   }
 }
 
