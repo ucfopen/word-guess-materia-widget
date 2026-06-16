@@ -120,6 +120,7 @@ class App {
     distractionText: document.getElementById("distraction-text"),
     submitDistraction: document.getElementById("submit-distraction"),
     distractionPopup: document.getElementById("distraction-popup"),
+    wordBankBlur: document.getElementById("word-bank-blur"),
 
     errorDialog: document.getElementById("error-dialog"),
     errorMsg: document.getElementById("error-message"),
@@ -411,11 +412,13 @@ class App {
       this.el.addDistraction.innerHTML = 'click to close'
       this.el.addDistraction.ariaLabel = 'Close Distractions Menu'
       this.el.distractionPopup.style.display = "block"
+      this.el.wordBankBlur.classList.add("show")
       this.el.distractionText.focus()
     } else {
       this.el.addDistraction.ariaLabel = "Add Distraction Word"
       this.el.addDistraction.innerHTML = 'add distraction +'
       this.el.distractionPopup.style.display = "none"
+      this.el.wordBankBlur.classList.remove("show")
       this.el.addDistraction.focus()
     }
   }

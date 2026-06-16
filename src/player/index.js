@@ -326,7 +326,7 @@ class App {
     this.version = version;
     this.title = title;
     this.paragraph = options.paragraph.replaceAll("\n", " ");
-    this.distractions = options.distractions;
+    this.distractions = options.distractions ?? [];
     this.words = Object.fromEntries(
       items.map((i) => [
         i.options.index,
