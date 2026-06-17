@@ -195,6 +195,7 @@ class App {
       else this.switchToAuto();
 
       this.scored = qset.options.scored;
+      this.distractions = qset.options.distractions ?? [];
 
       this.responseType = qset.options.responseType;
       this.updateResponseType()
