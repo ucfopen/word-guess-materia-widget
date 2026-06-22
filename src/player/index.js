@@ -213,7 +213,7 @@ class App {
     span.draggable = "true";
     span.innerText = text;
     span.id = `word-${index}`;
-    span.ariaLabel = `Word in word bank: ${text}`
+    span.ariaLabel = `${text}: word in word bank.`
     span.ariaHidden = false
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     span.addEventListener("keydown", (e) => {
@@ -385,7 +385,7 @@ class App {
         if (existing && existing !== this.draggedItem) {
           this.originSlot.appendChild(existing);
           if(this.originSlot.classList.contains("word-pill-home"))
-            existing.ariaLabel = `Word in word bank: ${existing.innerHTML}`
+            existing.ariaLabel = `${existing.innerHTML}: word in word bank.`
           else {
             const index = this.originSlot.dataset.length
             const spans = this.el.passage.childNodes
@@ -404,7 +404,7 @@ class App {
                   context += v.innerHTML
               }
             })
-            existing.ariaLabel = `Word in passage slot ${existing.parentElement.dataset.count}: ${existing.innerHTML}. Context: ${context}`
+            existing.ariaLabel = `${existing.innerHTML}: word in passage slot ${existing.parentElement.dataset.count}. Context: ${context}`
           }
         }
         else {
@@ -427,7 +427,7 @@ class App {
     }
 
     if(this.draggedItem.parentElement.classList.contains("word-pill-home"))
-      this.draggedItem.ariaLabel = `Word in word bank: ${this.draggedItem.innerHTML}`
+      this.draggedItem.ariaLabel = `${this.draggedItem.innerHTML}: word in word bank.`
     else {
       const index = this.draggedItem.parentElement.dataset.length
       const spans = this.el.passage.childNodes
@@ -444,7 +444,7 @@ class App {
             context += v.innerHTML
         }
       })
-      this.draggedItem.ariaLabel = `Word in passage slot ${this.draggedItem.parentElement.dataset.count}: ${this.draggedItem.innerHTML}. Context: ${context}`
+      this.draggedItem.ariaLabel = `${this.draggedItem.innerHTML}: word in passage slot ${this.draggedItem.parentElement.dataset.count}. Context: ${context}`
     }
 
     if(closest.dataset.count)

@@ -26,6 +26,10 @@ body {
   
     white-space: nowrap;
 
+    min-width: 120px;
+    box-sizing: border-box;
+    text-align: center;
+
     &.correct {
         background-color: #cef297;
 
@@ -56,8 +60,15 @@ body {
         }
     }
 
+    &::after {
+        font-size: 14px;
+        content: attr(data-text);
+        display: none;
+    }
+
     &:empty {
         height: 25px;
+        min-width: auto;
         width: 5rem;
         background-color: #f5f5f5;
         outline: 1px solid #565656;
@@ -67,8 +78,20 @@ body {
         position: relative;
         top: 6px;
 
+        &::before, &::after {
+            display: none;
+        }
+    }
+    
+    &:hover:not(:empty) {
+        background-color: #ffce1b;
+        cursor: help;
+        font-size: 0;
         &::before {
             display: none;
+        }
+        &::after {
+            display: inline;
         }
     }
 }
@@ -85,13 +108,12 @@ body {
         .pill:not(:empty) {
             background-color: #ffce1b;
             font-size: 0;
-            &::before {
-                display: none;
-            }
+            // &::before {
+            //     display: none;
+            // }
 
             &:after {
-                font-size: 14px;
-                content: attr(data-text);
+                display: inline;
             }
 
             &:empty {
@@ -105,6 +127,27 @@ body {
                 position: unset;
                 top: 0;
             }
+
+            &:hover {
+                font-size: 14px;
+                cursor: help;
+
+                &.correct {
+                    background-color: #cef297;
+                }
+
+                &.wrong {
+                    background-color: #FF6A50;
+                }
+
+                &::before {
+                    display: inline-block;
+                }
+
+                &::after {
+                    display: none;
+                }
+            }
         }
     }
 }
@@ -116,8 +159,8 @@ body {
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        gap: 8px;
+        // justify-content: space-between;
+        // gap: 8px;
         padding: 8px 11px;
         
         background-color: white;
@@ -129,7 +172,7 @@ body {
         border-color: #8d57df;
         border-radius: 10px;
         
-        
+        width: 300px;
     }
 
     .row {
@@ -154,8 +197,8 @@ body {
 #slider-text {
     font-family: "Paytone One", sans-serif;
     color: white;
-    margin: auto 0px auto 8px;
-    font-size: 18px
+    margin: auto;
+    font-size: 18px;
 }
 
 .user-btn {
@@ -178,5 +221,9 @@ body {
 
     .header h2 {
         font-size: 22px;
+    }
+
+    .header .header-body {
+        width: fit-content;
     }
 }

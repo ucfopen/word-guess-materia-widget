@@ -637,8 +637,14 @@ input.word-pill-container {
 
       transition: transform 0.2s ease;
 
-      &:hover {
+      &:hover, &:focus-visible {
         transform: translateY(-2px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid #93d82d;
+        outline-offset: 3px;
+        border-radius: 10px;
       }
     }
   }

@@ -25,11 +25,17 @@ body {
   cursor: pointer;
 
   box-shadow: 0 4px 0 #a6c51b;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, outline 0.2s ease;
   justify-content: center;
 
   &:hover, &:focus-visible {
     transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 4px solid #ffce1b;
+    outline-offset: 0px;
+    border-radius: 10px;
   }
 
   // &:focus-visible {
