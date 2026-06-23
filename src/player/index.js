@@ -42,6 +42,7 @@ class App {
   currentlyFocused = null;
 
   welcomePageIndex = 0;
+  distractions = []
 
   // "bank" || "free"
   responseType = "bank";
@@ -69,6 +70,9 @@ class App {
     howToPlayButton: document.getElementById("how-to-play-btn"),
     welcomeMessage: document.getElementById("welcome-message"),
     instructions: document.getElementById("instructions"),
+    distractionDialog: document.getElementById("distraction-dialog"),
+    distractionOk: document.getElementById("distraction-ok-button"),
+    distractionText: document.getElementById("distraction-text"),
     controlsPointerButton: document.getElementById("pointer-btn"),
     controlsKeyboardButton: document.getElementById("keyboard-btn"),
     controlsKeyboard: document.getElementById("keyboard-controls"),
@@ -217,7 +221,7 @@ class App {
     span.ariaHidden = false
     span.addEventListener("click", (e) => this.pillSelectListener(e))
     span.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") {
+      if(e.key === "Enter" || e.key === "Space") {
         this.pillSelectListener(e)
         if(this.el.passageSlots[0]) {
           if(this.el.passageSlots[0].childNodes[0])
@@ -247,7 +251,10 @@ class App {
     if (this.responseType === "bank") {
       span = document.createElement("span");
       span.addEventListener("click", (e) => this.pillSelectListener(e))
-      span.addEventListener("keydown", (e) => {if(e.key === "Enter" && this.draggedItem) this.pillSelectListener(e)})
+      span.addEventListener("keydown", (e) => {
+        if((e.key === "Enter"  || e.key === "Space") && this.draggedItem) 
+          this.pillSelectListener(e)
+      })
     }
     else {
       span = document.createElement("input")
@@ -464,8 +471,13 @@ class App {
   }
 
   returnToTop() {
-    const slots = this.el.wordBankSlots
-    if(slots[0] && slots[0].childNodes[0]) slots[0].childNodes[0].focus()
+    if(this.responseType === "bank") {
+      const slots = this.el.wordBankSlots
+      if(slots[0] && slots[0].childNodes[0]) slots[0].childNodes[0].focus()
+    } else {
+      const slots = this.el.passageSlots
+      if(slots[0]) slots[0].focus()
+    }
   }
 
   bind() {
@@ -477,7 +489,11 @@ class App {
       this.el.freeInstructions.style.display = "flex";
       this.el.welcomePages[0].style.display = "none";
       this.el.controlRow.style.display = "none"
+      this.el.returnBtn.innerHTML = "Return To Top"
+      this.el.returnBtn.ariaLabel = "Return To Top"
     }
+
+    this.el.distractionText.innerHTML = this.el.distractionText.innerHTML.replace("[num]", this.distractions.length)
     
     this.el.greeting.showModal();
 
@@ -530,8 +546,16 @@ class App {
     this.el.playGameButton.addEventListener("click", () => {
       this.el.greeting.close();
 
-      this.returnToTop()
+      if(this.distractions.length > 0)
+        this.el.distractionDialog.showModal()
+      else
+        this.returnToTop()
     });
+
+    this.el.distractionOk.addEventListener("click", () => {
+      this.el.distractionDialog.close()
+      this.returnToTop()
+    })
 
     this.el.returnBtn.addEventListener("click", ()=>this.returnToTop())
 
@@ -551,6 +575,7 @@ class App {
     ]) {
       btn.addEventListener("click", () => {
         this.closeWarning();
+        this.el.submit.focus()
       });
     }
 

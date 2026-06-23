@@ -27,7 +27,7 @@
       <!-- <img src="assets/Icon.png" alt="" class="logo" /> -->
       <button id="settings-btn" aria-label="Toggle Settings Menu"></button>
       <div id="settings-screen" class="hidden">
-        <div class="settings-internal">
+        <div id="settings-internal">
           <h2>Settings</h2>
           <div class="settings-inputs">
             <h3><label for="scoring-check">Enable Scoring?</label>
@@ -56,7 +56,6 @@
                 <label for="type-free">Free Response</label>
               </div>
             </div>
-            <button aria-label="Close Settings" id="close-settings">Close Settings</button>
           </div>
         </div>
       </div>
@@ -67,7 +66,7 @@
         <section class="title-box">
           <div class="section-header">
             <h2>Add Title</h2>
-            <span class="info-icon" tabindex="0">
+            <span class="info-icon" tabindex="0" id="out-of-settings">
               <div class="info-box bottom">
                 <p>
                   This will appear above your paragraph. Leave unchanged to hide
@@ -211,7 +210,7 @@
                 <h3>Add Distraction Word</h3>
                 <div class="row">
                   <input id="distraction-text" type="text" placeholder="Type distraction word..."/>
-                  <button id="submit-distraction"></button>
+                  <button id="submit-distraction" type="button"></button>
                 </div>
               </div>
             </div>
@@ -297,5 +296,30 @@
         </div>
       </div>
     </dialog>
+
+    <dialog id="delete-dialog">
+      <div class="dialog-shell">
+        <div class="dialog-box">
+          <div>
+            <button
+              title="close-error-dialog"
+              id="close-delete"
+              class="close-btn"
+            ></button>
+            <h2 class="error-heading">Warning!</h2>
+          </div>
+          <p class="error-text">You are about to reset all words in the Word Bank!</p>
+          <div class="row">
+            <button id="cancel-delete" class="action-btn variant-2">
+              Cancel
+            </button>
+            <button id="confirm-delete" class="action-btn">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
   </body>
 </html>

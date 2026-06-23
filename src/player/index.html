@@ -35,7 +35,7 @@
           <!-- <p class="free-only">Type in each blank what you think the best answer is!</p> -->
 
           <div class="word-bank" id="word-bank"></div>
-          <button id="submit-button" class="action-btn">Submit</button>
+          <button id="submit-button" class="action-btn" title="Submit">Submit</button>
           <button id="reset-button" class="action-btn free-only">Reset</button>
         </section>
 
@@ -228,6 +228,24 @@
           </div>
         </div>
       </dialog>
+
+      <dialog id="distraction-dialog">
+        <div class="dialog-shell">
+          <div class="dialog-box" id="distraction-container">
+            <div class="warning-content">
+              <p id="distraction-text">
+                This passage has [num] extra word(s) in the word bank. Not all of them are valid answers!
+              </p>
+              <div>
+                <button id="distraction-ok-button" class="action-btn">
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+
     </main>
   </body>
 </html>

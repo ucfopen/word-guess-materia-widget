@@ -515,7 +515,7 @@ section.inner {
   width: 24px;
   height: 24px;
   background-color: #0052E4;
-  mask: url("assets/Refresh.svg") no-repeat center / 22px;
+  mask: url("assets/shuffle.svg") no-repeat center / 22px;
 
   &:hover, &:focus-visible {
     transform: scale(1.12);
@@ -713,7 +713,7 @@ section.inner {
   }
 }
 
-.settings-internal {
+#settings-internal {
   width: $settings-size;
   background-color: white;
   box-sizing: border-box;
@@ -823,7 +823,7 @@ section.inner {
     opacity: 0;
     // width: 0;
 
-    .settings-internal {
+    #settings-internal {
       clip-path: rect(0px 0px 100% 0px);
     }
   }
@@ -1055,4 +1055,17 @@ section.inner {
 
 #add-distraction {
   z-index: 1000;
+}
+
+#delete-dialog {
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .error-text {
+    margin: 8px auto 16px auto;
+  }
 }

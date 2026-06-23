@@ -74,7 +74,7 @@ class App {
 
     settingsBtn: document.getElementById("settings-btn"),
     settingsScreen: document.getElementById("settings-screen"),
-    closeSettingsBtn: document.getElementById("close-settings"),
+    settingsInternal: document.getElementById("settings-internal"),
 
     slider: document.getElementById("slider"),
     sliderMask: document.getElementById("slider-mask"),
@@ -127,6 +127,11 @@ class App {
     errorDialogCloseButton: document.getElementById(
       "error-dialog-close-button",
     ),
+
+    deleteDialog: document.getElementById("delete-dialog"),
+    closeDelete: document.getElementById("close-delete"),
+    cancelDelete: document.getElementById("cancel-delete"),
+    confirmDelete: document.getElementById("confirm-delete")
   };
 
   activeMode = null;
@@ -273,6 +278,16 @@ class App {
       this.renderWordBank();
     });
 
+    this.el.settingsInternal.addEventListener("focus", ()=>{
+      this.openSettings()
+    }, true)
+
+    document.getElementById("out-of-settings").addEventListener("focus", ()=>this.closeSettings())
+
+    this.el.cancelDelete.addEventListener("click", ()=>this.el.deleteDialog.close())
+    this.el.closeDelete.addEventListener("click", ()=>this.el.deleteDialog.close())
+    this.el.confirmDelete.addEventListener("click", ()=>{this.clearHighlighted(); this.el.deleteDialog.close()})
+
     // When the textarea is clicked off
     this.el.textarea.addEventListener("blur", () => {
       this.generateWords();
@@ -291,7 +306,7 @@ class App {
     this.el.autoBtn.addEventListener("click", () => this.switchToAuto());
 
     this.el.refreshBtn.addEventListener("click", () => this.refreshAutoWords());
-    this.el.trashBtn.addEventListener("click", () => this.clearHighlighted());
+    this.el.trashBtn.addEventListener("click", () => this.el.deleteDialog.showModal());
 
     this.el.settingsBtn.addEventListener("click", (e)=>{
       e.stopPropagation()
@@ -346,20 +361,6 @@ class App {
       this.updateResponseType()
     })
 
-    this.el.settingsScoredCheck.addEventListener("focus", (e) => {
-      this.openSettings()
-    })
-
-    this.el.settingsBankCheck.addEventListener("focus", (e) => {
-      this.openSettings()
-    })
-
-    this.el.settingsFreeCheck.addEventListener("focus", (e) => {
-      this.openSettings()
-    })
-
-    this.el.closeSettingsBtn.addEventListener("click", ()=>this.closeSettings())
-
     this.el.passageCont.addEventListener("click", (e)=>{
       const span = e.target;
       if (span.classList.contains("word-span-pill")) return;
@@ -391,7 +392,12 @@ class App {
         this.el.pickarea.childNodes[0].focus()
     })
 
-    this.el.addDistraction.addEventListener("click", () => this.toggleDistractionPopup())
+    this.el.addDistraction.addEventListener("click", (e) => this.toggleDistractionPopup())
+
+    document.getElementById("hidden-words").addEventListener("focus", ()=>{
+      if(this.el.distractionPopup.style.display !== "none" && !this.el.distractionPopup.contains(document.activeElement) && document.activeElement.id !== "add-distraction")
+        this.closeDistractionPopup()
+    }, true)
 
     this.el.distractionText.addEventListener("keydown", (e)=>{
       if(e.key === "Enter") {
@@ -407,23 +413,31 @@ class App {
       this.el.distractionText.focus()
     })
 
-    this.el.wordBankBlur.addEventListener("click", ()=>this.toggleDistractionPopup())
+    this.el.wordBankBlur.addEventListener("click", ()=>this.closeDistractionPopup())
   }
 
   toggleDistractionPopup() {
     if(this.el.distractionPopup.style.display === "none") {
-      this.el.addDistraction.innerHTML = 'click to close'
-      this.el.addDistraction.ariaLabel = 'Close Distractions Menu'
-      this.el.distractionPopup.style.display = "block"
-      this.el.wordBankBlur.classList.add("show")
-      this.el.distractionText.focus()
+      this.openDistractionPopup()
     } else {
-      this.el.addDistraction.ariaLabel = "Add Distraction Word"
-      this.el.addDistraction.innerHTML = 'add distraction +'
-      this.el.distractionPopup.style.display = "none"
-      this.el.wordBankBlur.classList.remove("show")
-      this.el.addDistraction.focus()
+      this.closeDistractionPopup()
     }
+  }
+
+  openDistractionPopup() {
+    this.el.addDistraction.innerHTML = 'click to close'
+    this.el.addDistraction.ariaLabel = 'Close Distractions Menu'
+    this.el.distractionPopup.style.display = "block"
+    this.el.wordBankBlur.classList.add("show")
+    this.el.distractionText.focus()
+  }
+
+  closeDistractionPopup() {
+    this.el.addDistraction.ariaLabel = "Add Distraction Word"
+    this.el.addDistraction.innerHTML = 'add distraction +'
+    this.el.distractionPopup.style.display = "none"
+    this.el.wordBankBlur.classList.remove("show")
+    this.el.addDistraction.focus()
   }
 
   toggleSettings() {
@@ -462,6 +476,7 @@ class App {
 
     const distraction = document.createElement("button")
     distraction.className = "word-bank-pill distraction"
+    distraction.ariaLabel = `${text}: distraction. Press Enter to remove from Word Bank.`
 
     distraction.dataset.id = this.distractions.length
     this.distractions.push(text)
@@ -479,7 +494,9 @@ class App {
   }
 
   deleteDistraction(pill) {
-    this.distractions.splice(pill.dataset.id, 1)
+    const id = pill.dataset.id
+    this.distractions.splice(id, 1)
+    pill.previousElementSibling.focus()
     pill.remove()
   }
 
@@ -659,15 +676,18 @@ class App {
       const button = document.createElement("button");
       button.className = "x-btn";
       button.dataset.id = id;
+      button.ariaLabel = `${word.text}. Press Enter to remove from Word Bank.`
 
       pill.appendChild(span);
       pill.appendChild(button);
 
-      pill.onclick = button.onclick = () => {
+      pill.onclick = button.onclick = (e) => {
         this.highlighted.delete(id);
         this.renderWords();
         this.renderWordBank();
         this.renderManualProgress();
+
+        this.el.addDistraction.focus()
       };
 
       this.el.wordBank.appendChild(pill);
@@ -941,6 +961,13 @@ window.addEventListener("load", () => {
         if (app.el.titleInput.value.length > 100) {
           app.openWarningDialog(
             `Widget title cannot be longer than 100 characters. Please shorten the title.`,
+          );
+          return;
+        }
+
+        if (app.words.length === 0) {
+          app.openWarningDialog(
+            `Widget must have at least one selected word. Please select more words.`,
           );
           return;
         }
