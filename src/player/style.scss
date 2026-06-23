@@ -181,6 +181,7 @@ input.word-pill-container {
   // flex: 3;
   height: 90vh;
   padding: 1rem 3rem;
+  padding-right: calc(3rem - 8px);
 
   overflow: scroll;
 
@@ -191,8 +192,10 @@ input.word-pill-container {
   text-align: justify;
 
   background-color: white;
-  border-radius: 14px;
+  border-radius: 8px;
   box-shadow: 8px 9px 4px rgba(88, 42, 158, 0.67);
+
+  border-right: 6px solid white;
 
   max-width: 700px;
 
