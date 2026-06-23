@@ -378,7 +378,11 @@ section.inner {
 
       &.punctuation {
         margin-left: 0px;
-        pointer-events: none;
+        // pointer-events: none;
+        &:hover {
+          background: none;
+          cursor: default;
+        }
       }
     }
 
