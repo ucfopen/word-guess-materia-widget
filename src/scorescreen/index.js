@@ -40,15 +40,18 @@ Namespace('WordGuess').ScoreCore = (function() {
         _slider = document.getElementById("slide-knob")
         _sliderText = document.getElementById("slider-text")
 
-        const paragraph = _qset.options.paragraph
-        // const pWords = paragraph.split(SPLIT_REGEX).filter((v)=>v!==undefined && v !== "");
+        let paragraph;
+        if(parseInt(_version) === 1)
+            paragraph = _qset.paragraph
+        else
+            paragraph = _qset.options.paragraph
 
         let regex = SPLIT_REGEX
-        if(parseInt(_version) == 1)
+        if(parseInt(_version) === 1)
             regex = OLD_SPLIT_REGEX
 
         let punctuation = PUNCTUATION
-        if(parseInt(_version) == 1)
+        if(parseInt(_version) === 1)
             punctuation = OLD_PUNCTUATION
 
         const pWords = paragraph.split(regex).filter((v)=>v !== "").map((v)=>{
