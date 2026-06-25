@@ -52,6 +52,9 @@ Namespace('WordGuess').ScoreCore = (function() {
             }
         }
 
+        if(!qset.options.scored)
+            Materia.ScoreCore.hideScoresOverview()
+
         _questions = _qset.items;
 
         _passageEl = document.getElementById("passage")
