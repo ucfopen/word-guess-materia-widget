@@ -35,16 +35,30 @@ Namespace('WordGuess').ScoreCore = (function() {
 	const update = (qset, scoreTable) => {
 
 		_qset = qset
-		_questions = _qset.items;
+
+        if(parseInt(_version) === 1) {
+            _qset.items = _qset.questions_answers
+            qset.items.forEach((_v, i) => {
+                qset.items[i].options = { "index": qset.manualSkippingIndices[i] }
+            })
+
+            qset.options = {
+                "paragraph": qset.paragraph,
+                "mode": "manual",
+                "slider": "0",
+                "responseType": "free",
+                "scored": false,
+                "distractions": []
+            }
+        }
+
+        _questions = _qset.items;
+
         _passageEl = document.getElementById("passage")
         _slider = document.getElementById("slide-knob")
         _sliderText = document.getElementById("slider-text")
 
-        let paragraph;
-        if(parseInt(_version) === 1)
-            paragraph = _qset.paragraph
-        else
-            paragraph = _qset.options.paragraph
+        const paragraph = _qset.options.paragraph
 
         let regex = SPLIT_REGEX
         if(parseInt(_version) === 1)
@@ -69,6 +83,8 @@ Namespace('WordGuess').ScoreCore = (function() {
         let correct = 0
         let track = 0
         pWords.forEach((v, i)=>{
+            if(!v) return
+
             const span = document.createElement("span")
             span.id = i
             
@@ -87,14 +103,13 @@ Namespace('WordGuess').ScoreCore = (function() {
 
                 track++
 
-                // const space = document.createElement("span")
-                // space.innerHTML = " "
-                // _passageEl.appendChild(space)
             } else {
                 span.innerHTML = v
                 _passageEl.appendChild(span)
 
-                // if(!punctuation.has(v)) track++
+                if(parseInt(this.version) === 1 && OLD_PUNCTUATION.has(v))
+                    return;
+
                 if(v !== " ") track++
             }
         })
