@@ -11,7 +11,7 @@
 
 ### Playing Word Guess
 
-When a **Word Bank** (1) is present, simply drag and drop words from the word bank into the appropriate empty slot in the text passage. You can also use **tab** to quickly traverse the list of individual words, and **enter/return** to pick up a word. Use **tab** again to traverse the list of empty slots and **enter/return** a second time to place the word.
+When a **Word Bank** (1) is present, simply move words from the word bank into the appropriate empty slots in the text passage. Words can be moved by dragging-and-dropping or tapping (or clicking) a word and then tapping or clicking an empty slot. Keyboard users can use **tab** to quickly traverse the list of individual words, and **enter/return** to pick up a word. Use **tab** again to traverse the list of empty slots and **enter/return** a second time to place the word.
 
 Some Word Guess widgets may contain additional "distractor" words. Students will be notified of the number of distractor words present when the widget initializes. These appear as additional words in the word bank, resulting in leftover words when all blanks are filled in the text passage.
 
