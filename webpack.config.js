@@ -31,6 +31,11 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
       to: path.join(outputPath, "assets"),
       toType: "dir",
     },
+    {
+     from: `${srcPath}/_guides/img`,
+      to: `${outputPath}/guides/img`,
+      toType: 'dir'
+    }
   ],
   moduleRules: [
     rules.loadHTMLAndReplaceMateriaScripts,
