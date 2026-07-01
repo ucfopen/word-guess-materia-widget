@@ -73,6 +73,7 @@ class App {
     distractionDialog: document.getElementById("distraction-dialog"),
     distractionOk: document.getElementById("distraction-ok-button"),
     distractionText: document.getElementById("distraction-text"),
+    distractionDisclaimer: document.getElementById("distraction-disclaimer"),
     controlsPointerButton: document.getElementById("pointer-btn"),
     controlsKeyboardButton: document.getElementById("keyboard-btn"),
     controlsKeyboard: document.getElementById("keyboard-controls"),
@@ -493,6 +494,9 @@ class App {
       this.el.returnBtn.ariaLabel = "Return To Top"
     }
 
+    if(this.distractions.length > 0 && this.responseType === "bank")
+        this.el.distractionDisclaimer.style.display = "flex"
+
     this.el.distractionText.innerHTML = this.el.distractionText.innerHTML.replace("[num]", this.distractions.length)
     
     this.el.greeting.showModal();
@@ -543,13 +547,13 @@ class App {
       }
     })
 
+    this.el.distractionDisclaimer.addEventListener("click", () => {
+      this.el.distractionDisclaimer.style.display = "none";
+    })
+
     this.el.playGameButton.addEventListener("click", () => {
       this.el.greeting.close();
-
-      if(this.distractions.length > 0)
-        this.el.distractionDialog.showModal()
-      else
-        this.returnToTop()
+      this.returnToTop()
     });
 
     this.el.distractionOk.addEventListener("click", () => {

@@ -25,16 +25,15 @@
   <body>
     <div id='assistive-alert' aria-live='assertive'></div>
     <main>
-      <!-- <div class="logo-container">
-        <img src="assets/Icon.png" alt="Game logo" class="logo" />
-      </div> -->
-
       <div class="main-content">
         <section class="word-bank-container">
           <h2>Word Bank</h2>
-          <!-- <p class="free-only">Type in each blank what you think the best answer is!</p> -->
-
-          <div class="word-bank" id="word-bank"></div>
+          <div class="word-bank-container sub">
+            <div class="word-bank" id="word-bank"></div>
+            <div id="distraction-disclaimer" style="display: none;">
+              Careful! Not every word in the bank is correct!
+            </div>
+          </div>
           <button id="submit-button" class="action-btn" title="Submit">Submit</button>
           <button id="reset-button" class="action-btn free-only">Reset</button>
         </section>
@@ -51,28 +50,8 @@
       </div>
 
       <dialog id="greeting-dialog">
-        <!-- <div class="dialog-shell">
-          <div class="dialog-box"> -->
             <div class="dialog-content single">
-              <!-- <div class="dialog-left desc">
-                <img src="assets/IconBig.png" alt="" />
-                <p>Fill in the missing words to the passage back to life.</p>
-              </div> -->
               <div class="dialog-right">
-                <!-- <div id="welcome-message" style="display: block">
-                  <h2>Welcome to Word Guess!</h2>
-                  <div class="dialog-info">
-                    <p>
-                      Fill in the missing words and bring the passages back to
-                      life.
-                    </p>
-                    <p>Its simple to start, but harder to master...</p>
-                    <p>Ready to learn how it works?</p>
-                    <button id="how-to-play-btn" class="action-btn variant-2">
-                      How To Play
-                    </button>
-                  </div>
-                </div> -->
                 <div id="instructions" style="display: flex" class="container">
                   <h2>How To Play</h2>
                   <div class="dialog-info">
@@ -196,8 +175,6 @@
                 </div>
               </div>
             </div>
-          <!-- </div>
-        </div> -->
       </dialog>
 
       <dialog id="warning-dialog">
