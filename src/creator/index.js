@@ -202,6 +202,8 @@ class App {
       this.scored = qset.options.scored;
       this.distractions = qset.options.distractions ?? [];
 
+      this.distractions.forEach((v) => this.createDistraction(v, true))
+
       this.responseType = qset.options.responseType;
       this.updateResponseType()
 
@@ -471,7 +473,7 @@ class App {
     return this.el.titleInput.value;
   }
 
-  createDistraction(input) {
+  createDistraction(input, fromSave = false) {
     const text = input.trim()
 
     const distraction = document.createElement("button")
@@ -479,7 +481,7 @@ class App {
     distraction.ariaLabel = `${text}: distraction. Press Enter to remove from Word Bank.`
 
     distraction.dataset.id = this.distractions.length
-    this.distractions.push(text)
+    if(!fromSave) this.distractions.push(text)
 
     const inner = document.createElement("span")
     inner.innerHTML = text
