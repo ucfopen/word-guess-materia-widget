@@ -50,6 +50,10 @@ section {
     font-weight: bold;
     text-align: center;
   }
+
+  &.sub {
+    height: 70vh;
+  }
 }
 
 .word-bank {
@@ -82,17 +86,19 @@ section {
   border-radius: 20px;
   display: flex;
 
+  font-size: 14px;
+
   cursor: pointer;
 
   font-weight: 600;
   text-align: center;
   color: #fff;
   background-color: #70a0f9;
-  border: 6px solid #92b8ff;
-  padding: 8px;
+  border: 5px solid #92b8ff;
+  padding: 4px;
 
   justify-content: center;
-  gap: 2px;
+  gap: 8px;
 
   &::before {
     display: block;
@@ -535,8 +541,8 @@ input.word-pill-container {
 
     &.sub {
       flex-direction: column;
-      width: 80%;
-      // display: block;
+      width: calc(100% - 70px);
+      height: fit-content;
       gap: 8px;
       padding: 0;
     }
