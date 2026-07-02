@@ -131,6 +131,16 @@ input {
         border-bottom: 8px solid #270164;
       }
     }
+
+    &.left {
+      left: auto;
+      right: -10px;
+
+      &::after {
+        left:auto;
+        right: 8px;
+      }
+    }
   }
 
   &:hover, &:focus-visible  {
