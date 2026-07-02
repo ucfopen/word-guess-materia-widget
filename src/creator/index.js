@@ -141,6 +141,8 @@ class App {
   responseType = "bank";
   scored = true;
 
+  fromNew = true;
+
   distractions = []
 
   /**
@@ -260,7 +262,12 @@ class App {
       }
     })
 
-    this.el.outer.addEventListener("transitionend", ()=>this.updateSlider(this.el.slider.value))
+    this.el.outer.addEventListener("transitionend", ()=>{
+      if(this.fromNew) {
+        this.fromNew = false
+        this.updateSlider(this.el.slider.value)
+      }
+    })
 
     window.addEventListener("resize", ()=>this.updateSlider(this.el.slider.value))
 
