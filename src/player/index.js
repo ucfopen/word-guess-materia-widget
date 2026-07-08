@@ -731,7 +731,7 @@ window.addEventListener("load", () => {
 
         qset.options = {
           "paragraph": qset.paragraph,
-          "mode": qset.wordsToSkip == -1 ? "manual" : "automatic",
+          "mode": "manual",
           "slider": "0",
           "responseType": "free",
           "scored": false,
