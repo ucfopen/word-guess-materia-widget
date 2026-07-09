@@ -144,6 +144,10 @@ class App {
     return res
   }
 
+  isV1OldPunctuation(word) {
+    return parseInt(this.version) === 1 && OLD_PUNCTUATION.has(word)
+  }
+
   assistiveAlert(msg) {
     this.el.assistiveAlertElement.innerHTML = msg;
   } 
@@ -643,15 +647,15 @@ class App {
     for (let i = 0; i < paragraphWords.length; i++) {
       if(!paragraphWords[i]) continue;
 
-      if (this.words[j] && paragraphWords[i] !== " ") {
-        this.el.passage.appendChild(this.makeWordPillContainer(this.words[j].id, containerCount++,this.el.passage.childNodes.length))
-        j++
+      if (this.words[j] && paragraphWords[i] !== " " && !this.isV1OldPunctuation(paragraphWords[i])) {
+          this.el.passage.appendChild(this.makeWordPillContainer(this.words[j].id, containerCount++,this.el.passage.childNodes.length))
+          j++
       } else {
         const span = document.createElement("span")
         span.innerHTML = paragraphWords[i];
         this.el.passage.appendChild(span)
 
-        if(parseInt(this.version) === 1 && OLD_PUNCTUATION.has(paragraphWords[i])) {
+        if(this.isV1OldPunctuation(paragraphWords[i])) {
           continue;
         }
 
@@ -717,7 +721,12 @@ window.addEventListener("load", () => {
       if(parseInt(qsetVersion) === 1) {
         qset.items = qset.questions_answers
         qset.items.forEach((_v, i) => {
-          qset.items[i].options = { "index": qset.manualSkippingIndices[i] }
+          if (qset.wordsToSkip == -1) {
+            qset.items[i].options = { "index": qset.manualSkippingIndices[i] }
+          } else {
+            let indexForItem = (parseInt(qset.wordsToSkip) * (i + 1)) + (i + 1) - 1
+            qset.items[i].options = { "index": indexForItem }
+          }
         })
 
         qset.options = {
