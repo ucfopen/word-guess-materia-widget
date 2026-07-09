@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Word Guess Creator</title>
+    <meta charset="utf-8" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <script src="materia.creatorcore.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="creator.css" />
+    <script src="creator.js"></script>
+  </head>
+
+  <body>
+    <div id="side-column">
+      <!-- <img src="assets/Icon.png" alt="" class="logo" /> -->
+      <button id="settings-btn" aria-label="Toggle Settings Menu"></button>
+      <div id="settings-screen" class="hidden">
+        <div id="settings-internal">
+          <h2>Settings</h2>
+          <div class="settings-inputs">
+            <h3><label for="scoring-check">Enable Scoring?</label>
+              <span class="info-icon" tabindex="0">
+                <div class="info-box bottom">
+                  Enable to score the activity accurately.<br/>
+                  Disable to treat the activity as participation.
+                </div>
+              </span>
+              <input id="scoring-check" type="checkbox" value="true" checked>
+            </h3>
+            <h3>Response Type
+              <span class="info-icon" tabindex="0">
+                <div class="info-box bottom">
+                  Select how students fill in the blanks.
+                </div>
+              </span>
+            </h3>
+            <div class="type-select">
+              <div class="row">
+                <input id="type-bank" type="radio" value="bank" name="response-type" checked>
+                <label for="type-bank">Word Bank</label>
+              </div>
+              <div class="row">
+                <input id="type-free" type="radio" value="free" name="response-type">
+                <label for="type-free">Free Response</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="outer" class="new">  
+      <section id="edit-region" class="inner">
+        <section class="title-box">
+          <div class="section-header">
+            <h2>Add Title</h2>
+            <span class="info-icon" tabindex="0" id="out-of-settings">
+              <div class="info-box bottom">
+                <p>
+                  This will appear above your paragraph. Leave unchanged to hide
+                  the title.
+                </p>
+              </div>
+            </span>
+          </div>
+          <input
+            class="container"
+            id="title"
+            type="text"
+            placeholder="New WordGuess Widget"
+          />
+        </section>
+
+        <section class="passage-box">
+          <div class="segment">
+            <div class="section-header">
+              <h2>Add Passage</h2>
+              <span class="info-icon" tabindex="0">
+                <div class="info-box top">
+                  <p>
+                    Passage will display with the removed words for students to
+                    fill in. Change options to adjust removal.
+                  </p>
+                </div>
+              </span>
+            </div>
+            <div class="toggle-slider" style="width: 100px">
+              <span id="slide-knob" class="slide-knob"></span>
+
+              <button
+                class="toggle-btn pencil-btn"
+                id="pencil-edit"
+                title="edit"
+              ></button>
+
+              <button
+                class="toggle-btn mouse-btn"
+                id="mouse-click"
+                title="pick"
+              ></button>
+            </div>
+          </div>
+
+          <div class="passage container">
+            <textarea
+              id="textarea"
+              class=""
+              placeholder="Enter a paragraph here."
+            ></textarea>
+            <button id="jump-end">Jump to last word</button>
+            <div id="pickarea"></div>
+            <p>
+              <button id="jump-start">Jump to first word</button>
+              <span id="word-count"></span>
+            </p>
+          </div>
+          <button id="intro-pick-btn" disabled>
+              <p>Start picking words!</p>
+            </button>
+        </section>
+      </section>
+
+      <section id="bank-region" class="inner">
+        <section class="options">
+          <div class="section-header">
+            <h2>How should words be hidden?</h2>
+            <span class="info-icon" tabindex="0">
+              <div class="info-box bottom left">
+                <p>
+                  Select how Word Guess should hide the words. Pick the specific
+                  words with "let me choose", or get an automatic selection.
+                </p>
+              </div>
+            </span>
+          </div>
+          <div class="container" id="options-container">
+            <nav>
+              <div class="center">
+                <div class="toggle-slider">
+                  <span id="mode-slide-knob" class="slide-knob slid"></span>
+
+                  <button id="auto-button" class="toggle-btn">Automatic</button>
+
+                  <button id="manual-button" class="toggle-btn">
+                    Let Me Choose
+                  </button>
+                </div>
+              </div>
+
+              <div id="manual-info-container" class="mode-info-container">
+                <p class="info">Click the words in the text you want to hide.</p>
+                <div id="manual-cont" class="info-container">
+                  <div class="progress-container">
+                    <div id="manual-bar" class="progress-bar low"></div>
+                  </div>
+                  <p id="manual-message" class="status low">
+
+                  </p>
+                </div>
+              </div>
+
+              <div id="auto-info-container" class="mode-info-container">
+                <p class="info">Set the number of words between each hidden word.</p>
+
+                <div class="progress-bar-container">
+                  <div id="slider-mask"></div>
+                  <input
+                    type="range"
+                    min="10"
+                    max="100"
+                    value="50"
+                    class="slider"
+                    id="slider"
+                  />
+                </div>
+
+                <p id="automatic-message" class="info" style="display: none;">!!!</p>
+              </div>
+            </nav>
+          </div>
+        </section>
+
+        <section id="hidden-words" class="passage-box">
+          <div class="section-header">
+            <h2>Word Bank</h2>
+            <span class="info-icon" tabindex="0">
+              <div class="info-box top">
+                <p>The words students will use to fill in the blanks.</p>
+              </div>
+            </span>
+          </div>
+          <div id="word-bank-container" class="container">
+            <div id="word-bank">
+              <button id="add-distraction" class="word-bank-pill" aria-label="Add Distraction Word">
+                add distraction +
+              </button>
+              <div id="distraction-popup" style="display: none;">
+                <h3>Add Distraction Word</h3>
+                <div class="row">
+                  <input id="distraction-text" type="text" placeholder="Type distraction word..."/>
+                  <button id="submit-distraction" type="button"></button>
+                </div>
+              </div>
+            </div>
+            <div class="word-bank-info-container">
+              <span id="word-bank-info" class="warning"></span>
+              <div class="word-bank-buttons">
+                <button class="trash-btn" id="trash-btn" title="clear"></button>
+                <button
+                  class="refresh-btn"
+                  id="refresh-btn"
+                  title="refresh"
+                ></button>
+                <button
+                  id="return-to-title"
+                  aria-label="Return to the Title field"
+                >Return to the Title field</button>
+              </div>
+            </div>
+            <div id="word-bank-blur"></div>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <dialog id="help-dialog">
+      <div class="dialog-shell">
+        <div class="dialog-box">
+          <div class="dialog-content">
+            <div class="dialog-left">
+              <img src="assets/IconBig.png" alt="" />
+            </div>
+            <div class="dialog-right">
+              <div>
+                <h2>Welcome to Word Guess!</h2>
+                <p class="subtitle">
+                  Create a fun fill-in-the-blank activity from any passage.
+                </p>
+              </div>
+              <div class="info-card">
+                <h3>Create your Word Guess!</h3>
+                <ol>
+                  <li>Give your activity a title</li>
+                  <li>Add/Paste your passage the students will read</li>
+                  <li>
+                    Choose which words students must guess
+                  </li>
+                  <li>
+                    Add distraction words to test student's knowledge
+                  </li>
+                  <li>
+                    Customize how students interact with your activity <br/>via the <img src="assets/cog.svg"/>Settings
+                  </li>
+                </ol>
+                <h3>Students will...</h3>
+                <p>
+                  <b>Word Bank</b><br/> Read the passage and use the word bank to fill in the blanks.
+                </p>
+                <p>
+                  <b>Free Response</b><br/> Read the passage and fill in the blanks with their own responses.
+                </p>
+              </div>
+              <button id="close-button" class="action-btn">
+                Create Activity
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="error-dialog">
+      <div class="dialog-shell">
+        <div class="dialog-box">
+          <div>
+            <button
+              title="close-error-dialog"
+              id="error-dialog-close-button"
+              class="close-btn"
+            ></button>
+            <h2 class="error-heading">Oops!</h2>
+          </div>
+          <p class="error-text" id="error-message">!!!</p>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="delete-dialog">
+      <div class="dialog-shell">
+        <div class="dialog-box">
+          <div>
+            <button
+              title="close-error-dialog"
+              id="close-delete"
+              class="close-btn"
+            ></button>
+            <h2 class="error-heading">Warning!</h2>
+          </div>
+          <p class="error-text">You are about to reset all words in the Word Bank!</p>
+          <div class="row">
+            <button id="cancel-delete" class="action-btn variant-2">
+              Cancel
+            </button>
+            <button id="confirm-delete" class="action-btn">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+  </body>
+</html>

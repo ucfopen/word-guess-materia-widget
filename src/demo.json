@@ -1,495 +1,378 @@
 {
-  "name": "Kafka's Metamorphosis",
+  "name": "Frankenstein",
   "qset": {
-    "version": 1,
+    "version": "2",
     "data": {
-      "questions_answers": [
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #1"
-            }
-          ],
-          "answers": [
-            {
-              "text": "morning"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #2"
-            }
-          ],
-          "answers": [
-            {
-              "text": "dreams"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #3"
-            }
-          ],
-          "answers": [
-            {
-              "text": "bed"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #4"
-            }
-          ],
-          "answers": [
-            {
-              "text": "changed"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #5"
-            }
-          ],
-          "answers": [
-            {
-              "text": "verminous"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #6"
-            }
-          ],
-          "answers": [
-            {
-              "text": "back"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #7"
-            }
-          ],
-          "answers": [
-            {
-              "text": "lifted"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #8"
-            }
-          ],
-          "answers": [
-            {
-              "text": "abdomen"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #9"
-            }
-          ],
-          "answers": [
-            {
-              "text": "bow-like"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #10"
-            }
-          ],
-          "answers": [
-            {
-              "text": "blanket"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #11"
-            }
-          ],
-          "answers": [
-            {
-              "text": "slide"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #12"
-            }
-          ],
-          "answers": [
-            {
-              "text": "hardly"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #13"
-            }
-          ],
-          "answers": [
-            {
-              "text": "numerous"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #14"
-            }
-          ],
-          "answers": [
-            {
-              "text": "circumference"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #15"
-            }
-          ],
-          "answers": [
-            {
-              "text": "eyes"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #16"
-            }
-          ],
-          "answers": [
-            {
-              "text": "thought"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #17"
-            }
-          ],
-          "answers": [
-            {
-              "text": "proper"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #18"
-            }
-          ],
-          "answers": [
-            {
-              "text": "human"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #19"
-            }
-          ],
-          "answers": [
-            {
-              "text": "quietly"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #20"
-            }
-          ],
-          "answers": [
-            {
-              "text": "walls"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #21"
-            }
-          ],
-          "answers": [
-            {
-              "text": "goods"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #22"
-            }
-          ],
-          "answers": [
-            {
-              "text": "unpacked"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #23"
-            }
-          ],
-          "answers": [
-            {
-              "text": "travelling"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #24"
-            }
-          ],
-          "answers": [
-            {
-              "text": "picture"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #25"
-            }
-          ],
-          "answers": [
-            {
-              "text": "illustrated"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #26"
-            }
-          ],
-          "answers": [
-            {
-              "text": "set"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #27"
-            }
-          ],
-          "answers": [
-            {
-              "text": "picture"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #28"
-            }
-          ],
-          "answers": [
-            {
-              "text": "hat"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #29"
-            }
-          ],
-          "answers": [
-            {
-              "text": "erect"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #30"
-            }
-          ],
-          "answers": [
-            {
-              "text": "viewer"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #31"
-            }
-          ],
-          "answers": [
-            {
-              "text": "entire"
-            }
-          ]
-        },
-        {
-          "id": null,
-          "type": "QA",
-          "questions": [
-            {
-              "text": "Word #32"
-            }
-          ],
-          "answers": [
-            {
-              "text": "disappeared"
-            }
-          ]
+        "items": [
+            {
+                "id": "mwdk-mock-id-ad230838-abfb-4be4-ada4-a735139d5133",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #1"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "scene"
+                    }
+                ],
+                "options": {
+                    "index": 10
+                }
+            },
+            {
+                "id": "mwdk-mock-id-786c37cd-c58e-4a69-a9d1-ef1d7c6b1830",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #2"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "my"
+                    }
+                ],
+                "options": {
+                    "index": 21
+                }
+            },
+            {
+                "id": "mwdk-mock-id-23350ace-2ff0-49a0-bece-cb54b1ed91de",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #3"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "carriage"
+                    }
+                ],
+                "options": {
+                    "index": 32
+                }
+            },
+            {
+                "id": "mwdk-mock-id-eb02dec0-9084-4581-9f8b-d02801f019d2",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #4"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "distance"
+                    }
+                ],
+                "options": {
+                    "index": 44
+                }
+            },
+            {
+                "id": "mwdk-mock-id-e3b5b557-5423-4506-b9d0-d71e3755b28d",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #5"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "perceived"
+                    }
+                ],
+                "options": {
+                    "index": 53
+                }
+            },
+            {
+                "id": "mwdk-mock-id-aef465cd-91bf-4c3c-b9e5-fb7697550cb7",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #6"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "which"
+                    }
+                ],
+                "options": {
+                    "index": 63
+                }
+            },
+            {
+                "id": "mwdk-mock-id-11805d0c-98b5-498e-8ea6-86f61bad56d2",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #7"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "course"
+                    }
+                ],
+                "options": {
+                    "index": 72
+                }
+            },
+            {
+                "id": "mwdk-mock-id-0e10dad1-c99b-456c-808a-59911befb943",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #8"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "degrees"
+                    }
+                ],
+                "options": {
+                    "index": 81
+                }
+            },
+            {
+                "id": "mwdk-mock-id-fcb0256a-a0c0-4116-b761-1e92459ccad1",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #9"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "immense"
+                    }
+                ],
+                "options": {
+                    "index": 92
+                }
+            },
+            {
+                "id": "mwdk-mock-id-e24cc49c-a0ce-4bc6-938e-02a0f802ce87",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #10"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "side"
+                    }
+                ],
+                "options": {
+                    "index": 100
+                }
+            },
+            {
+                "id": "mwdk-mock-id-4101e511-f930-44cd-812b-f68e09f6dc17",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #11"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "dashing"
+                    }
+                ],
+                "options": {
+                    "index": 115
+                }
+            },
+            {
+                "id": "mwdk-mock-id-ff877ac9-aff7-4252-af85-70a3cbc05863",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #12"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "our"
+                    }
+                ],
+                "options": {
+                    "index": 125
+                }
+            },
+            {
+                "id": "mwdk-mock-id-a0924066-0777-490c-98ce-3fbcd66d44da",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #13"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "still"
+                    }
+                ],
+                "options": {
+                    "index": 134
+                }
+            },
+            {
+                "id": "mwdk-mock-id-d3e3390c-7244-49f5-a774-91ffebf7c277",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #14"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "character"
+                    }
+                ],
+                "options": {
+                    "index": 145
+                }
+            },
+            {
+                "id": "mwdk-mock-id-9ca3d355-2112-4236-86de-2bf93320a7b3",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #15"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "mountains"
+                    }
+                ],
+                "options": {
+                    "index": 155
+                }
+            },
+            {
+                "id": "mwdk-mock-id-da7ba5ba-d520-4173-bc37-0d098c88d125",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #16"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "peeping"
+                    }
+                ],
+                "options": {
+                    "index": 167
+                }
+            },
+            {
+                "id": "mwdk-mock-id-7e4cf29f-45c8-4e40-a369-3be3b9f83d86",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #17"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "singular"
+                    }
+                ],
+                "options": {
+                    "index": 178
+                }
+            },
+            {
+                "id": "mwdk-mock-id-7932af23-efc3-4c52-9c7d-b05a8a25dead",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #18"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "mighty"
+                    }
+                ],
+                "options": {
+                    "index": 190
+                }
+            },
+            {
+                "id": "mwdk-mock-id-5d8201a5-e635-4f1e-9d1f-f62ab1c0ef8d",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #19"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "towered"
+                    }
+                ],
+                "options": {
+                    "index": 200
+                }
+            },
+            {
+                "id": "mwdk-mock-id-47449e89-b84c-4e5a-8dd4-a771d3b2c2fb",
+                "type": "wordguess",
+                "materiaType": "question",
+                "questions": [
+                    {
+                        "text": "Word #20"
+                    }
+                ],
+                "answers": [
+                    {
+                        "text": "habitations"
+                    }
+                ],
+                "options": {
+                    "index": 211
+                }
+            }
+        ],
+        "options": {
+            "paragraph": "As it was, I was somewhat interested in the scene; it sometimes lulled, although it could not extinguish my grief. During the first day we travelled in a carriage. In the morning we had seen the mountains at a distance, towards which we gradually advanced. We perceived that the valley through which we wound, and which was formed by the river Arve, whose course we followed, closed in upon us by degrees; and when the sun had set, we beheld immense mountains and precipices overhanging us on every side, and heard the sound of the river raging among rocks, and the dashing of waterfalls around. The next day we pursued our journey upon mules; and as we ascended still higher, the valley assumed a more magnificent and astonishing character. Ruined castles hanging on the precipices of piny mountains; the impetuous Arve, and cottages every here and there peeping forth from among the trees, formed a scene of singular beauty. But it was augmented and rendered sublime by the mighty Alps, whose white and shining pyramids and domes towered above all, as belonging to another earth, the habitations of another race of beings.",
+            "mode": "automatic",
+            "slider": "6",
+            "responseType": "bank",
+            "scored": true,
+            "distractions": ["Victor"]
         }
-      ],
-      "title": "The Metamorphosis",
-      "paragraph": "One morning, as Gregor Samsa was waking up from anxious dreams, he discovered that in his bed he had been changed into a monstrous verminous bug. He lay on his armour-hard back and saw, as he lifted his head up a little, his brown, arched abdomen divided up into rigid bow-like sections. From this height the blanket, just about ready to slide off completely, could hardly stay in place. His numerous legs, pitifully thin in comparison to the rest of his circumference, flickered helplessly before his eyes. \"What’s happened to me,\" he thought. It was no dream. His room, a proper room for a human being, only somewhat too small, lay quietly between the four well-known walls. Above the table, on which an unpacked collection of sample cloth goods was spread out—Samsa was a travelling salesman—hung the picture which he had cut out of an illustrated magazine a little while ago and set in a pretty gilt frame. It was a picture of a woman with a fur hat and a fur boa. She sat erect there, lifting up in the direction of the viewer a solid fur muff into which her entire forearm had disappeared.\n",
-      "wordsToSkip": -1,
-      "manualSkippingIndices": [
-        1,
-        10,
-        16,
-        20,
-        24,
-        31,
-        36,
-        45,
-        50,
-        56,
-        61,
-        65,
-        70,
-        81,
-        86,
-        92,
-        100,
-        104,
-        111,
-        116,
-        123,
-        128,
-        134,
-        137,
-        145,
-        152,
-        161,
-        168,
-        175,
-        184,
-        192,
-        195
-      ]
     }
   }
 }

@@ -1,0 +1,229 @@
+@use "../creator/style.scss";
+
+body {
+    height: fit-content;
+    font-family: "Lato", sans-serif;
+    min-height: 0;
+    background: #230659;
+    padding: 0;
+    gap: 0;
+}
+
+.pill {
+    position: relative;
+    z-index: 1;
+  
+    display: inline-block;
+    padding: 6px 15px 5px;
+  
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 4px 0 2px;
+    
+    background-color: #ffce1b;
+    border-radius: 15px;
+  
+    white-space: nowrap;
+
+    min-width: 120px;
+    box-sizing: border-box;
+    text-align: center;
+
+    &.correct {
+        background-color: #cef297;
+
+        &::before {
+            color: white;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-right: 5px;
+            content: "";
+            background: url("assets/correct_black.svg") no-repeat 0 0;
+            background-size: 100%;
+        }
+    }
+
+    &.wrong {
+        background-color: #FF6A50;
+
+        &::before {
+            color: white;
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            content: "";
+            background: url("assets/incorrect.svg") no-repeat 0 0;
+            background-size: 100%;
+        }
+    }
+
+    &::after {
+        font-size: 14px;
+        content: attr(data-text);
+        display: none;
+    }
+
+    &:empty {
+        height: 25px;
+        min-width: auto;
+        width: 5rem;
+        background-color: #f5f5f5;
+        outline: 1px solid #565656;
+        outline-offset: -1px;
+        box-shadow: inset 0 4px 4px #00000040;
+
+        position: relative;
+        top: 6px;
+
+        &::before, &::after {
+            display: none;
+        }
+    }
+    
+    &:hover:not(:empty) {
+        background-color: #ffce1b;
+        cursor: help;
+        font-size: 0;
+        &::before {
+            display: none;
+        }
+        &::after {
+            display: inline;
+        }
+    }
+}
+
+#passage {
+    background: white;
+    border-radius: 10px;
+    margin: 0px 16px 24px 16px;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 2;
+
+    &.show-correct {
+        .pill:not(:empty) {
+            background-color: #ffce1b;
+            font-size: 0;
+            // &::before {
+            //     display: none;
+            // }
+
+            &:after {
+                display: inline;
+            }
+
+            &:empty {
+                outline: none;
+                height: unset;
+                width: unset;
+                background-color: #ffce1b;
+                border: none;
+                box-shadow: none;
+        
+                position: unset;
+                top: 0;
+            }
+
+            &:hover {
+                font-size: 14px;
+                cursor: help;
+
+                &.correct {
+                    background-color: #cef297;
+                }
+
+                &.wrong {
+                    background-color: #FF6A50;
+                }
+
+                &::before {
+                    display: inline-block;
+                }
+
+                &::after {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.header {
+    width: 100%;
+    padding: 16px;
+    .header-body {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        // justify-content: space-between;
+        // gap: 8px;
+        padding: 8px 11px;
+        
+        background-color: white;
+        border-radius: 15px;
+
+        background-color: #7538d3;
+        border-style: solid;
+        border-width: 5px;
+        border-color: #8d57df;
+        border-radius: 10px;
+        
+        width: 300px;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        font-family: 'Paytone One', sans-serif;
+        font-weight: 500;
+        font-size: 24px;
+        color: white;
+        margin: auto 8px auto 0;
+        text-align: right;
+    }
+}
+
+#slider-text {
+    font-family: "Paytone One", sans-serif;
+    color: white;
+    margin: auto;
+    font-size: 18px;
+}
+
+.user-btn {
+    width: 35px;
+    height: 35px;
+    background: transparent url("assets/user_answers.svg") no-repeat center;
+}
+  
+.correct-btn {
+    width: 35px;
+    height: 35px;
+    color: white;
+    background: transparent url("assets/correct_answers.svg") no-repeat center;
+}
+
+@media (width <= 400px) {
+    #slider-text {
+        display: none;
+    }
+
+    .header h2 {
+        font-size: 22px;
+    }
+
+    .header .header-body {
+        width: fit-content;
+    }
+}

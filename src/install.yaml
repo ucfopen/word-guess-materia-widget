@@ -1,8 +1,7 @@
 general:
   name: Word Guess
-  group: Materia
-  height: 670
-  width: 800
+  height: 0
+  width: 0
   in_catalog: No
   is_editable: Yes
   is_playable: Yes
@@ -13,20 +12,27 @@ general:
 files:
   creator: creator.html
   player: player.html
+  creator_guide: guides/creator.html
+  player_guide: guides/player.html
   flash_version: 0
 score:
   is_scorable: Yes
   score_module: WordGuess
+  score_screen: scoreScreen.html
 meta_data:
+  accessibility_keyboard: Full
+  accessibility_reader: Full
+  accessibility_description: >
+    Fully accessible with standard keyboard controls. Includes additional optional keyboard shortcuts for several
+    features.
   features:
     - Customizable
+    - Scorable
+    - Mobile Friendly
   supported_data:
     - Fill-in-the-blank
   about: >
-    Word Guess is a madlib-style game in which
-    students are allowed to fill the missing words
-    within a paragraph and discover how their
-    answers differed from the original text.
+    Word Guess is a word-matching game, where students must fill the missing spaces in a passage with words from a provided word bank.
   excerpt: >
     Students fill blanks within a paragraph with words they think belong.
   update_method: github

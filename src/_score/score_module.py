@@ -6,7 +6,13 @@ class WordGuess(ScoreModule):
         super().__init__(play)
 
     def check_answer(self, log):
+        scored = self.qset.get("data", self.qset).get("options", {}).get("scored", False)
+
         q = self.get_question_by_item_id(log.item_id)
-        if q is not None:
+        
+        sa = self.get_ss_answer(log, q)
+        se = self.get_ss_expected_answers(log, q)
+
+        if sa.lower() == se.lower() or scored is False:
             return 100
         return 0

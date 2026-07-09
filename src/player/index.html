@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Word Guess Player</title>
+    <meta charset="utf-8" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <script src="materia.enginecore.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="player.css" />
+    <script src="player.js" defer></script>
+  </head>
+
+  <body>
+    <div id='assistive-alert' aria-live='assertive'></div>
+    <main>
+      <div class="main-content">
+        <section class="word-bank-container">
+          <h2>Word Bank</h2>
+          <div class="word-bank-container sub">
+            <div class="word-bank" id="word-bank"></div>
+            <div id="distraction-disclaimer" style="display: none;">
+              Not every word in the bank will be used!
+            </div>
+          </div>
+          <button id="submit-button" class="action-btn" title="Submit">Submit</button>
+          <button id="reset-button" class="action-btn free-only">Reset</button>
+        </section>
+
+        <section class="passage">
+          <h2 id="title"></h2>
+
+          <div id="passage" tabindex="0"></div>
+          <button
+            id="return-to-bank"
+            aria-label="Return to the Word Bank"
+          >Return to the Word Bank</button>  
+        </section>
+      </div>
+
+      <dialog id="greeting-dialog">
+            <div class="dialog-content single">
+              <div class="dialog-right">
+                <div id="instructions" style="display: flex" class="container">
+                  <h2>How To Play</h2>
+                  <div class="dialog-info">
+                    <div id="free-message" style="display:none" class="">
+                      <p>
+                        In each blank, type what word you think fits the best!
+                      </p>
+                    </div>
+                    <div id="pointer-controls" style="display: flex" class="">
+                      <div class="item">
+                        <img alt="Animation depicting Drag and Drop functionality" src="assets/wgTempDnD.png"/>
+                        <div>
+                          <h3>Drag and Drop</h3>
+                          <p>
+                            Drag and Drop the word into where you think it
+                            belongs.
+                          </p>
+                          <p>
+                            Return a word to the bank by clicking it or
+                            dragging it back into its previous spot.
+                          </p>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="item">
+                        <img alt="Animation depicting Tap/Click functionality" src="assets/wgTempTC.png"/>
+                        <div>
+                          <h3>Tap / Click</h3>
+                          <p>
+                            Tap / Click the word once to select it, or to return
+                            it to the bank.
+                            </p><p>
+                            When a word is selected, tap / click it again to
+                            place it in the desired spot.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      id="keyboard-controls"
+                      style="display: none"
+                      class=""
+                    >
+                      <table>
+                        <thead>
+                          <tr>
+                            <th scope="col">Control</th>
+                            <th scope="col">Function</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>
+                              <p class="key">Tab</p>
+                            </th>
+                            <td>
+                              <p>Navigate between words on screen.</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">Enter</p>
+                            </th>
+                            <td>
+                              <p>
+                                Press <i>once</i> to select a word. Press again
+                                to place it into its destination.
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">Esc</p>
+                            </th>
+                            <td>
+                              <p>
+                                Cancel a selection.
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">H</p>
+                            </th>
+                            <td>
+                              <p>Toggle the instructions.</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">R</p>
+                            </th>
+                            <td>
+                              <p>Reset the selected word.</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <p class="key">Ctrl</p>
+                              <p>+</p>
+                              <p class="key">R</p>
+                            </th>
+                            <td>
+                              <p>Reset all words.</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="control-row">
+                      <button id="modal-prev">
+                        Previous
+                      </button>
+                      <div id="page-counter">1 / 2</div>
+                      <button id="modal-next">Next</button>
+                    </div>
+                  </div>
+                  <button id="play-game-btn" class="action-btn">
+                    Play Game
+                  </button>
+                </div>
+              </div>
+            </div>
+      </dialog>
+
+      <dialog id="warning-dialog">
+        <div class="dialog-shell">
+          <div class="dialog-box" id="warning-container">
+            <div>
+              <button
+                title="close warning dialog"
+                id="warning-dialog-close-button"
+                class="close-btn"
+              ></button>
+              <h2 class="error-heading">Warning!</h2>
+            </div>
+            <div class="warning-content">
+              <p>
+                You didn't fill out all the answers. Are you sure you want to
+                submit?
+              </p>
+              <div>
+                <button id="warning-cancel-button" class="action-btn">
+                  Cancel
+                </button>
+                <button id="warning-submit-button" class="action-btn variant-3">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="distraction-dialog">
+        <div class="dialog-shell">
+          <div class="dialog-box" id="distraction-container">
+            <div class="warning-content">
+              <p id="distraction-text">
+                This passage has [num] extra word(s) in the word bank. Not all of them are valid answers!
+              </p>
+              <div>
+                <button id="distraction-ok-button" class="action-btn">
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+
+    </main>
+  </body>
+</html>
