@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Word Guess Scorescreen</title>
+		<meta charset="utf-8" />
+		<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, target-densitydpi=device-dpi'>
+
+		<!-- STYLESHEETS -->
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap"
+        rel="stylesheet"
+        />
+
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="scoreScreen.css">
+
+		<!-- REQUIRED MATERIA JAVASCRIPT -->
+		<script src="materia.scorecore.js"></script>
+
+		<!-- MAIN SCORE SCRIPT -->
+		<script src="scoreScreen.js"></script>
+	</head>
+    <body>
+        <div class="header">
+            <div class="row">
+                
+                <div class="header-body">
+                    
+                    <div class="toggle-slider" style="width: 100px">
+                        <span id="slide-knob" class="slide-knob"></span>
+        
+                        <button
+                        class="toggle-btn user-btn"
+                        id="user-answers"
+                        aria-label="Show Your Answers"
+                        title="Show Your Answers"
+                        ></button>
+        
+                        <button
+                        class="toggle-btn correct-btn"
+                        id="correct-answers"
+                        aria-label="Show Correct Answers"
+                        title="Show Correct Answers"
+                        ></button>
+                    </div>
+                    <span id="slider-text">Your Answers</span>
+                </div>
+                <h2 id="correct-amt"></h2>
+            </div>
+        </div>
+        <div id="passage">
+        </div>
+        <script>
+            Materia.ScoreCore.start(WordGuess.ScoreCore);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,204 @@
+dialog {
+  z-index: 9999;
+  width: fit-content;
+  max-width: min(92vw, 900px);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  h1 {
+    font-family: "Lato", sans-serif;
+  }
+
+  h2 {
+    font-family: "Paytone One", serif;
+  }
+
+  h3,
+  h4 {
+    font-family: "Paytone One", serif;
+    -webkit-text-stroke: 0.3em #451b87;
+    paint-order: stroke fill;
+  }
+
+  p,
+  li {
+    font-family: "Lato", sans-serif;
+  }
+
+  margin: auto;
+  border-radius: 15px;
+  border-color: transparent;
+}
+
+.dialog-box {
+  position: relative;
+  width: fit-content;
+  max-width: min(92vw, 900px);
+  border-radius: 16px;
+  padding: 2rem 4rem;
+  box-shadow: 7px 8px 4px 0px #00000040;
+}
+
+.dialog-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: center;
+
+  &.single {
+    display: block;
+  }
+}
+
+.dialog-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  border-radius: 12px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.dialog-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  h2 {
+    font-family: "Paytone One", serif;
+    margin: 0 0 6px;
+    font-size: 34px;
+    text-align: center;
+    white-space: nowrap;
+    color: #2a0b57;
+  }
+}
+
+.subtitle {
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: #8a8a8a;
+}
+
+.info-card {
+  background: #7538d3;
+  color: #fff;
+  border-radius: 14px;
+  padding: 25px 40px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  h3,
+  h4 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0 0 10px;
+  }
+
+  ol {
+    padding-left: 18px;
+    margin: 0 0 16px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 1.5;
+    font-size: 15px;
+
+    &::marker {
+      font-weight: 600;
+    }
+
+    img {
+      display: inline-flex;
+      width: 15px;
+      height: 15px;
+      margin: auto 2px;
+    }
+  }
+
+  p {
+    margin: 0;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+
+    b {
+      font-family: "Paytone One", sans-serif;
+    }
+  }
+}
+
+.close-btn {
+  // IDK WHY THIS NEEDS TO BE HERE
+  outline: none;
+  cursor: pointer;
+
+  width: 12px;
+  height: 12px;
+  background: transparent url("assets/CloseButton.svg") no-repeat center;
+
+  position: absolute;
+  top: 14px;
+  right: 16px;
+
+  scale: 2;
+
+  &:hover, &:focus-visible {
+    scale: 2.05;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #93d82d;
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+}
+
+.error-heading {
+  font-size: 2rem;
+  color: #2e0073;
+  text-align: center;
+  font-weight: normal;
+}
+
+.error-text {
+  max-width: 15rem;
+  text-align: center;
+  color: #2e0073;
+  font-weight: bold;
+}
+
+@media (width <= 900px) {
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dialog-left {
+    min-height: 160px;
+    height: fit-content;
+
+    img {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  .dialog-right {
+    h2 {
+      white-space: normal;
+    }
+  }
+}
