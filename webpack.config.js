@@ -1,9 +1,7 @@
-const path = require("path");
-const widgetWebpack = require("materia-widget-development-kit/webpack-widget");
-
+const path = require('path')
 const srcPath = path.join(__dirname, "src");
 const outputPath = path.join(process.cwd(), "build");
-
+const widgetWebpack = require('materia-widget-development-kit/webpack-widget');
 const rules = widgetWebpack.getDefaultRules();
 
 const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
@@ -35,7 +33,11 @@ const buildConfig = widgetWebpack.getLegacyWidgetBuildConfig({
      from: `${srcPath}/_guides/img`,
       to: `${outputPath}/guides/img`,
       toType: 'dir'
-    }
+    },
+    {
+      from: `${srcPath}/_exports`,
+      to: `${outputPath}/_exports`,
+    },
   ],
   moduleRules: [
     rules.loadHTMLAndReplaceMateriaScripts,
